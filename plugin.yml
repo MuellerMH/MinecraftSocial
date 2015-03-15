@@ -25,15 +25,20 @@ commands:
     permission: MCSocial.join
     permission-message: You do not have Permission MCSocial.join
   leave:
-    description: Verlässt einen Chatraum
+    description: Verlaesst einen Chatraum
     usage: /leave ChannelName
     permission: MCSocial.leave
     permission-message: You do not have Permission MCSocial.leave
   list:
-    description: zeigt alle chaträume
+    description: zeigt alle chatrauume
     usage: /list
     permission: MCSocial.list
     permission-message: You do not have Permission MCSocial.leave
+  shop:
+    description: Erstellt einen NPC Shop
+    usage: /shop [add/remove] [Name] {Profession}
+    permission: MCSocial.shop
+    permission-message: You do not have Permission MCSocial.shop
 permissions:
   MCSocial.*:
     children:
@@ -43,6 +48,7 @@ permissions:
       MCSocial.join: true
       MCSocial.leave: true
       MCSocial.list: true
+      MCSocial.shop: true
   MCSocial.menu:
     default: true
   MCSocial.miner:
@@ -55,3 +61,5 @@ permissions:
     default: true
   MCSocial.list:
     default: true
+  MCSocial.shop:
+    default: op
