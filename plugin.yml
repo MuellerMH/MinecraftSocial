@@ -1,0 +1,57 @@
+name: MinecraftSocial
+main: de.mcsocial.main.MCSocial
+version: 0.0.0.1.1
+author: MuellerMH
+commands:
+  menu:
+    aliases: [m]
+    description: Zeigt das Spielermenu
+    usage: 
+    permission: MCSocial.menu
+    permission-message: You do not have Permission MCSocial.menu
+  miner:
+    description: Display Player Mining
+    usage: /miner UserName
+    permission: MCSocial.miner
+    permission-message: You do not have Permission MCSocial.miner
+  gs:
+    description: Display Player Mining
+    usage: /gs
+    permission: MCSocial.gs
+    permission-message: You do not have Permission MCSocial.gs
+  join:
+    description: Betritt einen Chatraum
+    usage: /join ChannelName
+    permission: MCSocial.join
+    permission-message: You do not have Permission MCSocial.join
+  leave:
+    description: Verlässt einen Chatraum
+    usage: /leave ChannelName
+    permission: MCSocial.leave
+    permission-message: You do not have Permission MCSocial.leave
+  list:
+    description: zeigt alle chaträume
+    usage: /list
+    permission: MCSocial.list
+    permission-message: You do not have Permission MCSocial.leave
+permissions:
+  MCSocial.*:
+    children:
+      MCSocial.menu: true
+      MCSocial.miner: false
+      MCSocial.gs: true
+      MCSocial.join: true
+      MCSocial.leave: true
+      MCSocial.list: true
+  MCSocial.menu:
+    default: true
+  MCSocial.miner:
+    default: op
+  MCSocial.gs:
+    default: true
+  MCSocial.join:
+    default: true
+  MCSocial.leave:
+    default: true
+  MCSocial.list:
+    default: true
