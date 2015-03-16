@@ -10,6 +10,7 @@ import org.bukkit.util.Vector;
 
 public class CustomVillager extends EntityVillager {
 	
+	@SuppressWarnings("unused")
 	private String name = null;
 
 	public CustomVillager(World world) {

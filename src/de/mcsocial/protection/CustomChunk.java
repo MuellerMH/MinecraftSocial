@@ -3,7 +3,6 @@ package de.mcsocial.protection;
 import java.util.HashMap;
 import java.util.UUID;
 
-import org.bukkit.craftbukkit.v1_8_R1.CraftChunk;
 import org.bukkit.entity.Player;
 
 public class CustomChunk {

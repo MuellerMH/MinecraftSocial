@@ -23,7 +23,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -46,11 +46,7 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		loadOwnedChunks();
 	}
 	
-	@EventHandler
-	public void onEntityChangeBlock (EntityInteractEvent event){
 		
-	}
-	
 	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event){
 		Player player = event.getPlayer();

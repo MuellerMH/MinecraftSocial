@@ -12,20 +12,37 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import de.mcsocial.chat.Channel;
 import de.mcsocial.economy.Account;
-import de.mcsocial.gui.Menu;
-import de.mcsocial.gui.Menus.FirstTimeMenu;
 import de.mcsocial.main.MCSocial;
 import de.mcsocial.main.MySQL;
+import de.mcsocial.permissions.PlayerPermissions;
 import de.mcsocial.protection.ChunkHandler;
 
 public class Resident implements Listener {
+	
+	/**
+	 * Prevent PvP and PvM damage dependent upon PvP settings and location.
+	 * 
+	 * @param event
+	 */
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+		
+		if(!ChunkHandler.isClaimAble(event.getEntity().getLocation().getChunk())){
+			event.setCancelled(true);
+			return;
+		}
+
+	}
 			
 	@SuppressWarnings("deprecation")
 	@EventHandler
@@ -88,26 +105,27 @@ public class Resident implements Listener {
 		//PlayerPermissions.initPlayerPermission(p);
 		
 		if(p.isOp() || (p.hasMetadata("isAdmin") && p.getMetadata("isAdmin").get(0).asBoolean()) ){
-			MCSocial.channel.join(p,"Support");
-			MCSocial.channel.join(p,"Admin");
-			MCSocial.channel.join(p,"Global");
-			MCSocial.channel.join(p,"Handel");	
-			MCSocial.channel.join(p,"Lokal");
+			Channel.join(p,"Support");
+			Channel.join(p,"Admin");
+			Channel.join(p,"Global");
+			Channel.join(p,"Handel");	
+			Channel.join(p,"Lokal");
 		}else
 		if(
 			(p.hasMetadata("isModerator") && p.getMetadata("isModerator").get(0).asBoolean())
 				||
 			(p.hasMetadata("isSupporter") && p.getMetadata("isSupporter").get(0).asBoolean())
 		){
-			MCSocial.channel.join(p,"Support");
-			MCSocial.channel.join(p,"Global");
-			MCSocial.channel.join(p,"Handel");	
-			MCSocial.channel.join(p,"Lokal");
+			Channel.join(p,"Support");
+			Channel.join(p,"Global");
+			Channel.join(p,"Handel");	
+			Channel.join(p,"Lokal");
 		}else{
-			MCSocial.channel.join(p,"Global");
-			MCSocial.channel.join(p,"Handel");	
-			MCSocial.channel.join(p,"Lokal");
+			Channel.join(p,"Global");
+			Channel.join(p,"Handel");	
+			Channel.join(p,"Lokal");
 		}
+		PlayerPermissions.initPlayerPermission(p);
 	}
 	
 	@EventHandler

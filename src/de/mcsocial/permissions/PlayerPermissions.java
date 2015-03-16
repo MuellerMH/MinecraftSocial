@@ -13,9 +13,36 @@ public class PlayerPermissions {
 	
 	public static void initPlayerPermission(Player p){		
 		PermissionAttachment attachment = p.addAttachment(MCSocial.instance);
+		if(PlayerPermissions.permissions == null){
+			PlayerPermissions.permissions = new HashMap<UUID,PermissionAttachment>();
+		}
+		PlayerPermissions.permissions.put(p.getUniqueId(), attachment);
 		
+		PlayerPermissions.loadPermissions(p);
 	}
 	
+	private static void loadPermissions(Player player) {
+		
+			if(PlayerPermissions.hasAccess(player,"admin")){
+				PlayerPermissions.setPermission(player,"de.mcsocial.admin.ban",true);
+				PlayerPermissions.setPermission(player,"de.mcsocial.admin.money",true);
+				PlayerPermissions.setPermission(player,"de.mcsocial.admin.gm",true);				
+			}
+			
+			if(PlayerPermissions.hasAccess(player,"moderator")){
+				PlayerPermissions.setPermission(player,"de.mcsocial.admin.timeban",true);
+				PlayerPermissions.setPermission(player,"MCSocial.miner",true);		
+			}
+			
+			if(PlayerPermissions.hasAccess(player,"supporter")){
+				PlayerPermissions.setPermission(player,"de.mcsocial.admin.kick",true);
+				PlayerPermissions.setPermission(player,"de.mcsocial.admin.fly",true);
+				PlayerPermissions.setPermission(player,"de.mcsocial.admin.tp",true);
+			}
+			
+			
+	}
+
 	public static void setPermission(Player p,String name, Boolean value){
 		PermissionAttachment attachment = permissions.get(p.getUniqueId());
 		attachment.setPermission(name, value);

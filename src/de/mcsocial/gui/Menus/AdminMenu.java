@@ -14,7 +14,7 @@ public class AdminMenu {
 	private static Player p;
 	
 	public static void loadMenu(Menu menu, Player p) {
-		AdminMenu.p = p;
+		AdminMenu.setP(p);
 		AdminMenu.menu = menu;
 		
 		closeMenu();
@@ -39,5 +39,13 @@ public class AdminMenu {
 		item.setDescriptions(lines);
 
 		AdminMenu.menu.addMenuItem(item, 26);
+	}
+
+	public static Player getP() {
+		return p;
+	}
+
+	public static void setP(Player p) {
+		AdminMenu.p = p;
 	}
 }

@@ -210,42 +210,42 @@ public class Miner implements Listener, CommandExecutor {
 				Miner.counterDias.put(event.getPlayer().getUniqueId(), 1);
 			}
 			CountPlayer = Miner.counterDias.get(event.getPlayer().getUniqueId());
-			Miner.counterDias.replace(event.getPlayer().getUniqueId(), ++CountPlayer);
+			Miner.counterDias.put(event.getPlayer().getUniqueId(), ++CountPlayer);
 			break;
 		case GOLD_ORE :
 			if(!Miner.counterGold.containsKey(event.getPlayer().getUniqueId())){
 				Miner.counterGold.put(event.getPlayer().getUniqueId(), 1);
 			}
 			CountPlayer = Miner.counterGold.get(event.getPlayer().getUniqueId());
-			Miner.counterGold.replace(event.getPlayer().getUniqueId(), ++CountPlayer);
+			Miner.counterGold.put(event.getPlayer().getUniqueId(), ++CountPlayer);
 			break;
 		case IRON_ORE :
 			if(!Miner.counterIron.containsKey(event.getPlayer().getUniqueId())){
 				Miner.counterIron.put(event.getPlayer().getUniqueId(), 1);
 			}
 			CountPlayer = Miner.counterIron.get(event.getPlayer().getUniqueId());
-			Miner.counterIron.replace(event.getPlayer().getUniqueId(), ++CountPlayer);
+			Miner.counterIron.put(event.getPlayer().getUniqueId(), ++CountPlayer);
 			break;
 		case REDSTONE_ORE :
 			if(!Miner.counterRedstone.containsKey(event.getPlayer().getUniqueId())){
 				Miner.counterRedstone.put(event.getPlayer().getUniqueId(), 1);
 			}
 			CountPlayer = Miner.counterRedstone.get(event.getPlayer().getUniqueId());
-			Miner.counterRedstone.replace(event.getPlayer().getUniqueId(), ++CountPlayer);
+			Miner.counterRedstone.put(event.getPlayer().getUniqueId(), ++CountPlayer);
 			break;
 		case COAL_ORE :
 			if(!Miner.counterCoal.containsKey(event.getPlayer().getUniqueId())){
 				Miner.counterCoal.put(event.getPlayer().getUniqueId(), 1);
 			}
 			CountPlayer = Miner.counterCoal.get(event.getPlayer().getUniqueId());
-			Miner.counterCoal.replace(event.getPlayer().getUniqueId(), ++CountPlayer);
+			Miner.counterCoal.put(event.getPlayer().getUniqueId(), ++CountPlayer);
 			break;
 		case LAPIS_ORE :
 			if(!Miner.counterLapis.containsKey(event.getPlayer().getUniqueId())){
 				Miner.counterLapis.put(event.getPlayer().getUniqueId(), 1);
 			}
 			CountPlayer = Miner.counterLapis.get(event.getPlayer().getUniqueId());
-			Miner.counterLapis.replace(event.getPlayer().getUniqueId(), ++CountPlayer);
+			Miner.counterLapis.put(event.getPlayer().getUniqueId(), ++CountPlayer);
 			break;	
 		case DIRT :
 			break;

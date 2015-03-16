@@ -10,7 +10,6 @@ import de.mcsocial.gui.MenuItem;
 import de.mcsocial.gui.Menus.AdminMenu;
 import de.mcsocial.gui.Menus.Hauptmenu;
 import de.mcsocial.gui.Menus.JailMenu;
-import de.mcsocial.gui.Menus.PlayerMenu;
 
 public class AdminItem extends MenuItem {
 	

@@ -14,7 +14,6 @@ import org.bukkit.material.MaterialData;
 import de.mcsocial.gui.Gui;
 import de.mcsocial.gui.Menu;
 import de.mcsocial.gui.MenuItem;
-import de.mcsocial.gui.Menus.AccountMenu;
 import de.mcsocial.gui.Menus.AdminMenu;
 import de.mcsocial.gui.Menus.JailMenu;
 import de.mcsocial.protection.ChunkHandler;
@@ -22,6 +21,7 @@ import de.mcsocial.protection.Jail;
 import de.mcsocial.protection.JailChunk;
 
 public class JailItem  extends MenuItem {
+	@SuppressWarnings("unused")
 	private Boolean isCellSpawn;
 	private Location cellLocation;
 	private Player player;

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -20,14 +21,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import de.mcsocial.gui.Gui;
 import de.mcsocial.gui.Menu;
 import de.mcsocial.gui.Menus.Hauptmenu;
-import de.mcsocial.trader.ShopData;
 import de.mcsocial.gui.Menus.ShopMenu;
-import de.mcsocial.main.MCSocial;
 import de.mcsocial.main.MySQL;
 
 public class TraderHandler implements Listener, CommandExecutor{
@@ -102,6 +100,7 @@ public class TraderHandler implements Listener, CommandExecutor{
 							break;
 						}
 					}
+
 					p.sendMessage("Shop mit dem Namen " + args[1] + " hinzugefügt.");
 					return true;
 				}
@@ -118,6 +117,9 @@ public class TraderHandler implements Listener, CommandExecutor{
 		}
 		return false;
 	}
+	
+	
+	
 /*
  * 
  * VillagerShop villShop = new VillagerShop((World) Bukkit.getWorld("world"));
@@ -154,24 +156,42 @@ public class TraderHandler implements Listener, CommandExecutor{
 		}
 		return out.toString();
 	}
+	
 	static void saveShop(ShopData shop){
 
 		String items = TraderHandler.itemToString(shop.getItems());
 		String sql;
 		
 		if(items== null)
-			sql = "insert ignore into MCS_npcshop (name,items)"
-		        + " values (?, ?)";
-		else
-			sql = "insert into MCS_npcshop (name,items)"
-			        + " values (?, ?)"
-			        + " ON DUPLICATE KEY UPDATE items= ?";
+		{
+			sql = "insert ignore into MCS_npcshop (name,items,location,profession)"
+		        + " values (?, ?, ?, ?)";
+			PreparedStatement preparedStmt = MySQL.getPreStat(sql);
+			try {
+				preparedStmt.setString (1, shop.getName());
+				preparedStmt.setString (2, items);
+				preparedStmt.setString (3, shop.getLocation());
+				preparedStmt.setInt(4, shop.getProfession());
+				
+				MySQL.insertDB(preparedStmt);								
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+		
+		sql = "insert into MCS_npcshop (name,items,location,profession)"
+		        + " values (?, ?, ?, ?)"
+		        + " ON DUPLICATE KEY UPDATE items= ?";
 		
 		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
 		try {
 			preparedStmt.setString (1, shop.getName());
 			preparedStmt.setString (2, items);
-			preparedStmt.setString (3, items);
+			preparedStmt.setString (3, shop.getLocation());
+			preparedStmt.setInt(4, shop.getProfession());
+			preparedStmt.setString (5, items);
 			
 			MySQL.insertDB(preparedStmt);								
 		} catch (SQLException e) {
@@ -179,9 +199,9 @@ public class TraderHandler implements Listener, CommandExecutor{
 			e.printStackTrace();
 		}
 	}
-
-	private static void loadShop(String customName){
-		PreparedStatement preparedStmt = MySQL.getPreStat("SELECT items FROM MCS_npcshop WHERE name = ?");
+	
+	static void loadShop(String customName){
+		PreparedStatement preparedStmt = MySQL.getPreStat("SELECT items,location,profession FROM MCS_npcshop WHERE name = ?");
 		ResultSet result = null;
 		try {
 			preparedStmt.setString(1, customName);
@@ -189,8 +209,8 @@ public class TraderHandler implements Listener, CommandExecutor{
 			
 			if(result == null) return;
 			
-			ShopData shop = new ShopData();
 			while(result.next()){
+				ShopData shop = new ShopData();
 				shop.setName(customName);
 				String itemString = result.getString("items");
 				if(itemString!=null){
@@ -200,10 +220,11 @@ public class TraderHandler implements Listener, CommandExecutor{
 						Material itemMaterial = Material.getMaterial(item);
 						itemStack.add(new ItemStack(itemMaterial));
 					}
-					
 					shop.setItems(itemStack);
 				}
-
+				shop.setProfession(result.getInt("profession"));
+				shop.setLocation(result.getString("location"));
+				initVillager(shop);
 				TraderHandler.shopList.put(customName, shop);
 			}
 		} catch (SQLException e) {
@@ -212,4 +233,72 @@ public class TraderHandler implements Listener, CommandExecutor{
 		}
 	}
 	
+	public static void loadShops(){
+		if(TraderHandler.shopList == null)
+			TraderHandler.shopList = new HashMap<String,ShopData>();
+		PreparedStatement preparedStmt = MySQL.getPreStat("SELECT name,items,location,profession FROM MCS_npcshop");
+		ResultSet result = null;
+		try {
+			result = MySQL.callDB(preparedStmt);
+			
+			if(result == null) return;
+			
+			while(result.next()){
+				ShopData shop = new ShopData();
+				shop.setName(result.getString("name"));
+				String itemString = result.getString("items");
+				if(itemString!=null){
+					String[] items = itemString.split(",");
+					List<ItemStack> itemStack = new ArrayList<ItemStack>();	
+					for(String item: items){
+						Material itemMaterial = Material.getMaterial(item);
+						itemStack.add(new ItemStack(itemMaterial));
+					}
+					shop.setItems(itemStack);
+				}
+
+				shop.setProfession(result.getInt("profession"));
+				shop.setLocation(result.getString("location"));
+				
+				initVillager(shop);
+				TraderHandler.shopList.put(result.getString("name"), shop);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+		
+	private static void initVillager(ShopData shop){
+		String[]locdata = shop.getLocation().split(",");
+		double x,z,y;
+		x = Double.parseDouble(locdata[0]);
+		y = Double.parseDouble(locdata[1]);
+		z = Double.parseDouble(locdata[2]);
+		Location loc = new Location(Bukkit.getWorld("world"),x,y,z);
+		
+		Villager village = VillagerShop.spawn(loc,shop.getName());
+		
+			switch(shop.getProfession()){
+			case 0:
+				village.setProfession(Villager.Profession.FARMER);
+				break;
+			case 1:
+				village.setProfession(Villager.Profession.LIBRARIAN);
+				break;
+			case 2:
+				village.setProfession(Villager.Profession.PRIEST);
+				break;
+			case 3:
+				village.setProfession(Villager.Profession.BLACKSMITH);
+				break;
+			case 4:
+				village.setProfession(Villager.Profession.BUTCHER);
+				break;
+			default:
+				village.setProfession(Villager.Profession.FARMER);
+				break;
+			}
+		System.out.println("Shop mit dem Namen " + shop.getName() + " hinzugefügt." + loc.toString());
+	}
 }

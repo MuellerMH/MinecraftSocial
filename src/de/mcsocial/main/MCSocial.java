@@ -1,16 +1,14 @@
 package de.mcsocial.main;
 
-import net.minecraft.server.v1_8_R1.World;
 import net.minecraft.server.v1_8_R1.EntityVillager;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.entity.CreatureType;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.mcsocial.chat.Channel;
 import de.mcsocial.chat.ChatListener;
@@ -22,7 +20,9 @@ import de.mcsocial.economy.Market;
 import de.mcsocial.economy.ShopHandler;
 import de.mcsocial.gui.Gui;
 import de.mcsocial.notification.Server;
+import de.mcsocial.protection.ChunkCleaner;
 import de.mcsocial.protection.ChunkHandler;
+import de.mcsocial.skills.SkillListener;
 import de.mcsocial.trader.TraderHandler;
 import de.mcsocial.trader.VillagerShop;
 
@@ -51,9 +51,11 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		Listener shopListener = new ShopHandler();
 		Listener miner = new Miner();
 		Listener traderListener = new TraderHandler();
+		Listener skillListener = new SkillListener();
 
 		Miner.loadMinerData();
 		((ShopHandler) shopListener).load();
+		TraderHandler.loadShops();
 		
 
 		MCSocial.setChannel(new Channel());
@@ -63,6 +65,8 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		MCSocial.channel.create("Handel");	
 		MCSocial.channel.create("Lokal");
 
+		getServer().getPluginManager().registerEvents(skillListener, this);
+		getServer().getPluginManager().registerEvents(jobListener, this);
 		getServer().getPluginManager().registerEvents(traderListener, this);
 		getServer().getPluginManager().registerEvents(shopListener, this);
 		getServer().getPluginManager().registerEvents(jobListener, this);
@@ -71,8 +75,6 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		getServer().getPluginManager().registerEvents(chatListener, this);
         getServer().getPluginManager().registerEvents(MCSocial.guiHandler, this);
         getServer().getPluginManager().registerEvents(miner, this);
-                	
-
         
 		getCommand("shop").setExecutor((CommandExecutor) traderListener);
 		getCommand("miner").setExecutor((CommandExecutor) miner);
@@ -85,6 +87,13 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		Market.loadPrices();
 		Jobs.loadJobs();
 		
+		new BukkitRunnable() {           
+	        @Override
+	        public void run() {
+		    	ChunkCleaner clean = new ChunkCleaner();
+		    	clean.run();
+	        }
+	    }.runTaskTimer(MCSocial.instance, 320L, 320L);
 		
 		MCSocial.setNotificationServer(new Server());		
 		
@@ -94,6 +103,7 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 	public void onDisable(){ 
 		Miner.saveMinerData();
 		Market.savePrices();
+		SkillListener.saveSkills();
 	}
 
 	public static Server getNotificationServer() {

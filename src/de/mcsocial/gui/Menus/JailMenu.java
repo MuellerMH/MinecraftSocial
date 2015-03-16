@@ -11,11 +11,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import de.mcsocial.city.City;
 import de.mcsocial.gui.Menu;
 import de.mcsocial.gui.items.JailItem;
 import de.mcsocial.protection.Jail;
-import de.mcsocial.protection.JailChunk;
 
 public class JailMenu {
 	public static Menu menu;
@@ -24,7 +22,7 @@ public class JailMenu {
 	public static String nextAction="";
 	
 	public static void loadMenu(Menu menu, Player player) {
-		JailMenu.p = player;
+		JailMenu.setP(player);
 		JailMenu.menu = menu;
 		int row = 1;
 		int col = 0;
@@ -93,6 +91,7 @@ public class JailMenu {
 		int i=0;
 		Iterator<Entry<Player, Integer>> allCell = prisonerAll.entrySet().iterator();
 		while(allCell.hasNext()){
+			@SuppressWarnings("rawtypes")
 			Map.Entry pair = (Map.Entry)allCell.next();
 			Player pl = (Player) pair.getKey();
 			JailItem item = new JailItem(pl.getName(),Material.ENDER_PEARL);
@@ -117,6 +116,14 @@ public class JailMenu {
 		item.setDescriptions(lines);
 		JailMenu.menu.addMenuItem(item, pos);
 		
+	}
+
+	public static Player getP() {
+		return p;
+	}
+
+	public static void setP(Player p) {
+		JailMenu.p = p;
 	}
 	
 	

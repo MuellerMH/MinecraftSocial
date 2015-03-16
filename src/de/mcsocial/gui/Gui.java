@@ -12,15 +12,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.mcsocial.city.Resident;
-import de.mcsocial.economy.Account;
-import de.mcsocial.gui.Menus.FirstTimeMenu;
 import de.mcsocial.gui.Menus.Hauptmenu;
 import de.mcsocial.main.MCSocial;
 

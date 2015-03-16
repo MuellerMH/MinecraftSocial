@@ -8,6 +8,8 @@ public class ShopData {
 	
 	private List<ItemStack> shopItems;
 	private String name;
+	private String location;
+	private int profession;
 	
 	public List<ItemStack> getItems() {
 		// TODO Auto-generated method stub
@@ -26,5 +28,27 @@ public class ShopData {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public void setLocation(double x, double y, double z) {
+		this.location = x +","+y+","+z;
+		
+	}
+	public String getLocation() {
+		return this.location;
+	}
+	
+	public void setProfession(int profession) {
+		this.profession =profession;
+		
+	}
+	
+	public int getProfession() {
+		return this.profession;
+	}
+	
+	public void setLocation(String string) {
+		this.location = string;
+	}
+	
 
 }

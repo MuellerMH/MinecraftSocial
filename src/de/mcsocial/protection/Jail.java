@@ -13,8 +13,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import de.mcsocial.gui.Menus.JailMenu;
-
 public class Jail {
 	
 	private static HashMap<Player,ItemStack[]>playerItems;
@@ -115,6 +113,7 @@ public class Jail {
 		List<Location>allCellLocation = new ArrayList<Location>();
 		Iterator<Entry<Location, JailChunk>> allCell = Jail.getList().entrySet().iterator();
 		while(allCell.hasNext()){
+			@SuppressWarnings("rawtypes")
 			Map.Entry pair = (Map.Entry)allCell.next();
 			allCellLocation.add((Location) pair.getKey());
 			

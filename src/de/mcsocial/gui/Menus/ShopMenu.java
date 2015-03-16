@@ -23,7 +23,7 @@ public class ShopMenu {
 	private static Player p;
 	
 	public static void loadMenu(Menu menuAccount,Player p, CraftVillager shop) {
-		ShopMenu.p = p;
+		ShopMenu.setP(p);
 		ShopMenu.menu = menuAccount;
 		
 		ShopData shopdata = TraderHandler.getShop(shop); 	
@@ -108,5 +108,13 @@ public class ShopMenu {
 		ShopMenu.trademenu.addMenuItem(menuBack, 35);
 		
 
+	}
+
+	public static Player getP() {
+		return p;
+	}
+
+	public static void setP(Player p) {
+		ShopMenu.p = p;
 	}
 }

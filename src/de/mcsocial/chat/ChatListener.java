@@ -16,7 +16,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import de.mcsocial.main.MCSocial;
 import de.mcsocial.protection.Jail;
-import de.mcsocial.protection.JailChunk;
 
 public class ChatListener implements Listener, CommandExecutor {
 
@@ -78,6 +77,8 @@ public class ChatListener implements Listener, CommandExecutor {
 	@SuppressWarnings("static-access")
 	@EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
+		
+		ChatLogger.writeLog(event.getPlayer(), event.getMessage());
 		  
         if(event.getMessage().equalsIgnoreCase("MuellerMH") 
         		|| event.getMessage().equalsIgnoreCase("mueller")

@@ -43,14 +43,17 @@ public class VillagerShop extends CustomVillager {
 		 World mcWorld = (World) ((CraftWorld) location.getWorld()).getHandle();
 	        final VillagerShop customEntity = new VillagerShop(
 	                mcWorld);
-	        customEntity.setName(string);	        
+	        customEntity.setName(string);	 
 	        customEntity.setLocation(location.getX(), location.getY(),
 	                location.getZ(), location.getYaw(), location.getPitch());
 	        ((CraftLivingEntity) customEntity.getBukkitEntity())
 	                .setRemoveWhenFarAway(false);	        
 	        mcWorld.addEntity(customEntity, SpawnReason.CUSTOM);
 	        ShopData shop = new ShopData();
-	        shop.setName(string);	 
+	        shop.setName(string);	
+	        shop.setProfession(customEntity.getProfession());
+	        shop.setLocation(location.getX(), location.getY(),
+	                location.getZ());
 	        TraderHandler.saveShop(shop);
 	        return (Villager) customEntity.getBukkitEntity();
 	}
