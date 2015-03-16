@@ -77,7 +77,7 @@ public class TraderHandler implements Listener, CommandExecutor{
 				return false;
 			}
 			
-			if(args.length >= 2){
+			if(args.length >= 3){
 				if(args[0].equalsIgnoreCase("add")){
 					Villager village = VillagerShop.spawn(((Player)sender).getLocation(), args[1]);
 					

@@ -158,5 +158,4 @@ public class City {
 		// TODO Auto-generated method stub
 		return City.residentList.containsValue(uniqueId);
 	}
-	
 }

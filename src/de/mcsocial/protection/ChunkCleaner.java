@@ -14,6 +14,7 @@ public class ChunkCleaner {
 		World world = Bukkit.getWorld("world");
 		// TODO Auto-generated method stub
 		List <LivingEntity>toRemove = new ArrayList<LivingEntity>();
+		
 		for (LivingEntity livingEntity : world.getLivingEntities()) {
 			Location livingEntityLoc = livingEntity.getLocation();
 		    
@@ -56,6 +57,7 @@ public class ChunkCleaner {
 		}
 		
 		for(LivingEntity livingEntity :toRemove){
+			livingEntity.teleport(new Location(Bukkit.getWorld("world"),0,0,0));
 			world.getLivingEntities().remove(livingEntity);
 		}
 		toRemove.clear();

@@ -33,6 +33,7 @@ import de.mcsocial.city.City;
 import de.mcsocial.economy.Account;
 import de.mcsocial.gui.Menus.Hauptmenu;
 import de.mcsocial.main.MySQL;
+import de.mcsocial.permissions.PlayerPermissions;
 
 public class ChunkHandler implements Listener,CommandExecutor {
 
@@ -55,7 +56,7 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		if(player.isOp())
 			return;
 		
-		if(player.hasMetadata("isAdmin") && player.getMetadata("isAdmin").get(0).asBoolean())
+		if(PlayerPermissions.hasAccess(player,"supporter"))
 			return;
 		
 		if(ChunkHandler.ownedChunks.containsKey(chunk.toString())) {
@@ -69,9 +70,19 @@ public class ChunkHandler implements Listener,CommandExecutor {
 				return;
 			}
 			
+			if(Jail.isJailChunks(chunk)){
+				return;
+			}
+			
+			if(cChunk.getCityName().equalsIgnoreCase("worldspawn")){
+				if(event.getRightClicked().isCustomNameVisible())
+					return;
+			}
+			
 			if(cChunk.isCity()){
 				//TODO: if player in City?
-				if(City.cityList.containsKey(cChunk.getCityName())){					
+				if(City.cityList.containsKey(cChunk.getCityName())){	
+					
 					if(City.isVillager(player.getUniqueId(), cChunk.getCityName())){
 						return;
 					}
@@ -317,7 +328,7 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		if(player.isOp())
 			return;
 		
-		if(player.hasMetadata("isAdmin") && player.getMetadata("isAdmin").get(0).asBoolean())
+		if(PlayerPermissions.hasAccess(player,"supporter"))
 			return;
 		
 				
@@ -415,7 +426,7 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		if(player.isOp())
 			return;
 		
-		if(player.hasMetadata("isAdmin") && player.getMetadata("isAdmin").get(0).asBoolean())
+		if(PlayerPermissions.hasAccess(player,"supporter"))
 			return;
 		
 		if(ChunkHandler.ownedChunks.containsKey(chunk.toString())) {
@@ -486,17 +497,20 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		Chunk chunk = block.getLocation().getChunk();
 		Player player = event.getPlayer();
 		
+		if(Jail.isJailChunks(chunk)){
+			return;
+		}
+		
 		if(player.isOp())
 			return;
 		
-		if(player.hasMetadata("isAdmin") && player.getMetadata("isAdmin").get(0).asBoolean())
-			return;
-		
-		if(player.hasMetadata("isAdmin") && player.getMetadata("isModerator").get(0).asBoolean())
+		if(PlayerPermissions.hasAccess(player,"supporter"))
 			return;
 		
 		if(ChunkHandler.ownedChunks.containsKey(chunk.toString())) {
 			CustomChunk cChunk = ChunkHandler.ownedChunks.get(chunk.toString());
+			
+			if(cChunk.getCityName().equalsIgnoreCase("WorldSpawn")) return;
 			
 			if(cChunk.getOwner().equals(player.getUniqueId())) {
 				return;
@@ -509,6 +523,7 @@ public class ChunkHandler implements Listener,CommandExecutor {
 			if(cChunk.isCity()){
 				//TODO: if player in City?
 				if(City.cityList.containsKey(cChunk.getCityName())){
+					
 					
 					if(City.isVillager(player.getUniqueId(), cChunk.getCityName())){
 						return;

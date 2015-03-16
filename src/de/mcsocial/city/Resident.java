@@ -101,31 +101,24 @@ public class Resident implements Listener {
 		getMoney(p);
 		
 		initPlayer(p);
-		
+
+		PlayerPermissions.initPlayerPermission(p);
 		//PlayerPermissions.initPlayerPermission(p);
 		
-		if(p.isOp() || (p.hasMetadata("isAdmin") && p.getMetadata("isAdmin").get(0).asBoolean()) ){
-			Channel.join(p,"Support");
+		if((p.hasMetadata("isAdmin") && p.getMetadata("isAdmin").get(0).asBoolean()) ){
 			Channel.join(p,"Admin");
-			Channel.join(p,"Global");
-			Channel.join(p,"Handel");	
-			Channel.join(p,"Lokal");
-		}else
+		}
 		if(
 			(p.hasMetadata("isModerator") && p.getMetadata("isModerator").get(0).asBoolean())
 				||
 			(p.hasMetadata("isSupporter") && p.getMetadata("isSupporter").get(0).asBoolean())
 		){
+
 			Channel.join(p,"Support");
-			Channel.join(p,"Global");
-			Channel.join(p,"Handel");	
-			Channel.join(p,"Lokal");
-		}else{
-			Channel.join(p,"Global");
-			Channel.join(p,"Handel");	
-			Channel.join(p,"Lokal");
 		}
-		PlayerPermissions.initPlayerPermission(p);
+		Channel.join(p,"Global");
+		Channel.join(p,"Handel");	
+		Channel.join(p,"Lokal");
 	}
 	
 	@EventHandler
