@@ -1,9 +1,11 @@
 package de.mcsocial.chat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -15,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import de.mcsocial.main.MCSocial;
+import de.mcsocial.permissions.PlayerPermissions;
 import de.mcsocial.protection.Jail;
 
 public class ChatListener implements Listener, CommandExecutor {
@@ -33,7 +36,6 @@ public class ChatListener implements Listener, CommandExecutor {
 		Player p = (Player)sender;
 
 		if(cmd.getName().equalsIgnoreCase("list")) {
-			System.out.println("Command list");
 			p.sendMessage("---------------------------");
 			p.sendMessage("Verfügbare Chat Kanäle");
 			p.sendMessage("---------------------------");
@@ -46,31 +48,176 @@ public class ChatListener implements Listener, CommandExecutor {
 			p.sendMessage("---------------------------");
 			return true;
 		}
-		
-		if(args.length == 0){
-			p.sendMessage("Bitte Chat Namen angeben");
-			return true;
-		}
+		if(cmd.getName().equalsIgnoreCase("g")) {
+			MCSocial.channel.join(p, "Global");
+			p.sendMessage("Chat [Global] betreten.");
+		}else
+			
+		if(cmd.getName().equalsIgnoreCase("h")) {
+			MCSocial.channel.join(p, "Handel");
+			p.sendMessage("Chat [Handel] betreten.");
+		}else
+			
+		if(cmd.getName().equalsIgnoreCase("a")) {
+			MCSocial.channel.join(p, "Admin");
+			p.sendMessage("Chat [Admin] betreten.");
+		}else
+			
+		if(cmd.getName().equalsIgnoreCase("l")) {
+			MCSocial.channel.join(p, "Lokal");
+			p.sendMessage("Chat [Lokal] betreten.");
+		}else
 			
 		if(cmd.getName().equalsIgnoreCase("join")) {
-			System.out.println("Command join");
-			if(!MCSocial.channel.channelExist(args[0]))
-			{
-				MCSocial.channel.create(args[0]);
-			}
 
-			MCSocial.channel.join(p, args[0]);
-			p.sendMessage("Chat " + args[0]+ " beigetreten.");
+			
+			if(args.length == 0){
+				p.sendMessage(ChatColor.BOLD + "" +ChatColor.RED + "---------------------------");
+				p.sendMessage(ChatColor.BOLD + "" +ChatColor.RED + "Bitte Chat Namen angeben");
+				p.sendMessage(ChatColor.BOLD + "" +ChatColor.RED + "---------------------------");
+				p.sendMessage(ChatColor.BOLD + "" +ChatColor.RED + "Verfügbare Chat Kanäle");
+				p.sendMessage(ChatColor.BOLD + "" +ChatColor.RED + "---------------------------");
+				
+				List<String> channels = MCSocial.channel.getList();
+				
+				for(String name: channels){
+					p.sendMessage(ChatColor.BOLD + "" +ChatColor.RED + "" + name);				
+				}
+				p.sendMessage("---------------------------");
+				return true;
+			}
+						
+			if(args[0].equalsIgnoreCase("Global")){
+				MCSocial.channel.join(p, "Global");
+				p.sendMessage("Chat [Global] beigetreten.");
+			}else if(args[0].equalsIgnoreCase("Support")){
+				MCSocial.channel.join(p, "Support");	
+				p.sendMessage("Chat [Support] beigetreten.");	
+			}else if(args[0].equalsIgnoreCase("Admin")){
+				if(PlayerPermissions.hasAccess(p, "admin")){
+					MCSocial.channel.join(p, "Admin");		
+					p.sendMessage("Chat [Admin] beigetreten.");
+				}else{
+					MCSocial.channel.join(p, "Lokal");	
+					p.sendMessage("Chat [Lokal] beigetreten.");	
+				}
+			}else if(args[0].equalsIgnoreCase("Handel")){
+				MCSocial.channel.join(p, "Handel");	
+				p.sendMessage("Chat [Handel] beigetreten.");		
+			}else {
+				MCSocial.channel.join(p, "Lokal");	
+				p.sendMessage("Chat [Lokal] beigetreten.");			
+			}
 			return true;
-		}
+		}else
 		
 		if(cmd.getName().equalsIgnoreCase("leave")) {
-			System.out.println("Command leave");
-			MCSocial.channel.leave(p, args[0]);
+
+			
+			if(args.length == 0){
+				p.sendMessage(ChatColor.BOLD + "" +ChatColor.RED + "---------------------------");
+				p.sendMessage(ChatColor.BOLD + "" +ChatColor.RED + "Bitte Chat Namen angeben");
+				p.sendMessage(ChatColor.BOLD + "" +ChatColor.RED + "---------------------------");
+				p.sendMessage(ChatColor.BOLD + "" +ChatColor.RED + "Verfügbare Chat Kanäle");
+				p.sendMessage(ChatColor.BOLD + "" +ChatColor.RED + "---------------------------");
+				
+				List<String> channels = MCSocial.channel.getList();
+				
+				for(String name: channels){
+					p.sendMessage(ChatColor.BOLD + "" +ChatColor.RED + "" + name);				
+				}
+				p.sendMessage("---------------------------");
+				return true;
+			}
+			
+			if(args[0].equalsIgnoreCase("Global")){
+				MCSocial.channel.leave(p, "Global");
+			}else if(args[0].equalsIgnoreCase("Support")){
+				MCSocial.channel.leave(p, "Support");			
+			}else if(args[0].equalsIgnoreCase("Admin")){
+				MCSocial.channel.leave(p, "Admin");			
+			}else if(args[0].equalsIgnoreCase("Handel")){
+				MCSocial.channel.leave(p, "Handel");				
+			}
 			p.sendMessage("Chat " + args[0]+ " verlassen.");
 			return true;
 		}
+			
+		
+		
+		if(args[0] != null){
+			List<Player> allPlayer = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
+
+			if(Jail.isInJail(p)){
+	        	p.sendMessage(ChatColor.RED + "Du bist im Gefängniss. Schweige und schreibe deine Sünden in das Buch!");
+	 			MCSocial.channel.join(p,"Lokal");
+	        }
+	        
+	        
+	        if(Jail.isJailChunks(p.getLocation().getChunk()))
+			{
+				MCSocial.channel.join(p, "Lokal");
+			}
+	        
+			for (Player chatPlayer: allPlayer){		        
+					
+				if(Jail.isJailChunks( chatPlayer.getLocation().getChunk()))
+				{
+					MCSocial.channel.join(chatPlayer, "Lokal");
+				}
 				
+				if(!MCSocial.channel.isInChat(chatPlayer,p.getMetadata("channel").get(0).asString())){
+					continue;
+				}
+				if(p.hasMetadata("channel")){
+					if(p.getMetadata("channel").get(0).asString() == "Lokal"){
+						if(outOfRange(p.getLocation(),chatPlayer.getLocation(),200)){
+							continue;
+						}
+					}
+					if(Jail.isInJail(chatPlayer)){
+						continue;
+					}
+				}
+				
+				String messagePrefix = ChatColor.WHITE  + "";        
+		        
+		        if(p.isOp()){
+		        	messagePrefix += ChatColor.RED +"[OP] ";
+		        }
+		        else if(p.hasMetadata("isAdmin") && p.getMetadata("isAdmin").get(0).asBoolean()){
+		        	messagePrefix += ChatColor.RED +""+ ChatColor.BOLD +"[A] ";
+		        }
+		        else if(p.hasMetadata("isSupporter") && p.getMetadata("isSupporter").get(0).asBoolean()){
+		        	messagePrefix += ChatColor.RED +""+ ChatColor.BOLD +"[S] ";
+		        }
+		        else if(p.hasMetadata("isModerator") && p.getMetadata("isModerator").get(0).asBoolean()){
+		        	messagePrefix += ChatColor.RED +""+ ChatColor.BOLD +"[M] ";
+		        }
+		        
+		        if(p.hasMetadata("newPlayer")){
+		        	messagePrefix += ChatColor.GREEN + "[New] ";
+		        }        
+		        else if(p.hasMetadata("cityowner")){
+		        	messagePrefix += ChatColor.BLUE +"Lehnsherr ";
+		        }
+		        //Beruf
+		        else if(p.hasMetadata("job") && p.getMetadata("job").get(0).asString() != null){
+		        	messagePrefix += ChatColor.DARK_GRAY +" "+ p.getMetadata("job").get(0).asString()+" ";
+		        }
+
+		        if(p.hasMetadata("isDonator") && p.getMetadata("isDonator").get(0).asBoolean()){
+		        	messagePrefix = ChatColor.GOLD +"[D] " + messagePrefix + "" + ChatColor.GOLD;
+		        }
+		        String message = "["+ p.getWorld().getName()+"] " + ChatColor.BOLD + "<" + p.getPlayer().getMetadata("channel").get(0).asString() + "> " +messagePrefix +  p.getPlayer().getName() + ChatColor.WHITE+ ":";
+				for(String text: args){
+					message+= " " +text;
+				}
+				chatPlayer.sendMessage(message);
+				return true;
+	        }
+		}
+		
 		// TODO Auto-generated method stub
 		return false;
 	}

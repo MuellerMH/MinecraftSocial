@@ -39,6 +39,31 @@ commands:
     usage: /shop [add/remove] [Name] {Profession}
     permission: MCSocial.shop
     permission-message: You do not have Permission MCSocial.shop
+  g:
+    description: Betreten des Chat Global
+    usage: /g
+    permission: MCSocial.g
+    permission-message: You do not have Permission MCSocial.shop
+  l:
+    description: Betreten des Chat Lokal
+    usage: /l
+    permission: MCSocial.l
+    permission-message: You do not have Permission MCSocial.shop
+  h:
+    description: Betreten des Handel Global
+    usage: /h
+    permission: MCSocial.h
+    permission-message: You do not have Permission MCSocial.shop
+  a:
+    description: Betreten des Chat Admin
+    usage: /a
+    permission: MCSocial.a
+    permission-message: You do not have Permission MCSocial.shop
+  s:
+    description: Betreten des Chat Support
+    usage: /s
+    permission: MCSocial.s
+    permission-message: You do not have Permission MCSocial.shop
 permissions:
   MCSocial.*:
     children:
@@ -49,10 +74,15 @@ permissions:
       MCSocial.leave: true
       MCSocial.list: true
       MCSocial.shop: true
+      MCSocial.g: true
+      MCSocial.l: true
+      MCSocial.h: true
+      MCSocial.a: true
+      MCSocial.s: true
   MCSocial.menu:
     default: true
   MCSocial.miner:
-    default: op
+    default: false
   MCSocial.gs:
     default: true
   MCSocial.join:
@@ -63,3 +93,13 @@ permissions:
     default: true
   MCSocial.shop:
     default: op
+  MCSocial.g:
+    default: true
+  MCSocial.l:
+    default: true
+  MCSocial.h:
+    default: true
+  MCSocial.a:
+    default: true
+  MCSocial.s:
+    default: true

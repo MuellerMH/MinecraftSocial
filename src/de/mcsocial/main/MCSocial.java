@@ -1,9 +1,12 @@
 package de.mcsocial.main;
 
+import java.io.File;
+import java.security.KeyPair;
+
 import net.minecraft.server.v1_8_R1.EntityVillager;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+
+
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -33,11 +36,25 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 	public static City cityHandler = null;
 	private static Server notificationServer;
 	public static Channel channel;
+	private static KeyPair keyPair;
+	
+	public static KeyPair getKeyPair(){
+		return MCSocial.keyPair;
+	}
 	
 	// called on PluginLoad
 	@SuppressWarnings("static-access")
 	public void onEnable(){ 
-
+		
+		File pluginFolder = new File(getDataFolder().toString());
+		if(!pluginFolder.exists()){
+			pluginFolder.mkdir();
+		}
+		/*
+		 * Create RSA directory and keys if it does not exist; otherwise, read
+		 * keys.
+		 */
+		
 		NMSUtils nms = new NMSUtils();
         nms.registerEntity("VillagerShop", 120, EntityVillager.class, VillagerShop.class);
         
@@ -81,6 +98,10 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		getCommand("join").setExecutor((CommandExecutor) chatListener);
 		getCommand("list").setExecutor((CommandExecutor) chatListener);
 		getCommand("leave").setExecutor((CommandExecutor) chatListener);
+		getCommand("g").setExecutor((CommandExecutor) chatListener);
+		getCommand("h").setExecutor((CommandExecutor) chatListener);
+		getCommand("a").setExecutor((CommandExecutor) chatListener);
+		getCommand("l").setExecutor((CommandExecutor) chatListener);
 		getCommand("menu").setExecutor(MCSocial.guiHandler);	
 		getCommand("gs").setExecutor((CommandExecutor)chunkListener);	
 		
@@ -97,13 +118,12 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		
 		MCSocial.setNotificationServer(new Server());		
 		
-		
 	}
 	
 	public void onDisable(){ 
 		Miner.saveMinerData();
 		Market.savePrices();
-		SkillListener.saveSkills();
+		SkillListener.saveSkills();	
 	}
 
 	public static Server getNotificationServer() {
