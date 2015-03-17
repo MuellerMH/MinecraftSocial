@@ -7,6 +7,7 @@ import net.minecraft.server.v1_8_R1.EntityVillager;
 
 
 
+
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -26,6 +27,7 @@ import de.mcsocial.notification.Server;
 import de.mcsocial.protection.ChunkCleaner;
 import de.mcsocial.protection.ChunkHandler;
 import de.mcsocial.skills.SkillListener;
+import de.mcsocial.tracker.VoteTracker;
 import de.mcsocial.trader.TraderHandler;
 import de.mcsocial.trader.VillagerShop;
 
@@ -38,7 +40,7 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 	public static Channel channel;
 	private static KeyPair keyPair;
 	
-	public static KeyPair getKeyPair(){
+	public KeyPair getKeyPair(){
 		return MCSocial.keyPair;
 	}
 	
@@ -118,12 +120,14 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		
 		MCSocial.setNotificationServer(new Server());		
 		
+		VoteTracker.onEnable(this);
 	}
 	
 	public void onDisable(){ 
 		Miner.saveMinerData();
 		Market.savePrices();
 		SkillListener.saveSkills();	
+		VoteTracker.onDisable();
 	}
 
 	public static Server getNotificationServer() {

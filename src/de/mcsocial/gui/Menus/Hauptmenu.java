@@ -12,6 +12,7 @@ import de.mcsocial.gui.items.CityManagerItem;
 import de.mcsocial.gui.items.HomeItem;
 import de.mcsocial.gui.items.PlayerItem;
 import de.mcsocial.gui.items.WorldSpawn;
+import de.mcsocial.permissions.PlayerPermissions;
 import de.mcsocial.protection.ChunkHandler;
 
 public class Hauptmenu {
@@ -38,6 +39,8 @@ public class Hauptmenu {
 	}	
 	
 	private static void adminMenu() {
+		if(!PlayerPermissions.hasAccess(p, "supporter"))
+		return;
 		// TODO Auto-generated method stub
 		PlayerItem item = new PlayerItem("Admin Menu",Material.ENCHANTED_BOOK);
 		List<String> lines = new LinkedList<String>();

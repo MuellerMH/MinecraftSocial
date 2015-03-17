@@ -683,7 +683,10 @@ public class ChunkHandler implements Listener,CommandExecutor {
 				ChunkHandler.markEdges(p);
 				Chunk chunk = p.getLocation().getChunk();
 				if(ChunkHandler.ownedChunks.containsKey(chunk.toString())) {
-					p.sendMessage("Grundstück gehört: " + ChunkHandler.getOwnerName(chunk.toString()));
+					if(ChunkHandler.getOwnerName(chunk.toString())==null)
+						p.sendMessage("Grundstück gehört: unbekaannt" );
+					else
+						p.sendMessage("Grundstück gehört: " + ChunkHandler.getOwnerName(chunk.toString()) );
 				}
 				break;
 			}

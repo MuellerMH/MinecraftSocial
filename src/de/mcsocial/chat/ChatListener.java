@@ -3,11 +3,13 @@ package de.mcsocial.chat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,8 +17,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.inventory.ItemStack;
 
+import de.mcsocial.economy.Account;
 import de.mcsocial.main.MCSocial;
+import de.mcsocial.notification.VoteNotificationEvent;
+import de.mcsocial.notification.VoteNotify;
 import de.mcsocial.permissions.PlayerPermissions;
 import de.mcsocial.protection.Jail;
 
@@ -221,6 +227,32 @@ public class ChatListener implements Listener, CommandExecutor {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@EventHandler
+	public void onVote(VoteNotificationEvent event){
+		VoteNotify vote = event.getVote();
+		Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "" + vote.getUsername() + " hat gevotet. Vielen Dank. Du sollst reich belohnt werden!");
+		Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "Vote auch du und werde belohnt! https://minecraft-server.eu/server/index/107161/minecraft_social");
+		
+		Player p = Bukkit.getPlayer(vote.getUsername());
+		if(p == null) return;
+		
+		Account.add(p, 1000.00);
+		List<Material> randomMat = new ArrayList<Material>();
+		randomMat.add(Material.DIAMOND_AXE);
+		randomMat.add(Material.DIAMOND);
+		randomMat.add(Material.DIAMOND_SWORD);
+		randomMat.add(Material.DIAMOND_BOOTS);
+		randomMat.add(Material.DIAMOND_CHESTPLATE);
+		randomMat.add(Material.DIAMOND_HELMET);
+		randomMat.add(Material.DIAMOND_HOE);
+		randomMat.add(Material.DIAMOND_PICKAXE);
+		randomMat.add(Material.DIAMOND_LEGGINGS);
+		Random r = new Random();
+		int random = r.nextInt(randomMat.size());
+		p.getInventory().addItem(new ItemStack(randomMat.get(random),1));
+	}
+	
 	@SuppressWarnings("static-access")
 	@EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {

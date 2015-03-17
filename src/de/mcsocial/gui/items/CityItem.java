@@ -100,7 +100,11 @@ public class CityItem extends MenuItem {
 				ChunkHandler.markEdges(p);
 				Chunk chunkinfo = p.getLocation().getChunk();
 				if(ChunkHandler.ownedChunks.containsKey(chunkinfo.toString())) {
-					p.sendMessage("Grundstück gehört: " + ChunkHandler.getOwnerName(chunkinfo.toString()));
+					String owner = ChunkHandler.getOwnerName(chunkinfo.toString());
+					if(owner == null)
+						p.sendMessage("Grundstück gehört: unbekannt");
+					else
+						p.sendMessage("Grundstück gehört: " + owner);
 				}								
 
 				Hauptmenu.menu.closeMenu(p);

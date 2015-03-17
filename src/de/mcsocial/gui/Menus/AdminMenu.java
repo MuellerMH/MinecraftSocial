@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import de.mcsocial.gui.Menu;
 import de.mcsocial.gui.items.AdminItem;
+import de.mcsocial.permissions.PlayerPermissions;
 
 public class AdminMenu {
 	public static Menu menu;
@@ -22,7 +23,8 @@ public class AdminMenu {
 	}
 	
 	private static void addJail()	{
-		
+		if(!PlayerPermissions.hasAccess(p, "moderator"))
+			return;
 		AdminItem item = new AdminItem("JailMenu",Material.ENDER_PEARL);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Zum Gefängnis Menu");
