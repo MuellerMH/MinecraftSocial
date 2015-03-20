@@ -5,9 +5,6 @@ import java.security.KeyPair;
 
 import net.minecraft.server.v1_8_R1.EntityVillager;
 
-
-
-
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -24,6 +21,7 @@ import de.mcsocial.economy.Market;
 import de.mcsocial.economy.ShopHandler;
 import de.mcsocial.gui.Gui;
 import de.mcsocial.notification.Server;
+import de.mcsocial.notification.WebListener;
 import de.mcsocial.protection.ChunkCleaner;
 import de.mcsocial.protection.ChunkHandler;
 import de.mcsocial.skills.SkillListener;
@@ -95,6 +93,7 @@ public class MCSocial  extends JavaPlugin  implements Listener {
         getServer().getPluginManager().registerEvents(MCSocial.guiHandler, this);
         getServer().getPluginManager().registerEvents(miner, this);
         
+		getCommand("infoitem").setExecutor((CommandExecutor) miner);
 		getCommand("shop").setExecutor((CommandExecutor) traderListener);
 		getCommand("miner").setExecutor((CommandExecutor) miner);
 		getCommand("join").setExecutor((CommandExecutor) chatListener);
@@ -121,6 +120,12 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		MCSocial.setNotificationServer(new Server());		
 		
 		VoteTracker.onEnable(this);
+		try {
+			WebListener.start();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void onDisable(){ 

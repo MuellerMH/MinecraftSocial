@@ -2,7 +2,7 @@ package de.mcsocial.gui.items;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.material.MaterialData;
+import org.bukkit.inventory.ItemStack;
 
 import de.mcsocial.cheatprotection.Miner;
 import de.mcsocial.city.Resident;
@@ -21,14 +21,9 @@ import de.mcsocial.permissions.PlayerPermissions;
 
 public class PlayerItem extends MenuItem {
 	
-	public PlayerItem(String text) {
-		super(text, new MaterialData(Material.BOOK));
-		// TODO Auto-generated constructor stub
-	}
-
 	public PlayerItem(String text, Material icon) {
-		super(text, new MaterialData(icon));
 		// TODO Auto-generated constructor stub
+		super(text, new ItemStack(icon,1));
 	}
 
 	@Override

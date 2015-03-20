@@ -15,8 +15,8 @@ public class Job {
 		allowed = new ArrayList<Material>();
 	}
 	
-	public Boolean isCraftable(Material mat) {
-		return allowed.contains(mat);
+	public Boolean isCraftable(String string) {
+		return allowed.contains(string);
 	}
 	
 	public void addMoney(Material item){

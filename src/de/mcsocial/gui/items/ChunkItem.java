@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.conversations.ConversationFactory;
 import org.bukkit.entity.Player;
-import org.bukkit.material.MaterialData;
+import org.bukkit.inventory.ItemStack;
 
 import de.mcsocial.gui.Gui;
 import de.mcsocial.gui.MenuItem;
@@ -18,14 +18,11 @@ public class ChunkItem extends MenuItem {
 	public static String cityName = null; 
 
 
-	public ChunkItem(String text) {
-		super(text, new MaterialData(Material.MAP));
-		// TODO Auto-generated constructor stub
-	}
+	
 
-	public ChunkItem(String text, Material materialData) {
+	public ChunkItem(String text, Material icon) {
 		// TODO Auto-generated constructor stub
-		super(text, new MaterialData( materialData));
+		super(text, new ItemStack(icon,1));
 	}
 	
 	public void setLocation(Location loc){

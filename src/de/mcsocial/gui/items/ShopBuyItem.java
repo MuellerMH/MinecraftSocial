@@ -3,7 +3,6 @@ package de.mcsocial.gui.items;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 
 import de.mcsocial.economy.Account;
 import de.mcsocial.economy.Market;
@@ -14,17 +13,13 @@ import de.mcsocial.gui.Menus.ShopMenu;
 public class ShopBuyItem extends MenuItem {
 	private Material mat;
 	private int amount;
-	private float sell;
-	private float buy;
+	private double sell;
+	private double buy;
+	private ItemStack item;
 	
-	public ShopBuyItem(String text) {
-		super(text, new MaterialData(Material.MAP));
+	public ShopBuyItem(String text, Material icon) {
 		// TODO Auto-generated constructor stub
-	}
-
-	public ShopBuyItem(String text, Material materialData) {
-		// TODO Auto-generated constructor stub
-		super(text, new MaterialData( materialData));
+		super(text, new ItemStack(icon,1));
 	}
 
 	@Override
@@ -51,7 +46,7 @@ public class ShopBuyItem extends MenuItem {
 		player.getInventory().addItem(item);				
 		player.updateInventory();
 		
-		Market.setPrice(this.mat, this.buy-(this.buy*0.01));
+		Market.setPrice(item.getType().toString()+":"+item.getDurability(), this.buy-(this.buy*0.01));
 
 		player.sendMessage("Gekauft für: "+total+" SD");
 		return;
@@ -59,7 +54,7 @@ public class ShopBuyItem extends MenuItem {
 	}
 	
 	public ItemStack getItem(){
-		return new ItemStack(this.mat);
+		return this.item;
 	}
 
 	public int getAmount() {
@@ -70,20 +65,20 @@ public class ShopBuyItem extends MenuItem {
 		this.amount = amount;
 	}
 
-	public float getSell() {
+	public double getSell() {
 		return sell;
 	}
 
-	public void setSell(float sell) {
-		this.sell = sell;
+	public void setSell(double d) {
+		this.sell = d;
 	}
 
-	public float getBuy() {
+	public double getBuy() {
 		return buy;
 	}
 
-	public void setBuy(float buy) {
-		this.buy = buy;
+	public void setBuy(double price) {
+		this.buy = price;
 	}
 
 	public void setMat(Material mat) {
@@ -94,6 +89,11 @@ public class ShopBuyItem extends MenuItem {
 	public Material getMat() {
 		// TODO Auto-generated method stub
 		return this.mat;
+	}
+
+	public void setItem(ItemStack item) {
+		// TODO Auto-generated method stub
+		this.item = item;
 	}
 	
 

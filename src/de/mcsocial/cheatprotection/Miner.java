@@ -17,6 +17,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import de.mcsocial.main.MySQL;
 
@@ -167,7 +169,7 @@ public class Miner implements Listener, CommandExecutor {
 	
 	private static void inserData(UUID player, Integer count, String type) {
 		String sql = "insert into MCS_miner (player, type, count)"
-		        + " values (?, ?, ?)";
+		        + " values (?, ?, ?) ON DUPLICATE KEY UPDATE count = ?";
 		
 		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
 		
@@ -175,6 +177,7 @@ public class Miner implements Listener, CommandExecutor {
 			preparedStmt.setString (1, player.toString());
 			preparedStmt.setString(2, type);		
 			preparedStmt.setInt (3, count);			
+			preparedStmt.setInt (4, count);			
 			MySQL.insertDB(preparedStmt);								
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -270,6 +273,16 @@ public class Miner implements Listener, CommandExecutor {
 		}
 		
 		Player p = (Player)sender;
+		
+		if(cmd.getName().equalsIgnoreCase("infoitem")) {
+			ItemStack item = p.getItemInHand();
+			p.sendMessage("getType " + item.getType());
+			p.sendMessage("getType.name " + item.getType().name());
+			p.sendMessage("getTypeId " + item.getTypeId());
+			ItemMeta im = item.getItemMeta();
+	        String name = im.getDisplayName();
+			p.sendMessage("ItemMeta " + name);
+		}
 		
 		if(cmd.getName().equalsIgnoreCase("miner")) {
 			if(args.length < 1){

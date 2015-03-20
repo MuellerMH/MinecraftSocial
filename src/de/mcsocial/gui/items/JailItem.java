@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.material.MaterialData;
+import org.bukkit.inventory.ItemStack;
 
 import de.mcsocial.gui.Gui;
 import de.mcsocial.gui.Menu;
@@ -27,14 +27,10 @@ public class JailItem  extends MenuItem {
 	private Player player;
 	private UUID uuid;
 	
-	public JailItem(String text) {
-		super(text);
-		isCellSpawn = false;
-	}
 	
-	public JailItem(String text, Material materialData) {
-		super(text, new MaterialData( materialData));
-		isCellSpawn = false;
+	public JailItem(String text, Material icon) {
+		// TODO Auto-generated constructor stub
+		super(text, new ItemStack(icon,1));
 	}
 
 	@SuppressWarnings("deprecation")

@@ -8,7 +8,7 @@ import org.bukkit.conversations.ConversationPrefix;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
-import org.bukkit.material.MaterialData;
+import org.bukkit.inventory.ItemStack;
 
 import de.mcsocial.gui.Gui;
 import de.mcsocial.gui.MenuItem;
@@ -21,14 +21,9 @@ public class AccountItem extends MenuItem {
 
 	private ConversationFactory conversationFactory;
 
-	public AccountItem(String text) {
-		super(text);
-		// TODO Auto-generated constructor stub
-	}
-
 	public AccountItem(String text, Material icon) {
 		// TODO Auto-generated constructor stub
-		super(text, new MaterialData(icon));
+		super(text, new ItemStack(icon,1));
 	}
 
 	@Override

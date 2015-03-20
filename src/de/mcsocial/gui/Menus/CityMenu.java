@@ -45,7 +45,7 @@ public class CityMenu {
 	
 	private static void addCityButton(String key, City city,int pos) {
 		// TODO Auto-generated method stub
-		CityItem item = new CityItem(key);
+		CityItem item = new CityItem(key, Material.MAP);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Stadthalter:  " + Bukkit.getOfflinePlayer(city.getOwner()).getName());
 		lines.add("StadtKapital:  " + 0);

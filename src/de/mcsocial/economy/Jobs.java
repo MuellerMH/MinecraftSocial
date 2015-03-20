@@ -21,6 +21,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import de.mcsocial.main.MCSocial;
@@ -46,17 +47,17 @@ public class Jobs implements Listener {
 			if (!(event.getCaught() instanceof Item)) return; //no catch
 			
 			Player player = event.getPlayer();	
-            Material mat = (Material) ((Item) event.getCaught()).getItemStack().getType();
+            ItemStack item = ((Item) event.getCaught()).getItemStack();
 
-            Market.setPrice(mat, Market.getPrice(mat)-((Market.getPrice(mat)/100)));
+            Market.updatePrice(item.getType().name()+":"+item.getDurability(), Market.getPrice(item.getType().name()+":"+item.getDurability())*0.10*-1);
             
             if(player.hasMetadata("job")){
     			String playerjob = player.getMetadata("job").get(0).asString();
     			if(playerjob != null){
     				Job job = Jobs.JobList.get(playerjob);
-    				if(job.isCraftable(mat))
+    				if(job.isCraftable(item.getType().name()+":"+item.getDurability()))
     				{
-    					Double itemPrice = Market.getPrice(mat);
+    					Double itemPrice = Market.getPrice(item.getType().name()+":"+item.getDurability());
     					Account.add(player,itemPrice/100);
     					return;
     				}
@@ -69,11 +70,21 @@ public class Jobs implements Listener {
 	
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event){
-		Material mat = event.getBlock().getType();			
-		Player player = event.getPlayer();		
+		Block block = event.getBlock();
+		List<ItemStack> listItems = (ArrayList<ItemStack>) block.getDrops();
+		Double itemPrice = 25.00;
+		Player player = event.getPlayer();	
+		String mat = block.getType().name();
+		
+		if(listItems.size() > 0)
+		{
+			ItemStack item = (ItemStack) listItems.get(0);
+			mat = item.getType().name()+":"+item.getDurability();	
+			Market.setPrice(mat, (Market.getPrice(mat)-((Market.getPrice(mat)/100))));
+			itemPrice = Market.getPrice(mat);
+		}
 
-        Market.setPrice(mat, (Market.getPrice(mat)+((Market.getPrice(mat)/100))));
-        
+		
         event.getBlock().setMetadata("placedBy", new FixedMetadataValue(MCSocial.instance, player.getUniqueId().toString()));
         
         if(player.hasMetadata("job")){
@@ -83,20 +94,12 @@ public class Jobs implements Listener {
 				
 				if( job.getName().equals("Architekt"))
 				{
-					Double itemPrice = Market.getPrice(mat);
 					Account.add(player,itemPrice/100);
 					return;
 				}
 				
-				if(job.isCraftable(mat))
-				{
-					if(mat.equals(Material.SAPLING)){
-						Double itemPrice = Market.getPrice(mat);
-						Account.add(player,itemPrice/100);
-						return;
-					}
-					
-					Double itemPrice = Market.getPrice(mat);
+				if(job.isCraftable(block.getType().name()))
+				{								
 					Account.remove(player,itemPrice/100);
 					return;
 				}
@@ -110,13 +113,24 @@ public class Jobs implements Listener {
 	@EventHandler
 	public void onBlockBreack(BlockBreakEvent event){
 		Block block = event.getBlock();
-		Material mat = block.getType();			
+		List<ItemStack> listItems = (ArrayList<ItemStack>) block.getDrops();
+		Double itemPrice = 25.00;
 		Player player = event.getPlayer();	
+		String mat = block.getType().name();
+		
+		if(listItems.size() > 0)
+		{
+			ItemStack item = (ItemStack) listItems.get(0);
+			mat = item.getType().name()+":"+item.getDurability();	
+			Market.setPrice(mat, (Market.getPrice(mat)-((Market.getPrice(mat)/100))));
+			itemPrice = Market.getPrice(mat);
+		}
+
 		
 		if(block.getType().equals(Material.SIGN) || block.getType().equals(Material.SIGN_POST) || block.getType().equals(Material.WALL_SIGN)){
 			ShopHandler.destroy((Sign)block.getState());
 		}
-        Market.setPrice(mat, (Market.getPrice(mat)-((Market.getPrice(mat)/100))));
+       
 		
 		if(block.hasMetadata("placedBy")){
 			UUID playerID = UUID.fromString(block.getMetadata("placedBy").get(0).asString());
@@ -133,9 +147,9 @@ public class Jobs implements Listener {
 				if(job == null){
 					return;
 				}
-				if(job.isCraftable(mat))
+				if(job.isCraftable(block.getType().name()))
 				{
-					Double itemPrice = Market.getPrice(mat);
+					
 					Account.add(player,itemPrice/100);
 					return;
 				}
@@ -147,9 +161,10 @@ public class Jobs implements Listener {
 	
 	@EventHandler
 	public void onCraftEvent(CraftItemEvent event){
-		Material mat = event.getInventory().getResult().getType();
+		ItemStack item = event.getInventory().getResult();
+		String mat = item.getType().name()+":"+((ItemStack) item).getDurability();
 		Player player = (Player)event.getWhoClicked();		
-
+		Double itemPrice = 25.00;
 
         Market.setPrice(mat, (Market.getPrice(mat)-((Market.getPrice(mat)/100))));
 		
@@ -157,10 +172,11 @@ public class Jobs implements Listener {
 			String playerjob = player.getMetadata("job").get(0).asString();
 			if(playerjob != null){
 				Job job = Jobs.JobList.get(playerjob);
-				if(job.isCraftable(mat))
+				if(job.isCraftable(item.getType().name()))
 				{
-					Double itemPrice = Market.getPrice(mat);
+					itemPrice = Market.getPrice(mat);
 					Account.add(player,itemPrice/100);
+					player.sendMessage(mat + itemPrice);
 					return;
 				}
 			}

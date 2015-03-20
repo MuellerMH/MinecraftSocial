@@ -2,7 +2,7 @@ package de.mcsocial.gui.items;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.material.MaterialData;
+import org.bukkit.inventory.ItemStack;
 
 import de.mcsocial.gui.Gui;
 import de.mcsocial.gui.Menu;
@@ -13,12 +13,9 @@ import de.mcsocial.gui.Menus.JailMenu;
 
 public class AdminItem extends MenuItem {
 	
-	public AdminItem(String text) {
-		super(text);
-	}
-	
-	public AdminItem(String text, Material materialData) {
-		super(text, new MaterialData( materialData));
+	public AdminItem(String text, Material icon) {
+		// TODO Auto-generated constructor stub
+		super(text, new ItemStack(icon,1));
 	}
 
 	@Override

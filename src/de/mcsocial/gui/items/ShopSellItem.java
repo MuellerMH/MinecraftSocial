@@ -3,7 +3,6 @@ package de.mcsocial.gui.items;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 
 import de.mcsocial.economy.Account;
 import de.mcsocial.economy.Market;
@@ -12,19 +11,15 @@ import de.mcsocial.gui.MenuItem;
 public class ShopSellItem extends MenuItem {
 	private Material mat;
 	private int amount;
-	private float sell;
-	private float buy;
+	private double sell;
+	private double buy;
+	private ItemStack item;
 	
-	public ShopSellItem(String text) {
-		super(text, new MaterialData(Material.MAP));
+	public ShopSellItem(String text, Material icon) {
 		// TODO Auto-generated constructor stub
+		super(text, new ItemStack(icon,1));
 	}
-
-	public ShopSellItem(String text, Material materialData) {
-		// TODO Auto-generated constructor stub
-		super(text, new MaterialData( materialData));
-	}
-
+	
 	@Override
 	public void onClick(Player player) {
 		if(!player.getInventory().contains(mat)) {
@@ -50,7 +45,7 @@ public class ShopSellItem extends MenuItem {
 				player.updateInventory();
 		
 				player.sendMessage("Verkauft für: "+total+" SD");
-				Market.setPrice(this.mat, this.buy+(this.buy*0.01));
+				Market.setPrice(itemStack.getType().toString()+":"+itemStack.getDurability(), this.buy+(this.buy*0.01));
 				return;
 			}
 		}
@@ -58,7 +53,7 @@ public class ShopSellItem extends MenuItem {
 	}
 	
 	public ItemStack getItem(){
-		return new ItemStack(this.mat);
+		return this.item;
 	}
 
 	public int getAmount() {
@@ -69,20 +64,20 @@ public class ShopSellItem extends MenuItem {
 		this.amount = amount;
 	}
 
-	public float getSell() {
+	public double getSell() {
 		return sell;
 	}
 
-	public void setSell(float sell) {
-		this.sell = sell;
+	public void setSell(double d) {
+		this.sell = d;
 	}
 
-	public float getBuy() {
+	public double getBuy() {
 		return buy;
 	}
 
-	public void setBuy(float buy) {
-		this.buy = buy;
+	public void setBuy(double price) {
+		this.buy = price;
 	}
 
 	public void setMat(Material mat) {
@@ -93,6 +88,11 @@ public class ShopSellItem extends MenuItem {
 	public Material getMat() {
 		// TODO Auto-generated method stub
 		return this.mat;
+	}
+
+	public void setItem(ItemStack item) {
+		// TODO Auto-generated method stub
+		this.item = item;
 	}
 	
 

@@ -2,21 +2,17 @@ package de.mcsocial.gui.items;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.material.MaterialData;
+import org.bukkit.inventory.ItemStack;
 
 import de.mcsocial.gui.MenuItem;
 import de.mcsocial.protection.Jail;
 
 public class WorldSpawn extends MenuItem {
 
-	public WorldSpawn(String text) {
-		super(text);
+		
+	public WorldSpawn(String text, Material icon) {
 		// TODO Auto-generated constructor stub
-	}
-	
-	public WorldSpawn(String text, Material materialData) {
-		// TODO Auto-generated constructor stub
-		super(text, new MaterialData( materialData));
+		super(text, new ItemStack(icon,1));
 	}
 
 	@Override

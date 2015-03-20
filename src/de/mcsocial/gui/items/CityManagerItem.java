@@ -2,7 +2,7 @@ package de.mcsocial.gui.items;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.material.MaterialData;
+import org.bukkit.inventory.ItemStack;
 
 import de.mcsocial.gui.Gui;
 import de.mcsocial.gui.Menu;
@@ -11,15 +11,11 @@ import de.mcsocial.gui.Menus.CityManagerMenu;
 import de.mcsocial.gui.Menus.Hauptmenu;
 
 public class CityManagerItem extends MenuItem {
-	
-	public CityManagerItem(String text) {
-		super(text);
+
+
+	public CityManagerItem(String text, Material icon) {
 		// TODO Auto-generated constructor stub
-	}
-	
-	public CityManagerItem(String text, Material materialData) {
-		// TODO Auto-generated constructor stub
-		super(text, new MaterialData( materialData));
+		super(text, new ItemStack(icon,1));
 	}
 
 	@Override

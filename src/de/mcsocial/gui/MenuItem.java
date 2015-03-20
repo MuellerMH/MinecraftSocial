@@ -3,11 +3,9 @@ package de.mcsocial.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 
 /**
  * MenuItem
@@ -21,43 +19,40 @@ public abstract class MenuItem {
 
     private Menu menu;
     private int number;
-    private MaterialData icon;
+    private ItemStack iconItem;
     private String text;
     private List<String> descriptions = new ArrayList<>();
 
     /**
      * Create a new menu item with the given title text on mouse over
      *
-     * Icon defaults to a piece of paper, and no number is displayed.
+     * iconItem defaults to a piece of paper, and no number is displayed.
      *
      * @param text The title text to display on mouse over
      */
-    public MenuItem(String text) {
-        this(text, new MaterialData(Material.PAPER));
-    }
 
     /**
      * Create a new menu item with the given title text on mouse over, and using
-     * the given MaterialData as its icon
+     * the given MaterialData as its iconItem
      *
      * @param text The title text to display on mouse over
-     * @param icon The material to use as its icon
+     * @param iconItem The material to use as its iconItem
      */
-    public MenuItem(String text, MaterialData icon) {
-        this(text, icon, 1);
+    public MenuItem(String text, ItemStack iconItem) {
+        this(text, iconItem, 1);
     }
 
     /**
      * Create a new menu item with the given title text on mouseover, using the
-     * given MaterialData as its icon, and displaying the given number
+     * given MaterialData as its iconItem, and displaying the given number
      *
      * @param text The title text to display on mouse over
-     * @param icon The material to use as its icon
+     * @param iconItem2 The material to use as its iconItem
      * @param number The number to display on the item (must be greater than 1)
      */
-    public MenuItem(String text, MaterialData icon, int number) {
+    public MenuItem(String text, ItemStack iconItem2, int number) {
         this.text = text;
-        this.icon = icon;
+        this.iconItem = iconItem2;
         this.number = number;
     }
 
@@ -90,12 +85,12 @@ public abstract class MenuItem {
     }
 
     /**
-     * Get the MaterialData used as the icon for this menu item
+     * Get the MaterialData used as the iconItem for this menu item
      *
-     * @return The icon
+     * @return The iconItem
      */
-    public MaterialData getIcon() {
-        return icon;
+    public ItemStack geticonItem() {
+        return iconItem;
     }
 
     /**
@@ -116,7 +111,11 @@ public abstract class MenuItem {
      * @param lines The lines of text to display as a description
      */
     public void setDescriptions(List<String> lines) {
-        descriptions = lines;
+    	ItemMeta itemMeta = this.iconItem.getItemMeta();
+        itemMeta.setDisplayName(this.text);
+        itemMeta.setLore(lines);
+        this.iconItem.setItemMeta(itemMeta);
+        
     }
 
     /**
@@ -134,13 +133,8 @@ public abstract class MenuItem {
 
     @SuppressWarnings("deprecation")
 	protected ItemStack getItemStack() {
-        ItemStack slot = new ItemStack(getIcon().getItemType(), getNumber(), getIcon().getData());
-        ItemMeta meta = slot.getItemMeta();
-        meta.setLore(descriptions);
-        meta.setDisplayName(getText());
-
-        slot.setItemMeta(meta);
-        return slot;
+        
+        return this.iconItem;
     }
 
     /**

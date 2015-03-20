@@ -2,7 +2,7 @@ package de.mcsocial.gui.items;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.material.MaterialData;
+import org.bukkit.inventory.ItemStack;
 
 import de.mcsocial.city.Resident;
 import de.mcsocial.gui.Gui;
@@ -13,14 +13,9 @@ import de.mcsocial.gui.Menus.PlayerMenu;
 
 public class JobSelectItem  extends MenuItem {
 
-	public JobSelectItem(String text) {
-		super(text);
-		// TODO Auto-generated constructor stub
-	}
-	
 	public JobSelectItem(String text, Material icon) {
-		super(text, new MaterialData(icon));
 		// TODO Auto-generated constructor stub
+		super(text, new ItemStack(icon,1));
 	}
 
 	@Override

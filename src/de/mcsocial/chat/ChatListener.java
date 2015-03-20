@@ -151,7 +151,7 @@ public class ChatListener implements Listener, CommandExecutor {
 			
 		
 		
-		if(args[0] != null){
+		if(args.length >=1 ){
 			List<Player> allPlayer = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
 
 			if(Jail.isInJail(p)){
@@ -305,9 +305,6 @@ public class ChatListener implements Listener, CommandExecutor {
 						notInChat.add(recPlayer);
 					}
 				}
-				if(Jail.isInJail(recPlayer)){
-					notInChat.add(recPlayer);
-				}
 			}
         }
 				
@@ -336,8 +333,13 @@ public class ChatListener implements Listener, CommandExecutor {
         else if(event.getPlayer().hasMetadata("cityowner")){
         	messagePrefix += ChatColor.BLUE +"Lehnsherr ";
         }
+        
+        if(event.getPlayer().hasMetadata("folk") && event.getPlayer().getMetadata("folk").get(0).asString() != null){
+        	messagePrefix += ChatColor.DARK_GREEN +" "+ event.getPlayer().getMetadata("folk").get(0).asString()+" ";
+        }
+        
         //Beruf
-        else if(event.getPlayer().hasMetadata("job") && event.getPlayer().getMetadata("job").get(0).asString() != null){
+        if(event.getPlayer().hasMetadata("job") && event.getPlayer().getMetadata("job").get(0).asString() != null){
         	messagePrefix += ChatColor.DARK_GRAY +" "+ event.getPlayer().getMetadata("job").get(0).asString()+" ";
         }
 
@@ -350,7 +352,7 @@ public class ChatListener implements Listener, CommandExecutor {
         
         if(event.getRecipients().size() == 1)
         {
-        	event.getPlayer().sendMessage("Niemand kann dich hören.");
+        	event.getPlayer().sendMessage( ChatColor.BOLD + "" + ChatColor.RED + "Niemand kann dich hören.");
         }
         return;
         

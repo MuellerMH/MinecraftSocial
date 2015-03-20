@@ -106,9 +106,9 @@ public class TraderHandler implements Listener, CommandExecutor{
 				}
 				
 				if(args[0].equalsIgnoreCase("remove")){
-					// entfernen ? VillagerShop.spawn(((Player)sender).getLocation(), args[2]);
+					//TODO: entfernen ? VillagerShop.spawn(((Player)sender).getLocation(), args[2]);
 					p.sendMessage("Shop mit dem Namen " + args[1] + " entfernt.");
-					p.sendMessage("TODO geht noch nicht... einfach killen.");
+					p.sendMessage("TODO: geht noch nicht... ");
 					return true;
 				}
 				return false;
@@ -151,7 +151,7 @@ public class TraderHandler implements Listener, CommandExecutor{
 		StringBuilder out = new StringBuilder();
 		for (ItemStack o : item)
 		{
-		  out.append(o.getType().toString());
+		  out.append(o.getType().toString()+":"+o.getDurability());
 		  out.append(",");
 		}
 		return out.toString();
@@ -217,8 +217,15 @@ public class TraderHandler implements Listener, CommandExecutor{
 					String[] items = itemString.split(",");
 					List<ItemStack> itemStack = new ArrayList<ItemStack>();	
 					for(String item: items){
-						Material itemMaterial = Material.getMaterial(item);
-						itemStack.add(new ItemStack(itemMaterial));
+						Material itemMaterial = Material.getMaterial(item.split(":")[0]);
+						ItemStack generatetItem;
+						generatetItem = new ItemStack(itemMaterial,1);
+						if(item.split(":").length == 2){
+							generatetItem = new ItemStack(itemMaterial,1,(short)Integer.parseInt(item.split(":")[1]));
+						}
+						
+						itemStack.add(generatetItem);
+						
 					}
 					shop.setItems(itemStack);
 				}
@@ -251,8 +258,15 @@ public class TraderHandler implements Listener, CommandExecutor{
 					String[] items = itemString.split(",");
 					List<ItemStack> itemStack = new ArrayList<ItemStack>();	
 					for(String item: items){
-						Material itemMaterial = Material.getMaterial(item);
-						itemStack.add(new ItemStack(itemMaterial));
+						Material itemMaterial = Material.getMaterial(item.split(":")[0]);
+						if(itemMaterial==null) continue;
+						ItemStack generatetItem;
+						generatetItem = new ItemStack(itemMaterial,1);
+						if(item.split(":").length == 2){
+							generatetItem = new ItemStack(itemMaterial,1,(short)Integer.parseInt(item.split(":")[1]));
+						}
+						
+						itemStack.add(generatetItem);
 					}
 					shop.setItems(itemStack);
 				}

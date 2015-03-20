@@ -14,6 +14,11 @@ commands:
     usage: /miner UserName
     permission: MCSocial.miner
     permission-message: You do not have Permission MCSocial.miner
+  infoitem:
+    description: Display Player in Hand Item Info
+    usage: /infoitem  (Hold Item in Hand)
+    permission: MCSocial.miner
+    permission-message: You do not have Permission MCSocial.infoitem
   gs:
     description: Display Player Mining
     usage: /gs
@@ -69,6 +74,7 @@ permissions:
     children:
       MCSocial.menu: true
       MCSocial.miner: false
+      MCSocial.infoitem: true
       MCSocial.gs: true
       MCSocial.join: true
       MCSocial.leave: true
@@ -83,6 +89,8 @@ permissions:
     default: true
   MCSocial.miner:
     default: false
+  MCSocial.miner:
+    default: true
   MCSocial.gs:
     default: true
   MCSocial.join:

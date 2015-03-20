@@ -30,7 +30,7 @@ public class PlayerMenu {
 	
 	private static void money()	{
 		
-		PlayerItem itemmoney = new PlayerItem("Konto");
+		PlayerItem itemmoney = new PlayerItem("Konto", Material.GOLD_INGOT);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Zeigt das Konto Menu.");
 		itemmoney.setDescriptions(lines);
@@ -40,7 +40,7 @@ public class PlayerMenu {
 	
 	private static void stats()	{
 		
-		PlayerItem itemstats = new PlayerItem("Level Status");
+		PlayerItem itemstats = new PlayerItem("Level Status", Material.PAINTING);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Zeigt deine aktuellen Skills und Level");
 		itemstats.setDescriptions(lines);

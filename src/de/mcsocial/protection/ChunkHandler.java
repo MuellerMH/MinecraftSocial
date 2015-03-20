@@ -23,8 +23,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
@@ -457,8 +455,10 @@ public class ChunkHandler implements Listener,CommandExecutor {
 	@EventHandler
     public void onPlayerInteract(PlayerInteractEvent event){
 		Block block = event.getClickedBlock();		
+		
 		if(block == null)
 			return;
+		
 		if(ChunkHandler.ownedChunks == null)
 			return;
 		
@@ -510,15 +510,10 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		if(ChunkHandler.ownedChunks.containsKey(chunk.toString())) {
 			CustomChunk cChunk = ChunkHandler.ownedChunks.get(chunk.toString());
 			
-			if(cChunk.getCityName().equalsIgnoreCase("WorldSpawn")) return;
-			
-			if(cChunk.getOwner().equals(player.getUniqueId())) {
-				return;
-			}
-			
-			if(cChunk.hasAccess(player.getUniqueId())) {
-				return;
-			}
+			if(cChunk.getCityName() != null)
+				if(cChunk.getCityName().equalsIgnoreCase("WorldSpawn")) return;			
+			if(cChunk.getOwner().equals(player.getUniqueId())) return;			
+			if(cChunk.hasAccess(player.getUniqueId())) return;
 			
 			if(cChunk.isCity()){
 				//TODO: if player in City?

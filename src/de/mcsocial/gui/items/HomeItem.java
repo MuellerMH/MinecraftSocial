@@ -3,21 +3,17 @@ package de.mcsocial.gui.items;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.material.MaterialData;
+import org.bukkit.inventory.ItemStack;
 
 import de.mcsocial.gui.MenuItem;
 import de.mcsocial.protection.Jail;
 
 public class HomeItem extends MenuItem {
 
-	public HomeItem(String text) {
-		super(text);
+		
+	public HomeItem(String text, Material icon) {
 		// TODO Auto-generated constructor stub
-	}
-	
-	public HomeItem(String text, Material materialData) {
-		// TODO Auto-generated constructor stub
-		super(text, new MaterialData( materialData));
+		super(text, new ItemStack(icon,1));
 	}
 
 	@Override

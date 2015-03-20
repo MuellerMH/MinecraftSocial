@@ -1,6 +1,7 @@
 package de.mcsocial.gui;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class Menu implements InventoryHolder  {
 	private HashMap<Integer, MenuItem> items = new HashMap<>();
@@ -86,7 +88,11 @@ public class Menu implements InventoryHolder  {
         if (slot != null && slot.getType() != Material.AIR) {
             return false;
         }
-        getInventory().setItem(index, item.getItemStack());
+        item.setDescriptions(new LinkedList<String>());
+        ItemMeta itemMeta = item.getItemStack().getItemMeta();
+        itemMeta.setDisplayName(item.getText());
+        item.getItemStack().setItemMeta(itemMeta);
+        getInventory().setItem(index, item.geticonItem());
         items.put(index, item);
         item.addToMenu(this);
         return true;

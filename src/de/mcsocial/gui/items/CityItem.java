@@ -10,7 +10,7 @@ import org.bukkit.conversations.ConversationPrefix;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
-import org.bukkit.material.MaterialData;
+import org.bukkit.inventory.ItemStack;
 
 import de.mcsocial.city.City;
 import de.mcsocial.gui.Gui;
@@ -30,14 +30,10 @@ public class CityItem extends MenuItem {
 	public static String cityName = null; 
 
 
-	public CityItem(String text) {
-		super(text, new MaterialData(Material.MAP));
-		// TODO Auto-generated constructor stub
-	}
 
-	public CityItem(String text, Material materialData) {
+	public CityItem(String text, Material icon) {
 		// TODO Auto-generated constructor stub
-		super(text, new MaterialData( materialData));
+		super(text, new ItemStack(icon,1));
 	}
 	
 	public void setLocation(Location loc){
