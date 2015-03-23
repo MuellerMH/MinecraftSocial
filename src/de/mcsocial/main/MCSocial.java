@@ -136,6 +136,10 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		Resident.onEnable();	
+		City.loadAllCitys();
+		City.loadAllVillager();
 	}
 	
 	public void onDisable(){ 
@@ -143,6 +147,8 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		Market.savePrices();
 		SkillListener.saveSkills();	
 		VoteTracker.onDisable();
+		TraderHandler.onDisable();
+		City.saveAllVillager();
 	}
 
 	public static Server getNotificationServer() {

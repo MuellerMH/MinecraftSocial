@@ -22,7 +22,7 @@ import de.mcsocial.protection.Jail;
 public class CityManagerItem extends MenuItem {
 
 	private UUID uuid;
-	private City city;
+	private City cityObject;
 
 	public CityManagerItem(String text, Material icon) {
 		// TODO Auto-generated constructor stub
@@ -49,25 +49,32 @@ public class CityManagerItem extends MenuItem {
 			case "Spieler entfernen":
 				needetRows = Math.max(1,(int)Math.ceil(City.residentList.size()/9));
 				playerSelect = new Menu("Spieler wählen",(int)Math.ceil(needetRows));
-				CityManagerMenu.createPlayerMenu(playerSelect,City.residentList,"remove");
+				CityManagerMenu.nextAction = "remove";
+				CityManagerMenu.createPlayerMenu(playerSelect,City.residentList);
 				Gui.switchMenu(p, CityManagerMenu.menu, playerSelect);
 				break;
 			case "Spieler hinzufuegen":
 				List<Player> allPlayer = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
 				needetRows = Math.max(1,(int)Math.ceil(allPlayer.size()/9));
 				playerSelect = new Menu("Spieler wählen",needetRows);
-				CityManagerMenu.createPlayerMenu(playerSelect,allPlayer,"add");
+				CityManagerMenu.nextAction = "add";
+				CityManagerMenu.createPlayerMenu(playerSelect,allPlayer);
 				Gui.switchMenu(p, CityManagerMenu.menu, playerSelect);
 				break;
 			default:
 				switch(CityManagerMenu.nextAction){				
 				case"remove":
-					City.residentList.remove(this.uuid);
+					City.remove(Bukkit.getPlayer(this.uuid),this.cityObject);
+					CityManagerMenu.getP().sendMessage("Spieler wurde entfernt.");
+					CityManagerMenu.menu.closeMenu(p);
 					break;			
 				case"add":
-					City.residentList.put(this.uuid,this.city);					  
+					City.add(Bukkit.getPlayer(this.uuid),this.cityObject);	
+					CityManagerMenu.getP().sendMessage("Spieler wurde hinzugefügt: " + Bukkit.getPlayer(this.uuid).getName());
+					CityManagerMenu.menu.closeMenu(p);	
 					break;
 				default:
+					CityManagerMenu.menu.closeMenu(p);
 					break;
 				}
 				CityManagerMenu.menu.closeMenu(p);
@@ -90,7 +97,7 @@ public class CityManagerItem extends MenuItem {
 
 	public void setCity(City value) {
 		// TODO Auto-generated method stub
-		this.city = value;
+		this.cityObject = value;
 		
 	}
 }

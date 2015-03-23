@@ -9,6 +9,7 @@ import de.mcsocial.main.MCSocial;
 public class Server {
 	
 	public Server(){
+		/**
 		new BukkitRunnable() {	           
 	        @Override
 	        public void run() {
@@ -26,6 +27,7 @@ public class Server {
 		    	Bukkit.broadcastMessage(ChatColor.DARK_GREEN +  "Twitch: http://www.twitch.tv/muellermh");
 	        }
 	    }.runTaskTimer(MCSocial.instance, 60L, 30000L);
+	    **/
 	}
 	
 }

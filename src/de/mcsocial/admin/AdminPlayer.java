@@ -13,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import de.mcsocial.city.City;
 import de.mcsocial.economy.Account;
 import de.mcsocial.permissions.PlayerPermissions;
 
@@ -112,7 +113,8 @@ public class AdminPlayer implements CommandExecutor {
 	public static boolean isDebug(Player admin){
 		if(!admin.isOp()) return false;
 		if(AdminPlayer.debug == null) return false;
-		if(AdminPlayer.debug) return true; 		
+		if(AdminPlayer.debug) return true; 	
+		City.debug();
 		return false;
 	}
 

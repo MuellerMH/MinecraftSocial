@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.mcsocial.city.City;
 import de.mcsocial.economy.Account;
 import de.mcsocial.main.MCSocial;
 import de.mcsocial.notification.VoteNotificationEvent;
@@ -212,9 +214,15 @@ public class ChatListener implements Listener, CommandExecutor {
 		        	messagePrefix += ChatColor.DARK_GRAY +" "+ p.getMetadata("job").get(0).asString()+" ";
 		        }
 
+
+		        if(p.hasMetadata("city")){
+		        	messagePrefix = ChatColor.GOLD +"<"+City.cityList.get(UUID.fromString(p.getMetadata("city").get(0).asString())).getName()+">" + messagePrefix + "" + ChatColor.GOLD;
+		        }
+
 		        if(p.hasMetadata("isDonator") && p.getMetadata("isDonator").get(0).asBoolean()){
 		        	messagePrefix = ChatColor.GOLD +"[D] " + messagePrefix + "" + ChatColor.GOLD;
 		        }
+
 		        String message = "["+ p.getWorld().getName()+"] " + ChatColor.BOLD + "<" + p.getPlayer().getMetadata("channel").get(0).asString() + "> " +messagePrefix +  p.getPlayer().getName() + ChatColor.WHITE+ ":";
 				for(String text: args){
 					message+= " " +text;
@@ -344,7 +352,7 @@ public class ChatListener implements Listener, CommandExecutor {
         }
 
         if(event.getPlayer().hasMetadata("city")){
-        	messagePrefix = ChatColor.GOLD +"<"+event.getPlayer().getMetadata("city").get(0).asString()+">" + messagePrefix + "" + ChatColor.GOLD;
+        	messagePrefix = ChatColor.GOLD +"<"+City.cityList.get(UUID.fromString(event.getPlayer().getMetadata("city").get(0).asString())).getName()+">" + messagePrefix + "" + ChatColor.GOLD;
         }
 
         if(event.getPlayer().hasMetadata("isDonator") && event.getPlayer().getMetadata("isDonator").get(0).asBoolean()){

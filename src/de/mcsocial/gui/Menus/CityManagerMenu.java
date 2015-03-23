@@ -73,18 +73,28 @@ public class CityManagerMenu {
 	}
 
 	public static void createPlayerMenu(Menu playerSelect,
-			HashMap<UUID, City> residentList, String action) {
+			HashMap<UUID, City> residentList) {
 		int i=0;
-		Iterator<Entry<UUID, City>> allResidents = residentList.entrySet().iterator();
+		Iterator<Entry<UUID, City>> allResidents = City.residentList.entrySet().iterator();
 		while(allResidents.hasNext()){	
 			@SuppressWarnings("rawtypes")
 			Map.Entry pair = (Map.Entry)allResidents.next();
 			Player pl = (Player) (Bukkit.getPlayer((UUID) pair.getKey()));
-			if(!City.cityList.containsKey(CityManagerMenu.getP().getUniqueId()))
-			{
+			if(pl == null) {
+				System.out.println("Spieler existiert nicht");
 				continue;
 			}
-			if(!pl.hasMetadata("city") && City.cityList.get(CityManagerMenu.getP().getUniqueId()).getName() != pl.getMetadata("city").get(0).asString()){
+			if(!City.cityList.containsKey(CityManagerMenu.getP().getUniqueId()))
+			{
+				System.out.println("Stadt existiert nicht");
+				continue;
+			}
+			if(!pl.hasMetadata("city")){
+				System.out.println("Spieler gehört keiner Stadt an");
+				continue;
+			}
+			if(!CityManagerMenu.getP().getUniqueId().equals(UUID.fromString(pl.getMetadata("city").get(0).asString()))){
+				System.out.println("Spieler gehört nicht dieser Stadt an");
 				continue;
 			}
 			CityManagerItem item = new CityManagerItem(pl.getName(),Material.BARRIER);
@@ -94,17 +104,26 @@ public class CityManagerMenu {
 			item.setDescriptions(lines);
 			item.setUUID(pl.getUniqueId());
 			item.setCity((City) pair.getValue());
-			CityManagerMenu.nextAction=action;
 			playerSelect.addMenuItem(item, i++);
 		}	
 		
 	}
 
 	public static void createPlayerMenu(Menu playerSelect,
-			List<Player> allPlayer, String action) {
+			List<Player> allPlayer) {
 		int i=0;
 		for(Player pl: allPlayer){		
+			if(pl == null) {
+				System.out.println("Spieler existiert nicht");
+				continue;
+			}
+			if(!City.cityList.containsKey(CityManagerMenu.getP().getUniqueId()))
+			{
+				System.out.println("Stadt existiert nicht");
+				continue;
+			}
 			if(pl.hasMetadata("city")){
+				System.out.println("Spieler gehört einer Stadt an");
 				continue;
 			}
 			CityManagerItem item = new CityManagerItem(pl.getName(),Material.BARRIER);
@@ -114,7 +133,6 @@ public class CityManagerMenu {
 			item.setDescriptions(lines);
 			item.setUUID(pl.getUniqueId());
 			item.setCity((City) City.cityList.get(CityManagerMenu.getP().getUniqueId()));
-			CityManagerMenu.nextAction=action;
 			playerSelect.addMenuItem(item, i++);
 		}	
 		

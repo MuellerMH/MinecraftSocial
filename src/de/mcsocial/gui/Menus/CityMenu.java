@@ -51,8 +51,7 @@ public class CityMenu {
 		lines.add("StadtKapital:  " + 0);
 		lines.add("Bewohner:  " + Bukkit.getOfflinePlayer(city.getOwner()).getName());
 		lines.add("Klicken um zur Stadt zu gelangen.");
-		item.setLocation(city.getLoc());
-		
+		item.setLocation(city.getLoc());		
 
 		item.setDescriptions(lines);
 

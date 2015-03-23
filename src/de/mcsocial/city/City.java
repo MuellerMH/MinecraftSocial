@@ -4,14 +4,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import de.mcsocial.gui.Menus.CityManagerMenu;
+import de.mcsocial.gui.items.CityManagerItem;
 import de.mcsocial.main.MCSocial;
 import de.mcsocial.main.MySQL;
 import de.mcsocial.protection.ChunkHandler;
@@ -20,7 +28,6 @@ import de.mcsocial.protection.CustomChunk;
 public class City {
 	
 	public static HashMap<UUID,City> cityList=null;
-	public static ResultSet CityListResult=null;
 	public static HashMap<UUID,City> residentList;
 	
 	private String name;
@@ -66,19 +73,28 @@ public class City {
 	      
 	}
 	
-	public void add(Player p, City city){
-		p.setMetadata("city", new FixedMetadataValue(MCSocial.instance, city));	
+	public static void add(Player p, City city){
+		if(City.residentList == null){
+			City.residentList = new HashMap<UUID,City>();
+		}
+		p.setMetadata("city", new FixedMetadataValue(MCSocial.instance,  city.getName()));	
 		City.residentList.put(p.getUniqueId(),city);
+		//system.out.println("Spieler "+p.getName()+" wurde der Stadt "+city.getName()+" hinzugefügt.");
 	}
 	
-	public void leave(Player p, City city){
-		p.setMetadata("city", new FixedMetadataValue(MCSocial.instance, city));	
-		City.residentList.put(p.getUniqueId(),city);
+	public static void leave(Player p, City city){
+		if(City.residentList == null)return;
+		if(!City.residentList.containsKey(p.getUniqueId()))return;
+		p.removeMetadata("city", MCSocial.instance);
+		City.residentList.remove(p.getUniqueId());
 	}
 	
-	public void remove(Player p, City city){
-		p.setMetadata("city", new FixedMetadataValue(MCSocial.instance, city));	
-		City.residentList.put(p.getUniqueId(),city);
+	public static void remove(Player p, City city){
+		if(City.residentList == null)return;
+		if(!City.residentList.containsKey(p.getUniqueId()))return;
+		p.removeMetadata("city", MCSocial.instance);	
+		City.residentList.remove(p.getUniqueId());
+		//system.out.println("Spieler "+p.getName()+" wurde aus der Stadt "+city.getName()+" entfernt.");
 	}
 	
 	public void delete() {
@@ -103,8 +119,15 @@ public class City {
 		return this.owner;
 	}
 
-	public static boolean isVillager(UUID playerID, String city){
-		return City.residentList.containsKey(playerID) && City.residentList.get(playerID).getName() == city;
+	public static boolean isVillager(UUID playerID, UUID city){
+		//system.out.println(City.residentList.toString());
+		if(City.residentList.containsKey(playerID)){
+			//system.out.println("IS IN LIST " + City.residentList.get(playerID).getOwner() + " " + city);
+			if(City.residentList.get(playerID).getOwner().equals(city)){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public Location getLoc() {
@@ -112,7 +135,8 @@ public class City {
 	}
 	
 	public City () {
-		loadAllCitys();
+		City.loadAllCitys();
+		City.loadAllVillager();
 	}
 	
 	public City(UUID owner, String name, Location loc2) {
@@ -122,35 +146,96 @@ public class City {
 		this.loc = loc2;
 	}
 
-	public void loadAllVillager(){
-		
+	public static void loadAllVillager(){		
+		if(City.residentList == null)
+		City.residentList = new HashMap<UUID,City>();
+		try {		
+			
+			ResultSet result = MySQL.callDB("SELECT name,player FROM MCS_city_resident;");	
+			
+			while(result.next()){
+				UUID playerUUID;
+				try{
+					playerUUID = UUID.fromString( result.getString( "player" ) );
+				}catch(Exception e){
+					playerUUID = Bukkit.getOfflinePlayer(result.getString( "player" )).getUniqueId();
+				}
+				try{
+					UUID owner = UUID.fromString(result.getString("name"));
+					City city = City.cityList.get(owner);
+					City.residentList.put(playerUUID,city);
+				} catch(IllegalArgumentException e){
+					continue;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void debug(){
+		Iterator<Entry<UUID, City>> allResidents = City.residentList.entrySet().iterator();
+		while(allResidents.hasNext()){	
+			@SuppressWarnings("rawtypes")
+			Map.Entry pair = (Map.Entry)allResidents.next();
+			//system.out.println(pair.getKey() +  ": " + ((City)pair.getValue()).getName() +" - " + pair.getValue().toString());
+		}
+		//system.out.println(City.residentList.toString());
+	}
+
+	public static void saveAllVillager(){
+		Iterator<Entry<UUID, City>> allResidents = City.residentList.entrySet().iterator();
+		while(allResidents.hasNext()){	
+			@SuppressWarnings("rawtypes")
+			Map.Entry pair = (Map.Entry)allResidents.next();
+			
+			
+			
+			String sql = "insert ignore into MCS_city_resident (name, player)"
+			        + " values (?, ?)";
+
+			PreparedStatement preparedStmt = MySQL.getPreStat(sql);
+			
+			try {
+				preparedStmt.setString (1, ((City)pair.getValue()).getOwner().toString());
+				preparedStmt.setString (2, pair.getKey().toString());
+					
+				MySQL.insertDB(preparedStmt);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			City.cityList=null;
+			City.residentList=null;
+		}	
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void loadAllCitys(){
-		
-		if(cityList != null)
-			return;
-		
-		City.cityList = new HashMap<UUID,City>();
+	public static void loadAllCitys(){
 
-		City.residentList = new HashMap<UUID,City>();
+		if(City.cityList == null)
+			City.cityList = new HashMap<UUID,City>();
+		else
+			return;
+		if(City.residentList == null)
+			City.residentList = new HashMap<UUID,City>();
 		
 		try {		
-			if(City.CityListResult == null) {
-				City.CityListResult = MySQL.callDB("SELECT name,owner,x,y,z,resident FROM MCS_city ORDER BY name asc;");	
-			}
-			while(City.CityListResult.next()){
+			ResultSet result = MySQL.callDB("SELECT name,owner,x,y,z,resident FROM MCS_city ORDER BY name asc;");	
+			
+			while(result.next()){
 				City city = new City();
-				city.loc = new Location(Bukkit.getWorld("world"),City.CityListResult.getInt("x"),City.CityListResult.getInt("y"),City.CityListResult.getInt("z"));
+				city.loc = new Location(Bukkit.getWorld("world"),result.getInt("x"),result.getInt("y"),result.getInt("z"));
 				UUID playerUUID;
 				try{
-					playerUUID = UUID.fromString( City.CityListResult.getString( "owner" ) );
+					playerUUID = UUID.fromString( result.getString( "owner" ) );
 				}catch(Exception e){
-					playerUUID = Bukkit.getOfflinePlayer(City.CityListResult.getString( "owner" )).getUniqueId();
+					playerUUID = Bukkit.getOfflinePlayer(result.getString( "owner" )).getUniqueId();
 				}
 				city.owner = playerUUID;
-				city.name = City.CityListResult.getString("name");
+				city.name = result.getString("name");
 				City.cityList.put(playerUUID,city);
 				City.residentList.put(playerUUID,city);
 			}

@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -25,6 +27,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 import de.mcsocial.admin.AdminPlayer;
 import de.mcsocial.chat.Channel;
 import de.mcsocial.economy.Account;
+import de.mcsocial.gui.Menus.CityManagerMenu;
+import de.mcsocial.gui.items.CityManagerItem;
 import de.mcsocial.main.MCSocial;
 import de.mcsocial.main.MySQL;
 import de.mcsocial.permissions.PlayerPermissions;
@@ -154,10 +158,16 @@ public class Resident implements Listener {
 		getCityResident(p);
 		getMoney(p);
 		
-		initPlayer(p);
+		Resident.initPlayer(p);
 
 		PlayerPermissions.initPlayerPermission(p);
 		
+		Resident.setChat(p);
+		Resident.create(p);
+	}
+	
+	private static void setChat(Player p) {
+		// TODO Auto-generated method stub
 		if((p.hasMetadata("isAdmin") && p.getMetadata("isAdmin").get(0).asBoolean()) ){
 			Channel.join(p,"Admin");
 		}
@@ -173,18 +183,20 @@ public class Resident implements Listener {
 		Channel.join(p,"Handel");	
 		Channel.join(p,"Lokal");
 	}
-	
+
 	@EventHandler
 	public void onPlayerLeft(PlayerQuitEvent event){
 		Account.create(event.getPlayer());
+		Resident.create(event.getPlayer());
 	}
 	
 	@EventHandler
 	public void onPlayerLeft(PlayerKickEvent event){
 		Account.create(event.getPlayer());
+		Resident.create(event.getPlayer());
 	}
 	
-	private void initPlayer(Player p){
+	private static void initPlayer(Player p){
 		PreparedStatement preparedStmt = MySQL.getPreStat("SELECT isSupporter,isModerator,isAdmin,isDonator,job,folk,nation,lastJobChange FROM MCS_player WHERE uuid = ?");
 		ResultSet result = null;
 		try {
@@ -245,6 +257,22 @@ public class Resident implements Listener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void onEnable(){
+		for(Player pl: Bukkit.getOnlinePlayers()){		
+			if(pl == null) {
+				System.out.println("Spieler existiert nicht");
+				continue;
+			}
+			
+			Resident.initPlayer(pl);
+
+			PlayerPermissions.initPlayerPermission(pl);
+			
+			Resident.setChat(pl);
+			
+		}	
 	}
 
 	private void getCityOwner(Player p) {

@@ -5,7 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -22,6 +26,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.mcsocial.city.City;
 import de.mcsocial.gui.Gui;
 import de.mcsocial.gui.Menu;
 import de.mcsocial.gui.Menus.Hauptmenu;
@@ -31,6 +36,7 @@ import de.mcsocial.main.MySQL;
 public class TraderHandler implements Listener, CommandExecutor{
 	
 	private static HashMap<String,ShopData>shopList;
+	private static HashMap<String,Villager>villagerList;
 	
 	@EventHandler
 	public void onInteract(PlayerInteractEntityEvent  event){
@@ -282,6 +288,16 @@ public class TraderHandler implements Listener, CommandExecutor{
 			e.printStackTrace();
 		}
 	}
+	
+	public static void onDisable(){
+		Iterator<Entry<String,Villager>> allShops = TraderHandler.villagerList.entrySet().iterator();
+		while(allShops.hasNext()){	
+			@SuppressWarnings("rawtypes")
+			Map.Entry pair = (Map.Entry)allShops.next();
+			((Villager)pair.getValue()).teleport(new Location(Bukkit.getWorld("world"),0,0,0));
+			((Villager)pair.getValue()).setHealth(0.00);
+		}
+	}
 		
 	private static void initVillager(ShopData shop){
 		String[]locdata = shop.getLocation().split(",");
@@ -293,26 +309,30 @@ public class TraderHandler implements Listener, CommandExecutor{
 		
 		Villager village = VillagerShop.spawn(loc,shop.getName());
 		
-			switch(shop.getProfession()){
-			case 0:
-				village.setProfession(Villager.Profession.FARMER);
-				break;
-			case 1:
-				village.setProfession(Villager.Profession.LIBRARIAN);
-				break;
-			case 2:
-				village.setProfession(Villager.Profession.PRIEST);
-				break;
-			case 3:
-				village.setProfession(Villager.Profession.BLACKSMITH);
-				break;
-			case 4:
-				village.setProfession(Villager.Profession.BUTCHER);
-				break;
-			default:
-				village.setProfession(Villager.Profession.FARMER);
-				break;
-			}
-		System.out.println("Shop mit dem Namen " + shop.getName() + " hinzugefügt." + loc.toString());
+		switch(shop.getProfession()){
+		case 0:
+			village.setProfession(Villager.Profession.FARMER);
+			break;
+		case 1:
+			village.setProfession(Villager.Profession.LIBRARIAN);
+			break;
+		case 2:
+			village.setProfession(Villager.Profession.PRIEST);
+			break;
+		case 3:
+			village.setProfession(Villager.Profession.BLACKSMITH);
+			break;
+		case 4:
+			village.setProfession(Villager.Profession.BUTCHER);
+			break;
+		default:
+			village.setProfession(Villager.Profession.FARMER);
+			break;
+		}
+		if(TraderHandler.villagerList==null){
+			TraderHandler.villagerList = new HashMap<String,Villager>();
+		}
+		TraderHandler.villagerList.put(shop.getName(),village);
+			
 	}
 }
