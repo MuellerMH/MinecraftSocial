@@ -289,8 +289,13 @@ public class Miner implements Listener, CommandExecutor {
 				p.sendMessage("Keinen Spielernamen angebenen.");
 				return true;
 			}
-				
-			Player oP = (Player) Bukkit.getPlayer(args[0]);
+			Player oP;
+			try{
+				oP = (Player) Bukkit.getPlayer(args[0]);
+			}catch(NullPointerException e){
+				oP = (Player) Bukkit.getOfflinePlayer(args[0]);
+			}
+			
 			// TODO Auto-generated method stub
 			p.sendMessage("--------------------------------");
 			p.sendMessage("Dein aktuelles Mining verhalten:");

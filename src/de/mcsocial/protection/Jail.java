@@ -84,6 +84,9 @@ public class Jail {
 	}
 
 	public static Boolean isJailChunks(Chunk chunk) {
+		if(Jail.jailChunks== null){
+			Jail.jailChunks = new ArrayList<JailChunk>();
+		}
 		return Jail.jailChunks.contains(chunk);			 
 	}
 

@@ -127,11 +127,11 @@ public class TraderHandler implements Listener, CommandExecutor{
 		// x Y z
 		villShop.setPosition(-240.50, 65.50, 236.50 );
 		
-0 = Villager
-1 = Librarian
-2 = Priest
-3 = Blacksmith
-4 = Butcher
+		0 = Villager
+		1 = Librarian
+		2 = Priest
+		3 = Blacksmith
+		4 = Butcher
 		 
 		VillagerShop villager = (VillagerShop)Bukkit.getWorld("world").spawnCreature(loc, CreatureType.VILLAGER);	
  */

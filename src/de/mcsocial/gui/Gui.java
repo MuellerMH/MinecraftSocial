@@ -24,7 +24,7 @@ public class Gui implements Listener, CommandExecutor {
 	
 	private static Plugin instance = MCSocial.instance;
 	public String title = "";
-	public int rows = 3;
+	public int rows = 5;
 	
 	public Gui (String title, int rows)
 	{

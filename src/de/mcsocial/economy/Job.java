@@ -9,10 +9,10 @@ public class Job {
 	
 	private String name;	
 	private String description;
-	private List<Material>allowed;
+	private List<String>allowed;
 	
 	public Job() {	
-		allowed = new ArrayList<Material>();
+		allowed = new ArrayList<String>();
 	}
 	
 	public Boolean isCraftable(String string) {
@@ -23,7 +23,7 @@ public class Job {
 		
 	}
 	
-	public void addAllowed(Material item){
+	public void addAllowed(String item){
 		allowed.add(item);
 	}
 	

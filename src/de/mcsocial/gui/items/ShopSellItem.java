@@ -15,9 +15,9 @@ public class ShopSellItem extends MenuItem {
 	private double buy;
 	private ItemStack item;
 	
-	public ShopSellItem(String text, Material icon) {
+	public ShopSellItem(String text, ItemStack icon) {
 		// TODO Auto-generated constructor stub
-		super(text, new ItemStack(icon,1));
+		super(text, icon);
 	}
 	
 	@Override

@@ -24,12 +24,13 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import de.mcsocial.admin.AdminPlayer;
 import de.mcsocial.main.MCSocial;
 import de.mcsocial.main.MySQL;
 
 public class Jobs implements Listener {
 	public static HashMap<String,Job>JobList;
-	public static HashMap<Material,Job>allJobItems;
+	public static HashMap<String,Job>allJobItems;
 	
 	public static void addJob(String name, Job job)
 	{
@@ -48,17 +49,22 @@ public class Jobs implements Listener {
 			
 			Player player = event.getPlayer();	
             ItemStack item = ((Item) event.getCaught()).getItemStack();
+            
+            if(AdminPlayer.isDebug(player)){
+    			player.sendMessage("Block Abgebaut:");
+    			player.sendMessage(item.getType().toString()+":"+item.getDurability());
+    		}
 
-            Market.updatePrice(item.getType().name()+":"+item.getDurability(), Market.getPrice(item.getType().name()+":"+item.getDurability())*0.10*-1);
+            Market.updatePrice(item.getType().toString()+":"+item.getDurability(), Market.getPrice(item.getType().toString()+":"+item.getDurability())*0.10*-1);
             
             if(player.hasMetadata("job")){
     			String playerjob = player.getMetadata("job").get(0).asString();
     			if(playerjob != null){
     				Job job = Jobs.JobList.get(playerjob);
-    				if(job.isCraftable(item.getType().name()+":"+item.getDurability()))
+    				if(job.isCraftable(item.getType().toString()+":"+item.getDurability()))
     				{
-    					Double itemPrice = Market.getPrice(item.getType().name()+":"+item.getDurability());
-    					Account.add(player,itemPrice/100);
+    					Double itemPrice = Market.getPrice(item.getType().toString()+":"+item.getDurability());
+    					Account.add(player,Math.max(1.00,itemPrice/100));
     					return;
     				}
     			}
@@ -71,19 +77,23 @@ public class Jobs implements Listener {
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event){
 		Block block = event.getBlock();
-		List<ItemStack> listItems = (ArrayList<ItemStack>) block.getDrops();
 		Double itemPrice = 25.00;
 		Player player = event.getPlayer();	
-		String mat = block.getType().name();
-		
-		if(listItems.size() > 0)
-		{
-			ItemStack item = (ItemStack) listItems.get(0);
-			mat = item.getType().name()+":"+item.getDurability();	
-			Market.setPrice(mat, (Market.getPrice(mat)-((Market.getPrice(mat)/100))));
-			itemPrice = Market.getPrice(mat);
-		}
 
+		String mat;
+		
+		try{
+			ItemStack item = (ItemStack) ((Item) block).getItemStack();
+			mat = item.getType().toString()+":"+item.getDurability();	
+		}catch(ClassCastException e){
+			mat = block.getType().toString()+":"+0;
+		}
+		
+		if(AdminPlayer.isDebug(player)){
+			player.sendMessage("Block Abgebaut:");
+			player.sendMessage(mat);
+			player.sendMessage(""+itemPrice);
+		}
 		
         event.getBlock().setMetadata("placedBy", new FixedMetadataValue(MCSocial.instance, player.getUniqueId().toString()));
         
@@ -94,13 +104,46 @@ public class Jobs implements Listener {
 				
 				if( job.getName().equals("Architekt"))
 				{
-					Account.add(player,itemPrice/100);
+					if(AdminPlayer.isDebug(player)){
+						player.sendMessage("Block Beruf:");
+						player.sendMessage("Einkommen: "+Math.max(1.00,itemPrice/100));
+					}			
+
+					Account.add(player,Math.max(1.00,itemPrice/100));
 					return;
 				}
 				
-				if(job.isCraftable(block.getType().name()))
-				{								
-					Account.remove(player,itemPrice/100);
+				if( job.getName().equals("Farmer"))
+				{
+					if(player.hasMetadata("job")){
+						String playerjob1 = player.getMetadata("job").get(0).asString();
+						if(playerjob1 != null){
+							Job job1 = Jobs.JobList.get(playerjob1);
+							if(job1 == null){
+								return;
+							}
+							if(job1.isCraftable(mat))
+							{
+								if(AdminPlayer.isDebug(player)){
+									player.sendMessage("Block Beruf:");
+									player.sendMessage("Einkommen: "+Math.max(1.00,itemPrice/100));
+								}
+								
+								Account.add(player,Math.max(1.00,itemPrice/100));
+								return;
+							}
+						}
+					}
+				}
+				
+				if(job.isCraftable(mat))
+				{				
+					if(AdminPlayer.isDebug(player)){
+						player.sendMessage("Block Beruf:");
+						player.sendMessage("Abgezogen: "+Math.max(1.00,itemPrice/100));
+					}
+					
+					Account.remove(player,Math.max(1.00,itemPrice/100));
 					return;
 				}
 			}
@@ -116,23 +159,37 @@ public class Jobs implements Listener {
 		List<ItemStack> listItems = (ArrayList<ItemStack>) block.getDrops();
 		Double itemPrice = 25.00;
 		Player player = event.getPlayer();	
-		String mat = block.getType().name();
+		
+		String mat;
+		
+		try{
+			ItemStack item = (ItemStack) ((Item) block).getItemStack();
+			mat = item.getType().toString()+":"+item.getDurability();	
+		}catch(ClassCastException e){
+			mat = block.getType().toString()+":"+0;
+		}
 		
 		if(listItems.size() > 0)
 		{
 			ItemStack item = (ItemStack) listItems.get(0);
-			mat = item.getType().name()+":"+item.getDurability();	
+			mat = item.getType().toString()+":"+item.getDurability();	
 			Market.setPrice(mat, (Market.getPrice(mat)-((Market.getPrice(mat)/100))));
 			itemPrice = Market.getPrice(mat);
 		}
-
+		
+		if(AdminPlayer.isDebug(player)){
+			player.sendMessage("Block Abgebaut:");
+			player.sendMessage(mat);
+			player.sendMessage(""+itemPrice);
+		}
 		
 		if(block.getType().equals(Material.SIGN) || block.getType().equals(Material.SIGN_POST) || block.getType().equals(Material.WALL_SIGN)){
 			ShopHandler.destroy((Sign)block.getState());
 		}
-       
+
+		String playerjob = player.getMetadata("job").get(0).asString();
 		
-		if(block.hasMetadata("placedBy")){
+		if(block.hasMetadata("placedBy") && !playerjob.equalsIgnoreCase("Farmer")){
 			UUID playerID = UUID.fromString(block.getMetadata("placedBy").get(0).asString());
 			if(player.getUniqueId().equals(playerID))
 			{
@@ -141,16 +198,19 @@ public class Jobs implements Listener {
 		}
 
         if(player.hasMetadata("job")){
-			String playerjob = player.getMetadata("job").get(0).asString();
 			if(playerjob != null){
 				Job job = Jobs.JobList.get(playerjob);
 				if(job == null){
 					return;
 				}
-				if(job.isCraftable(block.getType().name()))
+				if(job.isCraftable(mat))
 				{
+					if(AdminPlayer.isDebug(player)){
+						player.sendMessage("Block Beruf:");
+						player.sendMessage("Einkommen: "+Math.max(1.00,itemPrice/100));
+					}
 					
-					Account.add(player,itemPrice/100);
+					Account.add(player,Math.max(1.00,itemPrice/100));
 					return;
 				}
 			}
@@ -162,7 +222,7 @@ public class Jobs implements Listener {
 	@EventHandler
 	public void onCraftEvent(CraftItemEvent event){
 		ItemStack item = event.getInventory().getResult();
-		String mat = item.getType().name()+":"+((ItemStack) item).getDurability();
+		String mat = item.getType().toString()+":"+((ItemStack) item).getDurability();
 		Player player = (Player)event.getWhoClicked();		
 		Double itemPrice = 25.00;
 
@@ -172,11 +232,14 @@ public class Jobs implements Listener {
 			String playerjob = player.getMetadata("job").get(0).asString();
 			if(playerjob != null){
 				Job job = Jobs.JobList.get(playerjob);
-				if(job.isCraftable(item.getType().name()))
+				if(job.isCraftable(mat))
 				{
 					itemPrice = Market.getPrice(mat);
 					Account.add(player,itemPrice/100);
-					player.sendMessage(mat + itemPrice);
+					if(AdminPlayer.isDebug(player)){
+						player.sendMessage("Block Beruf:");
+						player.sendMessage("Einkommen: "+Math.max(1.00,itemPrice/100));
+					}
 					return;
 				}
 			}
@@ -208,7 +271,7 @@ public class Jobs implements Listener {
 		}
 		
 		if(Jobs.allJobItems == null){
-			Jobs.allJobItems = new HashMap<Material,Job>();
+			Jobs.allJobItems = new HashMap<String,Job>();
 		}
 		
 		PreparedStatement preparedStmt = MySQL.getPreStat("SELECT name, description, items FROM MCS_jobs WHERE status=1");
@@ -225,8 +288,8 @@ public class Jobs implements Listener {
 				{
 					List<String> materialList = new ArrayList<String>(Arrays.asList(allowedString.split(",")));
 					for (String matString : materialList) {
-						job.addAllowed(Material.getMaterial(matString));
-						Jobs.allJobItems.put(Material.getMaterial(matString),job);
+						job.addAllowed(matString);
+						Jobs.allJobItems.put(matString,job);
 					}
 				}
 				

@@ -57,6 +57,11 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		if(PlayerPermissions.hasAccess(player,"supporter"))
 			return;
 		
+		if(ChunkHandler.ownedChunks == null)
+		{
+			ChunkHandler.ownedChunks = new HashMap<String,CustomChunk>();
+		}
+		
 		if(ChunkHandler.ownedChunks.containsKey(chunk.toString())) {
 			CustomChunk cChunk = ChunkHandler.ownedChunks.get(chunk.toString());
 			

@@ -30,7 +30,6 @@ public class WebUserHandler implements HttpHandler {
 		cb.flip();
 		
 		// print the char buffer
-		System.out.println("[MCSocialWeb] " +cb.toString());
 		
 		Headers responseHeaders=exchange.getResponseHeaders();
 		responseHeaders.set("Content-Type","application/json");

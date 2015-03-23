@@ -15,9 +15,11 @@ public class AdminLogger {
 		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
 		try {
 			preparedStmt.setString (1, admin.getName());
-			preparedStmt.setString (2, player.getName());
+			if(player != null)preparedStmt.setString (2, player.getName());
+			else preparedStmt.setString (2, null);
 			preparedStmt.setString (3, action);
-			preparedStmt.setString (4, argument);
+			if(argument != null)preparedStmt.setString (4, argument);
+			else preparedStmt.setString (4, null);
 			
 			MySQL.insertDB(preparedStmt);								
 		} catch (SQLException e) {

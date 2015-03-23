@@ -15,17 +15,20 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import de.mcsocial.admin.AdminPlayer;
 import de.mcsocial.chat.Channel;
 import de.mcsocial.economy.Account;
 import de.mcsocial.main.MCSocial;
 import de.mcsocial.main.MySQL;
 import de.mcsocial.permissions.PlayerPermissions;
 import de.mcsocial.protection.ChunkHandler;
+import de.mcsocial.protection.CustomChunk;
 
 public class Resident implements Listener {
 	
@@ -35,13 +38,55 @@ public class Resident implements Listener {
 	 * @param event
 	 */
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-		
+	public void onEntityDamageByEntity(EntityDamageEvent event) {
 		if(!ChunkHandler.isClaimAble(event.getEntity().getLocation().getChunk())){
+			
+			Chunk chunk = event.getEntity().getLocation().getChunk();
+			
+			if (event.getEntity() instanceof Player){
+				event.setCancelled(true);
+				return;
+			}
+			
+			if (event instanceof EntityDamageByEntityEvent){
+				boolean proceed = false;
+				Player damager = null;
+				EntityDamageByEntityEvent edbye = (EntityDamageByEntityEvent) event;
+				
+				 if (edbye.getDamager() instanceof Player){
+					damager = (Player) edbye.getDamager();
+					proceed = true;
+					
+					if(ChunkHandler.ownedChunks == null)
+					{
+						ChunkHandler.ownedChunks = new HashMap<String,CustomChunk>();
+					}
+					if(damager.isOp()){
+						return;
+					}
+					
+					if(PlayerPermissions.hasAccess(damager,"supporter")){
+						return;
+					}
+					
+					if(ChunkHandler.ownedChunks.containsKey(chunk.toString())) {
+						CustomChunk cChunk = ChunkHandler.ownedChunks.get(chunk.toString());	
+						
+						if(cChunk.getOwner().equals(damager.getUniqueId())){
+							return;
+						}
+						
+						if(cChunk.hasAccess(damager.getUniqueId())){
+							return;
+						}
+					}
+					
+					
+				}
+			}
 			event.setCancelled(true);
 			return;
 		}
-
 	}
 			
 	@SuppressWarnings("deprecation")
@@ -89,6 +134,14 @@ public class Resident implements Listener {
 	@EventHandler
 	public void onPlayerJoinEvent(PlayerJoinEvent event) {
 		Player p = event.getPlayer();
+		if(AdminPlayer.bannedPlayer != null){
+			if(AdminPlayer.bannedPlayer.containsKey(p.getUniqueId())){
+				if(System.currentTimeMillis() < AdminPlayer.bannedPlayer.get(p.getUniqueId())){
+					p.kickPlayer("Du bist noch gebannt.");
+				}
+			}
+			
+		}
 		
 		if(!p.hasPlayedBefore()) {
 			Account.create(p);
@@ -103,7 +156,6 @@ public class Resident implements Listener {
 		initPlayer(p);
 
 		PlayerPermissions.initPlayerPermission(p);
-		//PlayerPermissions.initPlayerPermission(p);
 		
 		if((p.hasMetadata("isAdmin") && p.getMetadata("isAdmin").get(0).asBoolean()) ){
 			Channel.join(p,"Admin");

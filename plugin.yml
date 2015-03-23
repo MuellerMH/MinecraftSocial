@@ -38,7 +38,7 @@ commands:
     description: zeigt alle chatrauume
     usage: /list
     permission: MCSocial.list
-    permission-message: You do not have Permission MCSocial.leave
+    permission-message: You do not have Permission MCSocial.list
   shop:
     description: Erstellt einen NPC Shop
     usage: /shop [add/remove] [Name] {Profession}
@@ -48,27 +48,72 @@ commands:
     description: Betreten des Chat Global
     usage: /g
     permission: MCSocial.g
-    permission-message: You do not have Permission MCSocial.shop
+    permission-message: You do not have Permission MCSocial.g
   l:
     description: Betreten des Chat Lokal
     usage: /l
     permission: MCSocial.l
-    permission-message: You do not have Permission MCSocial.shop
+    permission-message: You do not have Permission MCSocial.l
   h:
     description: Betreten des Handel Global
     usage: /h
     permission: MCSocial.h
-    permission-message: You do not have Permission MCSocial.shop
+    permission-message: You do not have Permission MCSocial.h
   a:
     description: Betreten des Chat Admin
     usage: /a
     permission: MCSocial.a
-    permission-message: You do not have Permission MCSocial.shop
+    permission-message: You do not have Permission MCSocial.a
   s:
     description: Betreten des Chat Support
     usage: /s
     permission: MCSocial.s
-    permission-message: You do not have Permission MCSocial.shop
+    permission-message: You do not have Permission MCSocial.s
+  kick:
+    description: Betreten des Chat Support
+    usage: /kick [player] [message]
+    permission: MCSocial.kick
+    permission-message: You do not have Permission MCSocial..kick
+  ban:
+    description: Betreten des Chat Support
+    usage: /ban [player]
+    permission: MCSocial.ban
+    permission-message: You do not have Permission MCSocial..ban
+  timeban:
+    description: Betreten des Chat Support
+    usage: /timeban [player] [minutes]
+    permission: MCSocial.timeban
+    permission-message: You do not have Permission MCSocial.timeban
+  give:
+    description: gibt Gegenstand in der Hand dem Spieler
+    usage: /give [player]
+    permission: MCSocial.give
+    permission-message: You do not have Permission MCSocial.give
+  money:
+    description: Betreten des Chat Support
+    usage: /money [player] [amount]
+    permission: MCSocial.money
+    permission-message: You do not have Permission MCSocial.money
+  tp:
+    description: Betreten des Chat Support
+    usage: /tp [player] [player]
+    permission: MCSocial.tp
+    permission-message: You do not have Permission MCSocial.tp
+  gm:
+    description: Betreten des Chat Support
+    usage: /gm
+    permission: MCSocial.gm
+    permission-message: You do not have Permission MCSocial.gm
+  fly:
+    description: Betreten des Chat Support
+    usage: /fly
+    permission: MCSocial.fly
+    permission-message: You do not have Permission MCSocial.fly
+  debug:
+    description: Betreten des Chat Support
+    usage: /debug
+    permission: MCSocial.fly
+    permission-message: You do not have Permission MCSocial.debug
 permissions:
   MCSocial.*:
     children:
@@ -85,6 +130,14 @@ permissions:
       MCSocial.h: true
       MCSocial.a: true
       MCSocial.s: true
+      MCSocial.kick: false
+      MCSocial.ban: false
+      MCSocial.timeban: false
+      MCSocial.give: false
+      MCSocial.money: false
+      MCSocial.tp: false
+      MCSocial.fly: false
+      MCSocial.debug: false
   MCSocial.menu:
     default: true
   MCSocial.miner:
@@ -111,3 +164,19 @@ permissions:
     default: true
   MCSocial.s:
     default: true
+  MCSocial.kick:
+    default: false
+  MCSocial.ban:
+    default: false
+  MCSocial.timeban:
+    default: false
+  MCSocial.money:
+    default: false
+  MCSocial.give:
+    default: false
+  MCSocial.fly:
+    default: false
+  MCSocial.gm:
+    default: false
+  MCSocial.debug:
+    default: false

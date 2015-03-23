@@ -11,6 +11,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import de.mcsocial.admin.AdminPlayer;
 import de.mcsocial.chat.Channel;
 import de.mcsocial.chat.ChatListener;
 import de.mcsocial.cheatprotection.Miner;
@@ -69,6 +70,7 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		Listener miner = new Miner();
 		Listener traderListener = new TraderHandler();
 		Listener skillListener = new SkillListener();
+		CommandExecutor adminPlayer = new AdminPlayer();
 
 		Miner.loadMinerData();
 		((ShopHandler) shopListener).load();
@@ -104,7 +106,15 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		getCommand("a").setExecutor((CommandExecutor) chatListener);
 		getCommand("l").setExecutor((CommandExecutor) chatListener);
 		getCommand("menu").setExecutor(MCSocial.guiHandler);	
-		getCommand("gs").setExecutor((CommandExecutor)chunkListener);	
+		getCommand("fly").setExecutor(adminPlayer);	
+		getCommand("kick").setExecutor(adminPlayer);	
+		getCommand("ban").setExecutor(adminPlayer);	
+		getCommand("timeban").setExecutor(adminPlayer);	
+		getCommand("give").setExecutor(adminPlayer);	
+		getCommand("money").setExecutor(adminPlayer);	
+		getCommand("gm").setExecutor(adminPlayer);	
+		getCommand("tp").setExecutor(adminPlayer);	
+		getCommand("debug").setExecutor(adminPlayer);	
 		
 		Market.loadPrices();
 		Jobs.loadJobs();

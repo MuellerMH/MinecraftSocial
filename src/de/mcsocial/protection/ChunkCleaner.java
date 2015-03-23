@@ -37,10 +37,7 @@ public class ChunkCleaner {
 			entitiList.add("CraftGiant");
 			entitiList.add("CraftMagmaCube");
 			entitiList.add("CraftMonster");
-			entitiList.add("CraftMushroomCow");
-			entitiList.add("CraftOcelot");
 			entitiList.add("CraftPigZombie");
-			entitiList.add("CraftSheep");
 			entitiList.add("CraftSilverfish");
 			entitiList.add("CraftSkeleton");
 			entitiList.add("CraftSlime");
@@ -49,7 +46,6 @@ public class ChunkCleaner {
 			entitiList.add("CraftWaterMob");
 			entitiList.add("CraftWitch");
 			entitiList.add("CraftWither");
-			entitiList.add("CraftWolf");
 			entitiList.add("CraftZombie");
 			if(!entitiList.contains(livingEntity.toString()))
 				continue;

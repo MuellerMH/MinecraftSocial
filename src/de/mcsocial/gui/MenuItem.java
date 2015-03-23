@@ -111,6 +111,7 @@ public abstract class MenuItem {
      * @param lines The lines of text to display as a description
      */
     public void setDescriptions(List<String> lines) {
+    	
     	ItemMeta itemMeta = this.iconItem.getItemMeta();
         itemMeta.setDisplayName(this.text);
         itemMeta.setLore(lines);

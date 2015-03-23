@@ -24,20 +24,21 @@ public class PlayerPermissions {
 	private static void loadPermissions(Player player) {
 		
 			if(PlayerPermissions.hasAccess(player,"admin")){
-				PlayerPermissions.setPermission(player,"de.mcsocial.admin.ban",true);
-				PlayerPermissions.setPermission(player,"de.mcsocial.admin.money",true);
-				PlayerPermissions.setPermission(player,"de.mcsocial.admin.gm",true);				
+				PlayerPermissions.setPermission(player,"MCSocial.ban",true);
+				PlayerPermissions.setPermission(player,"MCSocial.money",true);	
+				PlayerPermissions.setPermission(player,"MCSocial.debug",true);		
 			}
 			
 			if(PlayerPermissions.hasAccess(player,"moderator")){
-				PlayerPermissions.setPermission(player,"de.mcsocial.admin.timeban",true);
-				PlayerPermissions.setPermission(player,"MCSocial.miner",true);		
+				PlayerPermissions.setPermission(player,"MCSocial.timeban",true);
+				PlayerPermissions.setPermission(player,"MCSocial.miner",true);	
+				PlayerPermissions.setPermission(player,"MCSocial.gm",true);			
 			}
 			
 			if(PlayerPermissions.hasAccess(player,"supporter")){
-				PlayerPermissions.setPermission(player,"de.mcsocial.admin.kick",true);
-				PlayerPermissions.setPermission(player,"de.mcsocial.admin.fly",true);
-				PlayerPermissions.setPermission(player,"de.mcsocial.admin.tp",true);
+				PlayerPermissions.setPermission(player,"MCSocial.kick",true);
+				PlayerPermissions.setPermission(player,"MCSocial.fly",true);
+				PlayerPermissions.setPermission(player,"MCSocial.tp",true);
 			}
 			
 			
@@ -92,6 +93,9 @@ public class PlayerPermissions {
 				{
 					return true;
 				}
+			}
+			if(p.hasMetadata("isModerator")){
+				return p.getMetadata("isModerator").get(0).asBoolean();
 			}
 			if(p.hasMetadata("isSupporter")){
 				return p.getMetadata("isSupporter").get(0).asBoolean();
