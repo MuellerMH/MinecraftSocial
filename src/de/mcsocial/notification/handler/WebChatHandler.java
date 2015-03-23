@@ -21,7 +21,6 @@ public class WebChatHandler implements HttpHandler {
 		BufferedReader in=new BufferedReader(new InputStreamReader(is));
 		String requestMethod=exchange.getRequestMethod();
 		
-		System.out.println("[MCSocialWeb] " +requestMethod);
 		CharBuffer cb = CharBuffer.allocate(256);
 		
 		// read characters into a char buffer

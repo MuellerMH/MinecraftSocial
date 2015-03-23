@@ -32,7 +32,7 @@ public class ShopBuyItem extends MenuItem {
 
 		
 		int totalStack = this.amount;				
-		double total = this.sell*totalStack;
+		double total = this.buy*totalStack;
 		
 		if(Account.getBalance(player) < total){
 			player.sendMessage("Du hast nicht genügend Geld.");
@@ -46,9 +46,13 @@ public class ShopBuyItem extends MenuItem {
 		player.getInventory().addItem(item);				
 		player.updateInventory();
 		
-		Market.setPrice(item.getType().toString()+":"+item.getDurability(), this.buy-(this.buy*0.01));
-
+		Market.setPrice(item.getType().toString()+":"+item.getDurability(), this.buy+(this.buy*0.10));
+		this.sell = Math.max(1, Market.getPrice(item.getType().toString()+":"+item.getDurability())*0.6);
+		this.buy = Math.max(1, Market.getPrice(item.getType().toString()+":"+item.getDurability()));
 		player.sendMessage("Gekauft für: "+total+" SD");
+
+		ShopMenu.trademenu.updateMenu();
+		ShopMenu.menu.updateMenu();		
 		return;
 
 	}

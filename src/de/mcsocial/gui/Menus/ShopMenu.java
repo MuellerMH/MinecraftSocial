@@ -34,7 +34,7 @@ public class  ShopMenu {
 		int col=0;
 		
 		for(ItemStack item: shopdata.getItems()){
-			
+			item.setAmount(1);
 			String name = "";
 	        ItemMeta im = item.getItemMeta();
 	        name = im.getDisplayName();
@@ -52,7 +52,7 @@ public class  ShopMenu {
 			menuItem.setDurability(item.getDurability());
 			menuItem.setDescriptions(menuItemlines);			
 			
-			ShopMenu.menu.addMenuItem(menuItem, (col++));			
+			ShopMenu.menu.addMenuItem(menuItem, (col++));	
 		}		
 
 	}
@@ -60,6 +60,7 @@ public class  ShopMenu {
 	public static void loadShopMenu(Player p, ItemStack item) {
 		
 		String name = "";
+		item.setAmount(1);
         ItemMeta im = item.getItemMeta();
         name = im.getDisplayName();
         
@@ -73,54 +74,58 @@ public class  ShopMenu {
 		ShopBuyItem menuBuyItem = new ShopBuyItem(name,item);	
 		List<String> menuBuyItemlines = new LinkedList<String>();
 		menuBuyItemlines.add("Item kaufen 1x");
-		menuBuyItemlines.add("Kaufpreis: " + price);
+		menuBuyItemlines.add("Kaufpreis: " + Math.round(Math.max(1, price)));
 		menuBuyItem.setDescriptions(menuBuyItemlines);
 		menuBuyItem.setMat(item.getType());
 		menuBuyItem.setItem(item);
 		menuBuyItem.setAmount(1);
-		menuBuyItem.setBuy(price);	
-		menuBuyItem.setSell(price*0.6);	
+		menuBuyItem.setBuy(Math.max(1, price));	
+		menuBuyItem.setSell(Math.max(1, price*0.6));	
 		ShopMenu.trademenu.addMenuItem(menuBuyItem, 12);
 		
 		ShopSellItem menuSellItem = new ShopSellItem(name,item);	
 		List<String> menuSellItemlines = new LinkedList<String>();	
 		menuSellItemlines.add("Item verkaufen 1x");
-		menuSellItemlines.add("Kaufpreis: " + price*64);
+		menuSellItemlines.add("Verkaufspreis: " + Math.round(Math.max(1, price*0.6)));
 		menuSellItem.setDescriptions(menuSellItemlines);	
 		menuSellItem.setMat(item.getType());
 		menuSellItem.setItem(item);
 		menuSellItem.setAmount(1);
-		menuSellItem.setBuy(price);	
-		menuSellItem.setSell(price*0.6);	
+		menuSellItem.setBuy(Math.max(1, price));	
+		menuSellItem.setSell(Math.max(1, price*0.6));		
 		ShopMenu.trademenu.addMenuItem(menuSellItem, 14);
+		
+
+		item.setAmount(64);
 		
 		ShopBuyItem menuBuyItemStack = new ShopBuyItem(name,item);	
 		List<String> menuBuyItemStacklines = new LinkedList<String>();	
 		menuBuyItemStacklines.add("Item kaufen 64x");
-		menuBuyItemStacklines.add("Verkaufspreis: " + (price*0.6));
+		menuBuyItemStacklines.add("Kaufpreis: " + Math.round(Math.max(1, price*64)));
 		menuBuyItemStack.setDescriptions(menuBuyItemStacklines);	
 		menuBuyItemStack.setMat(item.getType());
 		menuBuyItemStack.setItem(item);
 		menuBuyItemStack.setAmount(64);	
-		menuBuyItemStack.setBuy(price);	
-		menuBuyItemStack.setSell(price*0.6);	
+		menuBuyItemStack.setBuy(Math.max(1, price));	
+		menuBuyItemStack.setSell(Math.max(1, price*0.6));		
 		ShopMenu.trademenu.addMenuItem(menuBuyItemStack, 21);
 		
 		ShopSellItem menuSellItemStack = new ShopSellItem(name,item);
 		List<String> menuSellItemStacklines = new LinkedList<String>();		
 		menuSellItemStacklines.add("Item verkaufen 64x");
-		menuSellItemStacklines.add("Verkaufspreis: " + (price*0.6)*64);
+		menuSellItemStacklines.add("Verkaufspreis: " + Math.round(Math.max(1, price*0.6)*64));
 		menuSellItemStack.setDescriptions(menuSellItemStacklines);	
 		menuSellItemStack.setMat(item.getType());
 		menuSellItemStack.setItem(item);
 		menuSellItemStack.setAmount(64);
-		menuSellItemStack.setBuy(price);	
-		menuSellItemStack.setSell(price*0.6);	
+		menuSellItemStack.setBuy(Math.max(1, price));	
+		menuSellItemStack.setSell(Math.max(1, price*0.6));	
 		ShopMenu.trademenu.addMenuItem(menuSellItemStack, 23);
 		
 		ShopBuyItem menuBack = new ShopBuyItem("zurück",new ItemStack(Material.ENDER_PEARL));
 		ShopMenu.trademenu.addMenuItem(menuBack, 35);
-		
+		ShopMenu.trademenu.updateMenu();
+		ShopMenu.menu.updateMenu();
 
 	}
 

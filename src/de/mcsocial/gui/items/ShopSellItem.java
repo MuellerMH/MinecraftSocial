@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import de.mcsocial.economy.Account;
 import de.mcsocial.economy.Market;
 import de.mcsocial.gui.MenuItem;
+import de.mcsocial.gui.Menus.ShopMenu;
 
 public class ShopSellItem extends MenuItem {
 	private Material mat;
@@ -45,7 +46,13 @@ public class ShopSellItem extends MenuItem {
 				player.updateInventory();
 		
 				player.sendMessage("Verkauft für: "+total+" SD");
-				Market.setPrice(itemStack.getType().toString()+":"+itemStack.getDurability(), this.buy+(this.buy*0.01));
+				Market.setPrice(itemStack.getType().toString()+":"+itemStack.getDurability(), this.buy-(this.buy*0.14));
+				this.sell = Math.max(1, Market.getPrice(item.getType().toString()+":"+item.getDurability())*0.6);
+				this.buy = Math.max(1, Market.getPrice(item.getType().toString()+":"+item.getDurability()));
+				
+
+				ShopMenu.trademenu.updateMenu();
+				ShopMenu.menu.updateMenu();		
 				return;
 			}
 		}

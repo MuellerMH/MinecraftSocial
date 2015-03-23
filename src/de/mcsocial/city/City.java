@@ -21,7 +21,7 @@ public class City {
 	
 	public static HashMap<UUID,City> cityList=null;
 	public static ResultSet CityListResult=null;
-	public static HashMap<UUID,Player> residentList;
+	public static HashMap<UUID,City> residentList;
 	
 	private String name;
 	private UUID owner;
@@ -50,7 +50,7 @@ public class City {
 			p.setMetadata("city", new FixedMetadataValue(MCSocial.instance, city.name));
 			p.setMetadata("cityowner", new FixedMetadataValue(MCSocial.instance, true));
 			
-			City.residentList.put(city.owner,p);	
+			City.residentList.put(city.owner,city);	
 			
 			CustomChunk cChunk = new CustomChunk(chunk.toString(), p.getUniqueId(),true,city.name);
 			
@@ -66,8 +66,19 @@ public class City {
 	      
 	}
 	
-	public void join(Player p, String city){
+	public void add(Player p, City city){
 		p.setMetadata("city", new FixedMetadataValue(MCSocial.instance, city));	
+		City.residentList.put(p.getUniqueId(),city);
+	}
+	
+	public void leave(Player p, City city){
+		p.setMetadata("city", new FixedMetadataValue(MCSocial.instance, city));	
+		City.residentList.put(p.getUniqueId(),city);
+	}
+	
+	public void remove(Player p, City city){
+		p.setMetadata("city", new FixedMetadataValue(MCSocial.instance, city));	
+		City.residentList.put(p.getUniqueId(),city);
 	}
 	
 	public void delete() {
@@ -123,7 +134,7 @@ public class City {
 		
 		City.cityList = new HashMap<UUID,City>();
 
-		City.residentList = new HashMap<UUID,Player>();
+		City.residentList = new HashMap<UUID,City>();
 		
 		try {		
 			if(City.CityListResult == null) {
@@ -141,7 +152,7 @@ public class City {
 				city.owner = playerUUID;
 				city.name = City.CityListResult.getString("name");
 				City.cityList.put(playerUUID,city);
-				City.residentList.put(playerUUID,Bukkit.getPlayer(playerUUID));
+				City.residentList.put(playerUUID,city);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -156,6 +167,6 @@ public class City {
 
 	public static boolean isVillager(UUID uniqueId) {
 		// TODO Auto-generated method stub
-		return City.residentList.containsValue(uniqueId);
+		return City.residentList.containsKey(uniqueId);
 	}
 }

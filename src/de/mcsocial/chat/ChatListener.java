@@ -343,6 +343,10 @@ public class ChatListener implements Listener, CommandExecutor {
         	messagePrefix += ChatColor.DARK_GRAY +" "+ event.getPlayer().getMetadata("job").get(0).asString()+" ";
         }
 
+        if(event.getPlayer().hasMetadata("city")){
+        	messagePrefix = ChatColor.GOLD +"<"+event.getPlayer().getMetadata("city").get(0).asString()+">" + messagePrefix + "" + ChatColor.GOLD;
+        }
+
         if(event.getPlayer().hasMetadata("isDonator") && event.getPlayer().getMetadata("isDonator").get(0).asBoolean()){
         	messagePrefix = ChatColor.GOLD +"[D] " + messagePrefix + "" + ChatColor.GOLD;
         }

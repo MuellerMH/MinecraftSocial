@@ -38,7 +38,7 @@ public class ChunkHandler implements Listener,CommandExecutor {
 	public static Material edgeID = Material.WOOL;
 	public static Material edgeIDRemove = Material.AIR;	
 	public static HashMap<String,Chunk> lastChunk = new HashMap<String,Chunk>();	
-	public static HashMap<String,CustomChunk> ownedChunks = null;
+	public static HashMap<String,CustomChunk> ownedChunks;
 	public static ResultSet ownedChunksResult=null;
 	
 	public ChunkHandler(){
@@ -158,7 +158,10 @@ public class ChunkHandler implements Listener,CommandExecutor {
 	}
 
 	public static void claimJailChunk(Player p, Double price){
-
+		if(ChunkHandler.ownedChunks == null){
+			ChunkHandler.ownedChunks = new HashMap<String,CustomChunk>(); 
+		}
+		
 		Chunk chunk = p.getLocation().getChunk();
 		JailChunk cChunk = null;
 		if(!p.isOp()){
@@ -195,7 +198,9 @@ public class ChunkHandler implements Listener,CommandExecutor {
 	}
 
 	public static void claimChunk(Player p, Double price){
-
+		if(ChunkHandler.ownedChunks == null){
+			ChunkHandler.ownedChunks = new HashMap<String,CustomChunk>(); 
+		}
 		Chunk chunk = p.getLocation().getChunk();
 		CustomChunk cChunk = null;
 		if(!p.isOp()){
@@ -692,6 +697,20 @@ public class ChunkHandler implements Listener,CommandExecutor {
 			}
 		}
 		return false;
+	}
+
+	public static void setAccess(Chunk chunk, Player player) {
+		// TODO Auto-generated method stub
+		if(ChunkHandler.ownedChunks.containsKey(chunk.toString())){
+			ChunkHandler.ownedChunks.get(chunk.toString()).getOwner();
+		}
+	}
+
+	public static void removeAccess(Chunk chunk, Player player) {
+		// TODO Auto-generated method stub
+		if(ChunkHandler.ownedChunks.containsKey(chunk.toString())){
+			ChunkHandler.ownedChunks.get(chunk.toString()).getOwner();
+		}
 	}
 
 	public static UUID getOwner(Chunk chunk) {

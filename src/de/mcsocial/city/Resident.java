@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -55,7 +56,6 @@ public class Resident implements Listener {
 				
 				 if (edbye.getDamager() instanceof Player){
 					damager = (Player) edbye.getDamager();
-					proceed = true;
 					
 					if(ChunkHandler.ownedChunks == null)
 					{
@@ -80,7 +80,8 @@ public class Resident implements Listener {
 							return;
 						}
 					}
-					
+
+					event.setCancelled(true);
 					
 				}
 			}
@@ -178,6 +179,11 @@ public class Resident implements Listener {
 		Account.create(event.getPlayer());
 	}
 	
+	@EventHandler
+	public void onPlayerLeft(PlayerKickEvent event){
+		Account.create(event.getPlayer());
+	}
+	
 	private void initPlayer(Player p){
 		PreparedStatement preparedStmt = MySQL.getPreStat("SELECT isSupporter,isModerator,isAdmin,isDonator,job,folk,nation,lastJobChange FROM MCS_player WHERE uuid = ?");
 		ResultSet result = null;
@@ -224,7 +230,7 @@ public class Resident implements Listener {
 		// TODO Auto-generated method stub
 		String sql = "insert ignore into MCS_player (name, uuid)"
 		        + " values (?, ?)"
-		        + " ON DUPLICATE KEY UPDATE job= ?, lastJobChange=?, folk=?";
+		        + " ON DUPLICATE KEY UPDATE job= ?, lastJobChange=?, folk=?, lastlogin=NOW()";
 		
 		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
 		

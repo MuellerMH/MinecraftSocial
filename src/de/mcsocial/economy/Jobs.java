@@ -187,17 +187,16 @@ public class Jobs implements Listener {
 			ShopHandler.destroy((Sign)block.getState());
 		}
 
-		String playerjob = player.getMetadata("job").get(0).asString();
-		
-		if(block.hasMetadata("placedBy") && !playerjob.equalsIgnoreCase("Farmer")){
-			UUID playerID = UUID.fromString(block.getMetadata("placedBy").get(0).asString());
-			if(player.getUniqueId().equals(playerID))
-			{
-				return;
-			}
-		}
-
         if(player.hasMetadata("job")){
+        	String playerjob = player.getMetadata("job").get(0).asString();
+    		
+    		if(block.hasMetadata("placedBy") && !playerjob.equalsIgnoreCase("Farmer")){
+    			UUID playerID = UUID.fromString(block.getMetadata("placedBy").get(0).asString());
+    			if(player.getUniqueId().equals(playerID))
+    			{
+    				return;
+    			}
+    		}
 			if(playerjob != null){
 				Job job = Jobs.JobList.get(playerjob);
 				if(job == null){

@@ -88,9 +88,9 @@ public class Menu implements InventoryHolder  {
         if (slot != null && slot.getType() != Material.AIR) {
             return false;
         }
-        item.setDescriptions(new LinkedList<String>());
         ItemMeta itemMeta = item.getItemStack().getItemMeta();
         itemMeta.setDisplayName(item.getText());
+        itemMeta.setLore(item.getDescriptions());
         item.getItemStack().setItemMeta(itemMeta);
         getInventory().setItem(index, item.geticonItem());
         items.put(index, item);

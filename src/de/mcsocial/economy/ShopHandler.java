@@ -357,7 +357,7 @@ public class ShopHandler implements Listener {
 	}
 
 	private void save(Shop shop){
-		String sql = "INSERT INTO ni394187_1_DB.MCS_shop"
+		String sql = "INSERT INTO MCS_shop"
 				+ "("
 				+ "shopName,"
 				+ "owner,"
@@ -472,7 +472,7 @@ public class ShopHandler implements Listener {
 
 	private void destroy(String string) {
 		// TODO Auto-generated method stub
-		String sql = "DELETE FROM ni394187_1_DB.MCS_shop WHERE sign = ? ";
+		String sql = "DELETE FROM MCS_shop WHERE sign = ? ";
 		
 		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
 		
@@ -495,7 +495,7 @@ public class ShopHandler implements Listener {
 	public static void destroy(Sign state) {
 		// TODO Auto-generated method stub
 		
-		String sql = "DELETE FROM ni394187_1_DB.MCS_shop WHERE sign = ? ";
+		String sql = "DELETE FROM MCS_shop WHERE sign = ? ";
 		
 		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
 		
