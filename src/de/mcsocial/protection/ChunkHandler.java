@@ -77,10 +77,15 @@ public class ChunkHandler implements Listener,CommandExecutor {
 			if(Jail.isJailChunks(chunk)){
 				return;
 			}
-			
-			if(cChunk.getCityName().equalsIgnoreCase("worldspawn")){
-				if(event.getRightClicked().isCustomNameVisible())
-					return;
+			try{
+				if(cChunk.getCityName().equalsIgnoreCase("worldspawn")){
+					if(event.getRightClicked().isCustomNameVisible())
+						return;
+				}
+			}catch(NullPointerException e ){
+				player.sendMessage("Du besitzt keine Berechtigungen auf diesem Grundstück.");
+				event.setCancelled(true);
+				return;
 			}
 			
 			if(cChunk.isCity()){

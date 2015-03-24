@@ -23,17 +23,11 @@ public class CityMenu {
 		CityMenu.p = p;
 		CityMenu.menu = menu;
 		
-		int row = 1;
-		int col = 0;
-		
+		int i=0;
 		Iterator it = City.cityList.entrySet().iterator();
 		while(it.hasNext()){
 			Map.Entry pair = (Map.Entry)it.next();
-			CityMenu.addCityButton((String)((City)pair.getValue()).getName(),(City)pair.getValue(),row*col++);
-			if(col == 8){
-				row ++;
-				col = 0;
-			}
+			CityMenu.addCityButton((String)((City)pair.getValue()).getName(),(City)pair.getValue(),i++);
 		}				
 				
 		CityMenu.closeMenu();

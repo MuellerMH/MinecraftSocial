@@ -24,20 +24,15 @@ public class JailMenu {
 	public static void loadMenu(Menu menu, Player player) {
 		JailMenu.setP(player);
 		JailMenu.menu = menu;
-		int row = 1;
-		int col = 0;
+		int i=0;
 
-		addToJail(row*col++);
-		removeFromJail(row*col++);
-		createNewCell(row*col++);
-		col++;
+		addToJail(i++);
+		removeFromJail(i++);
+		createNewCell(i++);
+		i++;
 		
 		for(Location cell: Jail.getCellList()){
-			JailMenu.createJailCellSpawn(cell,row*col++);
-			if(col == 8){
-				row ++;
-				col = 0;
-			}
+			JailMenu.createJailCellSpawn(cell,i++);
 		}
 	}
 	

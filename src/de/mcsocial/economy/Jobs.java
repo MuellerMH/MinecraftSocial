@@ -13,12 +13,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
@@ -39,6 +41,63 @@ public class Jobs implements Listener {
 		}
 		
 		Jobs.JobList.put(name, job);		
+		
+	}
+	@EventHandler
+	public void onEntityDeath(EntityDeathEvent event){
+		List<ItemStack> items = event.getDrops();
+		EntityType en = event.getEntityType();
+		
+		List<EntityType> entitiList = new ArrayList<EntityType>();
+		entitiList.add(EntityType.ZOMBIE);
+		entitiList.add(EntityType.BAT);
+		entitiList.add(EntityType.BLAZE);
+		entitiList.add(EntityType.CAVE_SPIDER);		
+		entitiList.add(EntityType.CREEPER);
+		entitiList.add(EntityType.ENDER_DRAGON);
+		entitiList.add(EntityType.ENDERMAN);
+		entitiList.add(EntityType.GHAST);
+		entitiList.add(EntityType.GIANT);
+		entitiList.add(EntityType.MAGMA_CUBE);		
+		entitiList.add(EntityType.PIG_ZOMBIE);
+		entitiList.add(EntityType.SILVERFISH);
+		entitiList.add(EntityType.SKELETON);
+		entitiList.add(EntityType.SLIME);
+		entitiList.add(EntityType.SPIDER);
+		entitiList.add(EntityType.SQUID);		
+		entitiList.add(EntityType.WITCH);
+		entitiList.add(EntityType.WITHER);
+		entitiList.add(EntityType.ZOMBIE);
+		entitiList.add(EntityType.VILLAGER);
+		if(!entitiList.contains(en))
+			return;
+		
+		Player player = event.getEntity().getKiller();
+		 
+		if(player!=null){
+			Double claimedMoney = 0.00;
+			
+			if(player.hasMetadata("job")){
+				String playerjob = player.getMetadata("job").get(0).asString();
+    			if(playerjob != null){
+    				Job job = Jobs.JobList.get(playerjob);
+					for(ItemStack item: items){
+						if(job.isCraftable(item.getType().toString()+":"+item.getDurability())){
+							claimedMoney += Math.min(1, Market.getPrice(item.getType().toString() +":"+ item.getDurability())*0.01);	
+						}
+						Market.setPrice(item.getType().toString() +":"+ item.getDurability(),Market.getPrice(item.getType().toString() +":"+ item.getDurability())-(Market.getPrice(item.getType().toString() +":"+ item.getDurability())*0.14));					
+					}				
+					if(playerjob.equalsIgnoreCase("Soldat")){	
+						if(en.equals(EntityType.VILLAGER)){
+							claimedMoney -=100;
+						}else{
+							claimedMoney +=100;
+						}					
+					}
+    			}
+			}
+			Account.add(player, claimedMoney);
+		}
 		
 	}
 	

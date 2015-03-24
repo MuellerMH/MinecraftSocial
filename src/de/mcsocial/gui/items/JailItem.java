@@ -41,7 +41,7 @@ public class JailItem  extends MenuItem {
 		switch(this.getText()){
 			case "einsperren":		
 				List<Player> allPlayer = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
-				needetRows = Math.max(1,(int)Math.ceil(allPlayer.size()/9));
+				needetRows = Math.max(1,(int)Math.ceil(allPlayer.toArray().length/9));
 				playerSelect = new Menu("Spieler wählen",needetRows);
 				JailMenu.createPlayerMenu(playerSelect,allPlayer,"select");
 				Gui.switchMenu(p, JailMenu.menu, playerSelect);
