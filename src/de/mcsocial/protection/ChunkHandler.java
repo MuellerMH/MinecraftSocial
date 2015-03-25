@@ -78,7 +78,7 @@ public class ChunkHandler implements Listener,CommandExecutor {
 				return;
 			}
 			
-			if(cChunk.getCityName().equalsIgnoreCase("worldspawn")){
+			if(cChunk.getCityName().equals(UUID.fromString("2f4b1ce8-4922-3b77-8ea7-1"))){
 				if(event.getRightClicked().isCustomNameVisible())
 					return;
 			}
