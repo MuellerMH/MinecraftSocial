@@ -52,12 +52,12 @@ public class City {
 
 			City city = new City(p.getUniqueId(),arg1,loc);
 			
-			City.cityList.put(city.owner,city);	
+			City.cityList.put(city.getOwner(),city);	
 			
-			p.setMetadata("city", new FixedMetadataValue(MCSocial.instance, city.name));
+			p.setMetadata("city", new FixedMetadataValue(MCSocial.instance, city.owner));
 			p.setMetadata("cityowner", new FixedMetadataValue(MCSocial.instance, true));
 			
-			City.residentList.put(city.owner,city);	
+			City.residentList.put(city.getOwner(),city);	
 			
 			CustomChunk cChunk = new CustomChunk(chunk.toString(), p.getUniqueId(),true,city.name);
 			
@@ -77,7 +77,7 @@ public class City {
 		if(City.residentList == null){
 			City.residentList = new HashMap<UUID,City>();
 		}
-		p.setMetadata("city", new FixedMetadataValue(MCSocial.instance,  city.getName()));	
+		p.setMetadata("city", new FixedMetadataValue(MCSocial.instance,  city.getOwner()));	
 		City.residentList.put(p.getUniqueId(),city);
 		//system.out.println("Spieler "+p.getName()+" wurde der Stadt "+city.getName()+" hinzugefügt.");
 	}

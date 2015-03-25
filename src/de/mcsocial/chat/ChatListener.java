@@ -352,7 +352,11 @@ public class ChatListener implements Listener, CommandExecutor {
         }
 
         if(event.getPlayer().hasMetadata("city")){
-        	messagePrefix = ChatColor.GOLD +"<"+City.cityList.get(UUID.fromString(event.getPlayer().getMetadata("city").get(0).asString())).getName()+">" + messagePrefix + "" + ChatColor.GOLD;
+        	try{
+        		messagePrefix = ChatColor.GOLD +"<"+City.cityList.get(UUID.fromString(event.getPlayer().getMetadata("city").get(0).asString())).getName()+">" + messagePrefix + "" + ChatColor.GOLD;
+        	}catch(IllegalArgumentException e){
+        		
+        	}
         }
 
         if(event.getPlayer().hasMetadata("isDonator") && event.getPlayer().getMetadata("isDonator").get(0).asBoolean()){
