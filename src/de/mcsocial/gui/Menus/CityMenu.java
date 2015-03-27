@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import de.mcsocial.city.City;
 import de.mcsocial.gui.Menu;
 import de.mcsocial.gui.items.CityItem;
+import de.mcsocial.protection.ChunkHandler;
 
 public class CityMenu {
 	public static Menu menu;
@@ -53,6 +54,8 @@ public class CityMenu {
 	}
 	
 	private static void createCity() {
+		if(!ChunkHandler.isClaimAble(CityMenu.p)) return;
+		
 		if(!CityMenu.p.isOp()){
 			if(CityMenu.p.hasMetadata("cityowner")){
 				return;
@@ -67,8 +70,11 @@ public class CityMenu {
 		lines.add("Zurück zum Hauptmenu.");
 		item.setDescriptions(lines);
 
-
-		CityMenu.menu.addMenuItem(item, 19);
+		if(!CityMenu.p.isOp()){
+			CityMenu.menu.addMenuItem(item, 34);
+		}else{
+			CityMenu.menu.addMenuItem(item, 33);
+		}
 	}
 	
 
@@ -85,7 +91,7 @@ public class CityMenu {
 		item.setDescriptions(lines);
 
 
-		CityMenu.menu.addMenuItem(item, 20);
+		CityMenu.menu.addMenuItem(item, 34);
 	}
 	
 	private static void closeMenu()	{
@@ -96,6 +102,6 @@ public class CityMenu {
 		item.setDescriptions(lines);
 
 
-		CityMenu.menu.addMenuItem(item, 26);
+		CityMenu.menu.addMenuItem(item, 35);
 	}
 }

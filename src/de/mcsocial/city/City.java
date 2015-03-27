@@ -3,6 +3,7 @@ package de.mcsocial.city;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -83,6 +84,10 @@ public class City {
 	}
 	
 	public static void leave(Player p, City city){
+		if(!city.getOwner().equals(p.getUniqueId())){
+			p.sendMessage("Du bist der Lehsnherr dieser Stadt, du kannst sie nicht verlassen.");
+			return;
+		}
 		if(City.residentList == null)return;
 		if(!City.residentList.containsKey(p.getUniqueId()))return;
 		p.removeMetadata("city", MCSocial.instance);
@@ -253,5 +258,71 @@ public class City {
 	public static boolean isVillager(UUID uniqueId) {
 		// TODO Auto-generated method stub
 		return City.residentList.containsKey(uniqueId);
+	}
+
+	public static void removeCity(Player p) {
+		// TODO Auto-generated method stub
+
+		List<UUID> deleteCity = new ArrayList<UUID>();
+		
+		Iterator<Entry<UUID, City>> allResidents = City.residentList.entrySet().iterator();
+		while(allResidents.hasNext()){	
+			@SuppressWarnings("rawtypes")
+			Map.Entry pair = (Map.Entry)allResidents.next();
+			try{
+				City city = (City)pair.getValue();
+				if(city.getOwner().equals(p.getUniqueId())){
+					deleteCity.add((UUID) pair.getKey());
+				}
+			}catch(NullPointerException e){
+				
+			}
+					
+		}
+		
+
+		for(UUID resi: deleteCity ){
+			City.residentList.remove(resi);
+		}
+		
+
+		p.setMetadata("cityowner", new FixedMetadataValue(MCSocial.instance, false));
+
+		City.cityList.remove(p.getUniqueId());
+		City.delete(p);
+		City.deleteVillager(p);
+		
+	}
+	
+	public static void delete(Player p) {
+		String sql = "DELETE FROM MCS_city WHERE owner=?";
+
+		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
+		
+		try {
+			preparedStmt.setString (1, p.getUniqueId().toString());
+			MySQL.insertDB(preparedStmt);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      
+	}
+	
+	public static void deleteVillager(Player p) {
+		String sql = "DELETE FROM MCS_city_resident WHERE name=?";
+
+		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
+		
+		try {
+			preparedStmt.setString (1, p.getUniqueId().toString());
+			MySQL.insertDB(preparedStmt);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      
 	}
 }

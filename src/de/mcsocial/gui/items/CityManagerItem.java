@@ -17,6 +17,8 @@ import de.mcsocial.gui.MenuItem;
 import de.mcsocial.gui.Menus.CityManagerMenu;
 import de.mcsocial.gui.Menus.Hauptmenu;
 import de.mcsocial.gui.Menus.CityManagerMenu;
+import de.mcsocial.protection.ChunkHandler;
+import de.mcsocial.protection.CustomChunk;
 import de.mcsocial.protection.Jail;
 
 public class CityManagerItem extends MenuItem {
@@ -37,22 +39,51 @@ public class CityManagerItem extends MenuItem {
 		int needetRows = 3;
 		
 		switch(this.getText()){
+		
+			case "Stadt aufloesen":
+				// TODO Auto-generated method stub
+				City.removeCity(p);
+				ChunkHandler.removeCity(p);
+				p.sendMessage("Grundtückt wurde aus der Stadt entfernt.");
+	
+				CityManagerMenu.menu.closeMenu(p);
+				return;
+			case "Grundstueck entfernen":
+				// TODO Auto-generated method stub
+				CustomChunk chunk = ChunkHandler.getChunk(p.getLocation().getChunk());
+				chunk.setCity(null);
+				ChunkHandler.save(chunk);
+				ChunkHandler.ownedChunks.put(p.getLocation().getChunk().toString(), chunk);
+				p.sendMessage("Grundtückt wurde aus der Stadt entfernt.");
+	
+				CityManagerMenu.menu.closeMenu(p);
+				return;
+			case "Grundstueck hinzufuegen":
+				// TODO Auto-generated method stub
+				CustomChunk addChunk = ChunkHandler.getChunk(p.getLocation().getChunk());
+				addChunk.setCity(p);
+				ChunkHandler.save(addChunk);
+				ChunkHandler.ownedChunks.put(p.getLocation().getChunk().toString(), addChunk);
+				p.sendMessage("Grundtückt wurde der Stadt hinzugefügt.");
+
+				CityManagerMenu.menu.closeMenu(p);
+				return;
 			case "Hauptmenu":
 				// TODO Auto-generated method stub
 				Gui.switchMenu(p, CityManagerMenu.menu, Hauptmenu.menu);
-				break;
+				return;
 			case "Stadt verwalten":
 				Menu chunkMenu = new Menu("Stadt verwalten",3);
 				Gui.switchMenu(p, Hauptmenu.menu, chunkMenu);
 				CityManagerMenu.loadMenu(chunkMenu,p);	
-				break;
+				return;
 			case "Spieler entfernen":
 				needetRows = Math.max(1,(int)Math.ceil(City.residentList.size()/9));
 				playerSelect = new Menu("Spieler wählen",(int)Math.ceil(needetRows));
 				CityManagerMenu.nextAction = "remove";
 				CityManagerMenu.createPlayerMenu(playerSelect,City.residentList);
 				Gui.switchMenu(p, CityManagerMenu.menu, playerSelect);
-				break;
+				return;
 			case "Spieler hinzufuegen":
 				List<Player> allPlayer = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
 				needetRows = Math.max(1,(int)Math.ceil(allPlayer.size()/9));
@@ -60,25 +91,23 @@ public class CityManagerItem extends MenuItem {
 				CityManagerMenu.nextAction = "add";
 				CityManagerMenu.createPlayerMenu(playerSelect,allPlayer);
 				Gui.switchMenu(p, CityManagerMenu.menu, playerSelect);
-				break;
+				return;
 			default:
 				switch(CityManagerMenu.nextAction){				
-				case"remove":
-					City.remove(Bukkit.getPlayer(this.uuid),this.cityObject);
-					CityManagerMenu.getP().sendMessage("Spieler wurde entfernt.");
-					CityManagerMenu.menu.closeMenu(p);
-					break;			
-				case"add":
-					City.add(Bukkit.getPlayer(this.uuid),this.cityObject);	
-					CityManagerMenu.getP().sendMessage("Spieler wurde hinzugefügt: " + Bukkit.getPlayer(this.uuid).getName());
-					CityManagerMenu.menu.closeMenu(p);	
-					break;
-				default:
-					CityManagerMenu.menu.closeMenu(p);
-					break;
+					case"remove":
+						City.remove(Bukkit.getPlayer(this.uuid),this.cityObject);
+						CityManagerMenu.getP().sendMessage("Spieler wurde entfernt.");
+						CityManagerMenu.menu.closeMenu(p);
+						return;
+					case"add":
+						City.add(Bukkit.getPlayer(this.uuid),this.cityObject);	
+						CityManagerMenu.getP().sendMessage("Spieler wurde hinzugefügt: " + Bukkit.getPlayer(this.uuid).getName());
+						CityManagerMenu.menu.closeMenu(p);	
+						return;
+					default:
+						CityManagerMenu.menu.closeMenu(p);
+						return;
 				}
-				CityManagerMenu.menu.closeMenu(p);
-				break;
 		}
 		
 	}

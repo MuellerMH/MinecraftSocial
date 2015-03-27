@@ -748,4 +748,21 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		}
 		return null;
 	}
+
+
+	public static void removeCity(Player p) {
+		// TODO Auto-generated method stub
+		String sql = "UPDATE MCS_chunkowner SET iscity=0, cityname=null WHERE ownerid=?";
+		
+		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
+		
+		try {
+			preparedStmt.setString (1, p.getUniqueId().toString());
+			MySQL.insertDB(preparedStmt);								
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }

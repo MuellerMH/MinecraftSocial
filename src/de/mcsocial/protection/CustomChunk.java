@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
+import de.mcsocial.city.City;
+
 public class CustomChunk {
 	private String name;
 	private UUID owner;
@@ -92,6 +94,17 @@ public class CustomChunk {
 
 	public void setIsJail(Boolean isJail) {
 		this.isJail = isJail;
+	}
+
+	public void setCity(Player p) {
+		// TODO Auto-generated method stub
+		if(p== null){
+			this.ownerIsCity = false;
+			this.cityname = "";
+			return;
+		}
+		this.ownerIsCity = true;
+		this.cityname = City.cityList.get(UUID.fromString(p.getMetadata("city").get(0).asString())).getName();
 	}
 	
 }

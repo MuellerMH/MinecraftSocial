@@ -137,7 +137,7 @@ public class AdminPlayer implements CommandExecutor {
 				} catch( NullPointerException e ){
 					admin.sendMessage("Spieler existiert nicht.");
 				}
-				return true;
+				return false;
 			}
 			return false;
 		}
@@ -152,7 +152,7 @@ public class AdminPlayer implements CommandExecutor {
 				}catch( NullPointerException e ){
 					admin.sendMessage("Spieler existiert nicht.");
 				}
-				return true;
+				return false;
 			}
 			return false;
 		}
@@ -178,9 +178,9 @@ public class AdminPlayer implements CommandExecutor {
 				} catch( NullPointerException e ){
 					admin.sendMessage("Spieler existiert nicht.");
 				}
-				return true;
+				return false;
 			}
-			return true;
+			return false;
 		}
 		
 		if(cmd.getName().equalsIgnoreCase("teleport")) {
@@ -194,7 +194,7 @@ public class AdminPlayer implements CommandExecutor {
 				}catch( NullPointerException e ){
 					admin.sendMessage("Spieler existiert nicht.");
 				}
-				return true;
+				return false;
 			}
 			if(args.length == 2){
 				try{
@@ -203,7 +203,7 @@ public class AdminPlayer implements CommandExecutor {
 				} catch( NullPointerException e ){
 					admin.sendMessage("Spieler existiert nicht.");
 				}
-				return true;
+				return false;
 			}
 			if(args.length == 1){
 				try{
@@ -212,9 +212,9 @@ public class AdminPlayer implements CommandExecutor {
 				} catch( NullPointerException e ){
 					admin.sendMessage("Spieler existiert nicht.");
 				}
-				return true;
+				return false;
 			}
-			return true;
+			return false;
 		}
 		
 		if(cmd.getName().equalsIgnoreCase("money")) {
@@ -227,7 +227,7 @@ public class AdminPlayer implements CommandExecutor {
 				}catch( NullPointerException e ){
 					admin.sendMessage("Spieler existiert nicht.");
 				}
-				return true;
+				return false;
 			}
 			return false;
 		}

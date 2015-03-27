@@ -36,7 +36,19 @@ public class Hauptmenu {
 		Hauptmenu.displayChunk();
 		Hauptmenu.claimChunk();
 		Hauptmenu.adminMenu();
+		Hauptmenu.loadLeaveCity();
 	}	
+	
+	private static void loadLeaveCity(){		
+		if(!Hauptmenu.p.hasMetadata("city")){
+			return;
+		}
+		CityItem itemLeave = new CityItem("Stadt verlassen",Material.BARRIER);
+		List<String> linesLeave = new LinkedList<String>();
+		linesLeave.add("Ja, ich möchte meine Stadt verlassen.");
+		itemLeave.setDescriptions(linesLeave);
+		Hauptmenu.menu.addMenuItem(itemLeave, 21);
+	}
 	
 	private static void adminMenu() {
 		if(!PlayerPermissions.hasAccess(p, "supporter"))

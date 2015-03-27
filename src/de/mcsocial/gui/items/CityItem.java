@@ -1,5 +1,7 @@
 package de.mcsocial.gui.items;
 
+import java.util.UUID;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -46,16 +48,24 @@ public class CityItem extends MenuItem {
 		switch(this.getText()){
 			case "Grundstueck kaufen":
 				ChunkHandler.claimChunk(p, 4000.00);
-				Hauptmenu.menu.closeMenu(p);
-				
-			break;case "Grundstueck verkaufen":
-				ChunkHandler.unclaimChunk(p, 2000.00);
-				Hauptmenu.menu.closeMenu(p);
+				Hauptmenu.menu.closeMenu(p);				
+			break;
+			case "Stadt verlassen":
+				if(!p.hasMetadata("city"))
+					return;
+				try{
+					City.leave(p, City.cityList.get(UUID.fromString(p.getMetadata("city").get(0).asString())));
+					City.residentList.remove(p.getUniqueId());
+					Hauptmenu.menu.closeMenu(p);
+					p.sendMessage("Du bist aus der Stadt ausgetreten");
+				}catch(NullPointerException e){
+					p.sendMessage("Du konntest die Stadt nicht verlassen. Versuch es später noch einmal.");
+				}
 				
 			break;
 			case "Städte Menu":
 				// TODO Auto-generated method stub
-				Menu cityMenu = new Menu("City",3);
+				Menu cityMenu = new Menu("City",4);
 				Gui.switchMenu(p, Hauptmenu.menu, cityMenu);
 				CityMenu.loadMenu(cityMenu,p);
 			break;

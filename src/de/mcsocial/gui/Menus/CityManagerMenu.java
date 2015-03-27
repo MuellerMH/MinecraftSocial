@@ -16,6 +16,7 @@ import de.mcsocial.city.City;
 import de.mcsocial.gui.Menu;
 import de.mcsocial.gui.items.CityManagerItem;
 import de.mcsocial.gui.items.JailItem;
+import de.mcsocial.protection.ChunkHandler;
 
 public class CityManagerMenu {
 	public static Menu menu;
@@ -29,8 +30,58 @@ public class CityManagerMenu {
 		CityManagerMenu.addPlayer();
 		CityManagerMenu.removePlayer();
 		CityManagerMenu.closeMenu();
+		CityManagerMenu.addCityGS();
+		CityManagerMenu.removeCityGS();
+		deleteCity();
 	}
 	
+	private static void removeCityGS() {
+		if(ChunkHandler.isClaimAble(CityManagerMenu.p))
+			return;
+		if(ChunkHandler.getOwner(CityManagerMenu.p) == null)
+			return;
+		if(!ChunkHandler.getOwner(CityManagerMenu.p).equals(CityManagerMenu.p.getUniqueId()))
+			return;
+		
+		// TODO Auto-generated method stub
+		CityManagerItem item = new CityManagerItem("Grundstueck entfernen",Material.DIRT);
+		List<String> lines = new LinkedList<String>();
+		lines.add("Dieses Grundstück aus der Stadt entfernen.");
+		item.setDescriptions(lines);
+
+		CityManagerMenu.menu.addMenuItem(item, 10);
+	}
+	
+	private static void addCityGS() {
+		if(ChunkHandler.isClaimAble(CityManagerMenu.p))
+			return;
+		if(ChunkHandler.getOwner(CityManagerMenu.p) == null)
+			return;
+		if(!ChunkHandler.getOwner(CityManagerMenu.p).equals(CityManagerMenu.p.getUniqueId()))
+			return;
+		
+		// TODO Auto-generated method stub
+		CityManagerItem item = new CityManagerItem("Grundstueck hinzufuegen",Material.GRASS);
+		List<String> lines = new LinkedList<String>();
+		lines.add("Dieses Grundstück der Stadt hinzufügen.");
+		item.setDescriptions(lines);
+
+		CityManagerMenu.menu.addMenuItem(item, 9);
+	}
+	
+
+
+	private static void deleteCity() {
+		// TODO Auto-generated method stub
+		CityManagerItem item = new CityManagerItem("Stadt aufloesen",Material.BARRIER);
+		List<String> lines = new LinkedList<String>();
+		lines.add("Diese Stadt wirklich auflöesen und löschen?");
+		item.setDescriptions(lines);
+
+
+		CityManagerMenu.menu.addMenuItem(item, 22);
+	}
+
 	private static void removePlayer() {
 		// TODO Auto-generated method stub
 		CityManagerItem item = new CityManagerItem("Spieler entfernen",Material.BARRIER);
