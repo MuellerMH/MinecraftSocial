@@ -129,7 +129,7 @@ public class AdminPlayer implements CommandExecutor {
 		
 		Player admin = (Player)sender;
 
-		if(cmd.getName().equalsIgnoreCase("ban")) {
+		if(cmd.getName().equalsIgnoreCase("bannen")) {
 			if(args.length == 1){
 				try{
 					ban(admin, Bukkit.getPlayer(args[0]));
@@ -157,7 +157,7 @@ public class AdminPlayer implements CommandExecutor {
 			return false;
 		}
 		
-		if(cmd.getName().equalsIgnoreCase("kick")) {
+		if(cmd.getName().equalsIgnoreCase("kicken")) {
 			if(args.length == 2){
 				try{
 					kick(admin, Bukkit.getPlayer(args[0]),args[1]);
@@ -170,7 +170,7 @@ public class AdminPlayer implements CommandExecutor {
 			return false;
 		}
 		
-		if(cmd.getName().equalsIgnoreCase("give")) {
+		if(cmd.getName().equalsIgnoreCase("geben")) {
 			if(args.length == 2){
 				try{
 					give(admin, Bukkit.getPlayer(args[0]), args[1]);
@@ -183,7 +183,7 @@ public class AdminPlayer implements CommandExecutor {
 			return true;
 		}
 		
-		if(cmd.getName().equalsIgnoreCase("tp")) {
+		if(cmd.getName().equalsIgnoreCase("teleport")) {
 			if(args.length == 3){
 				try{
 					Location target = new Location(admin.getLocation().getWorld(), Integer.parseInt(args[0]),Integer.parseInt( args[1]), Integer.parseInt(args[2]));

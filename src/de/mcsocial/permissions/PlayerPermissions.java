@@ -24,7 +24,7 @@ public class PlayerPermissions {
 	private static void loadPermissions(Player player) {
 		
 			if(PlayerPermissions.hasAccess(player,"admin")){
-				PlayerPermissions.setPermission(player,"MCSocial.ban",true);
+				PlayerPermissions.setPermission(player,"MCSocial.bannen",true);
 				PlayerPermissions.setPermission(player,"MCSocial.money",true);	
 				PlayerPermissions.setPermission(player,"MCSocial.debug",true);		
 			}
@@ -36,9 +36,9 @@ public class PlayerPermissions {
 			}
 			
 			if(PlayerPermissions.hasAccess(player,"supporter")){
-				PlayerPermissions.setPermission(player,"MCSocial.kick",true);
+				PlayerPermissions.setPermission(player,"MCSocial.kicken",true);
 				PlayerPermissions.setPermission(player,"MCSocial.fly",true);
-				PlayerPermissions.setPermission(player,"MCSocial.tp",true);
+				PlayerPermissions.setPermission(player,"MCSocial.teleport",true);
 			}
 			
 			
