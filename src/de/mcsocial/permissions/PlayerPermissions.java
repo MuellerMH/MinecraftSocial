@@ -64,7 +64,7 @@ public class PlayerPermissions {
 			return p.isOp();
 		case"admin":
 			if(p.isOp()){
-				return true;
+				return p.isOp();
 			}
 			if(p.hasMetadata("isAdmin")){
 				return p.getMetadata("isAdmin").get(0).asBoolean();
@@ -75,10 +75,7 @@ public class PlayerPermissions {
 				return true;
 			}
 			if(p.hasMetadata("isAdmin")){
-				if(p.getMetadata("isAdmin").get(0).asBoolean())
-				{
-					return true;
-				}
+				return p.getMetadata("isAdmin").get(0).asBoolean();
 			}
 			if(p.hasMetadata("isModerator")){
 				return p.getMetadata("isModerator").get(0).asBoolean();
@@ -89,10 +86,7 @@ public class PlayerPermissions {
 				return true;
 			}
 			if(p.hasMetadata("isAdmin")){
-				if(p.getMetadata("isAdmin").get(0).asBoolean())
-				{
-					return true;
-				}
+				return p.getMetadata("isAdmin").get(0).asBoolean();
 			}
 			if(p.hasMetadata("isModerator")){
 				return p.getMetadata("isModerator").get(0).asBoolean();
@@ -106,10 +100,7 @@ public class PlayerPermissions {
 				return true;
 			}
 			if(p.hasMetadata("isAdmin")){
-				if(p.getMetadata("isAdmin").get(0).asBoolean())
-				{
-					return true;
-				}
+				return p.getMetadata("isAdmin").get(0).asBoolean();
 			}
 			if(p.hasMetadata("isDonator")){
 				return p.getMetadata("isDonator").get(0).asBoolean();

@@ -125,12 +125,18 @@ public class City {
 	}
 
 	public static boolean isVillager(UUID playerID, UUID city){
-		//system.out.println(City.residentList.toString());
+		System.out.println(City.residentList.toString());
+		try{
+		if(City.residentList == null)
+			City.loadAllVillager();
 		if(City.residentList.containsKey(playerID)){
-			//system.out.println("IS IN LIST " + City.residentList.get(playerID).getOwner() + " " + city);
+			System.out.println("IS IN LIST " + City.residentList.get(playerID).getOwner() + " " + city);
 			if(City.residentList.get(playerID).getOwner().equals(city)){
 				return true;
 			}
+		}
+		}catch(Exception e){
+			return false;
 		}
 		return false;
 	}
@@ -153,7 +159,7 @@ public class City {
 
 	public static void loadAllVillager(){		
 		if(City.residentList == null)
-		City.residentList = new HashMap<UUID,City>();
+			City.residentList = new HashMap<UUID,City>();
 		try {		
 			
 			ResultSet result = MySQL.callDB("SELECT name,player FROM MCS_city_resident;");	

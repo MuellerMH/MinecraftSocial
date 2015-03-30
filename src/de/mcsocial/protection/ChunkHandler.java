@@ -79,9 +79,12 @@ public class ChunkHandler implements Listener,CommandExecutor {
 			}
 			
 			try{
-				if(cChunk.getCityName().equalsIgnoreCase("worldspawn")){
-					if(event.getRightClicked().isCustomNameVisible())
-						return;
+				if(cChunk.getCityName() != null){					
+					if(cChunk.getCityName().equalsIgnoreCase("WorldSpawn")){		
+						if(event.getRightClicked().isCustomNameVisible()){
+							return;
+						}
+					}					
 				}
 			}catch(NullPointerException e ){
 				player.sendMessage("Du besitzt keine Berechtigungen auf diesem Grundstück.");
@@ -349,7 +352,6 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		if(PlayerPermissions.hasAccess(player,"supporter"))
 			return;
 		
-				
 		switch(block.getType()){
 		
 		case AIR:		
@@ -383,10 +385,12 @@ public class ChunkHandler implements Listener,CommandExecutor {
 			CustomChunk cChunk = ChunkHandler.ownedChunks.get(chunk.toString());
 			
 			if(cChunk.getOwner().equals(player.getUniqueId())) {
+				event.setCancelled(false);
 				return;
 			}
 			
 			if(cChunk.hasAccess(player.getUniqueId())) {
+				event.setCancelled(false);
 				return;
 			}
 			
@@ -396,22 +400,31 @@ public class ChunkHandler implements Listener,CommandExecutor {
 				if(City.cityList.containsKey(cChunk.getOwner())){						
 					if(City.isVillager(player.getUniqueId(), cChunk.getOwner())){
 						//system.out.println("in City");
+						event.setCancelled(false);
 						return;
 					}
 				} else {
 					//system.out.println("not in City Resis");
+					event.setCancelled(true);
 				}
 			}
 			player.sendMessage("Du besitzt keine Berechtigungen auf diesem Grundstück.");
 			event.setCancelled(true);
+			return;
 		}
 	}
 	
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
 		Block block = event.getBlock();
+		Chunk chunk = block.getLocation().getChunk();
+		Player player = event.getPlayer();
 
+		if(player.isOp())
+			return;
 		
+		if(PlayerPermissions.hasAccess(player,"supporter"))
+			return;
 		
 		
 		switch(block.getType()){
@@ -442,23 +455,17 @@ public class ChunkHandler implements Listener,CommandExecutor {
 			break;
 		
 		}
-		Chunk chunk = block.getLocation().getChunk();
-		Player player = event.getPlayer();
-		
-		if(player.isOp())
-			return;
-		
-		if(PlayerPermissions.hasAccess(player,"supporter"))
-			return;
-		
+				
 		if(ChunkHandler.ownedChunks.containsKey(chunk.toString())) {
 			CustomChunk cChunk = ChunkHandler.ownedChunks.get(chunk.toString());
 			
 			if(cChunk.getOwner().equals(player.getUniqueId())) {
+				event.setCancelled(false);
 				return;
 			}
 			
 			if(cChunk.hasAccess(player.getUniqueId())) {
+				event.setCancelled(false);
 				return;
 			}
 			
@@ -468,14 +475,17 @@ public class ChunkHandler implements Listener,CommandExecutor {
 				if(City.cityList.containsKey(cChunk.getOwner())){						
 					if(City.isVillager(player.getUniqueId(), cChunk.getOwner())){
 						//system.out.println("in City");
+						event.setCancelled(false);
 						return;
 					}
 				} else {
+					event.setCancelled(true);
 					//system.out.println("not in City Resis");
 				}
 			}
 			player.sendMessage("Du besitzt keine Berechtigungen auf diesem Grundstück.");
 			event.setCancelled(true);
+			event.setBuild(false);
 		}
 	}
 	
