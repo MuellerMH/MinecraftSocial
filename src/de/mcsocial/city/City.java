@@ -84,9 +84,11 @@ public class City {
 	}
 	
 	public static void leave(Player p, City city){
-		if(!city.getOwner().equals(p.getUniqueId())){
-			p.sendMessage("Du bist der Lehsnherr dieser Stadt, du kannst sie nicht verlassen.");
-			return;
+		if(city != null){
+			if(city.getOwner().equals(p.getUniqueId())){
+				p.sendMessage("Du bist der Lehsnherr dieser Stadt, du kannst sie nicht verlassen.");
+				return;
+			}
 		}
 		if(City.residentList == null)return;
 		if(!City.residentList.containsKey(p.getUniqueId()))return;
