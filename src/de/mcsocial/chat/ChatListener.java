@@ -59,21 +59,25 @@ public class ChatListener implements Listener, CommandExecutor {
 		if(cmd.getName().equalsIgnoreCase("g")) {
 			MCSocial.channel.join(p, "Global");
 			p.sendMessage("Chat [Global] betreten.");
+			return true;
 		}else
 			
 		if(cmd.getName().equalsIgnoreCase("h")) {
 			MCSocial.channel.join(p, "Handel");
 			p.sendMessage("Chat [Handel] betreten.");
+			return true;
 		}else
 			
 		if(cmd.getName().equalsIgnoreCase("a")) {
 			MCSocial.channel.join(p, "Admin");
 			p.sendMessage("Chat [Admin] betreten.");
+			return true;
 		}else
 			
 		if(cmd.getName().equalsIgnoreCase("l")) {
 			MCSocial.channel.join(p, "Lokal");
 			p.sendMessage("Chat [Lokal] betreten.");
+			return true;
 		}else
 			
 		if(cmd.getName().equalsIgnoreCase("join")) {
@@ -356,7 +360,9 @@ public class ChatListener implements Listener, CommandExecutor {
         		messagePrefix = ChatColor.GOLD +"<"+City.cityList.get(UUID.fromString(event.getPlayer().getMetadata("city").get(0).asString())).getName()+">" + messagePrefix + "" + ChatColor.GOLD;
         	}catch(IllegalArgumentException e){
         		
-        	}
+        	}catch(NullPointerException e){
+            	
+            }
         }
 
         if(event.getPlayer().hasMetadata("isDonator") && event.getPlayer().getMetadata("isDonator").get(0).asBoolean()){

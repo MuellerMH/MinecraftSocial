@@ -46,6 +46,7 @@ public class CityMenu {
 		lines.add("StadtKapital:  " + 0);
 		lines.add("Bewohner:  " + Bukkit.getOfflinePlayer(city.getOwner()).getName());
 		lines.add("Klicken um zur Stadt zu gelangen.");
+		lines.add("Schnellreise kostet 500 SD.");
 		item.setLocation(city.getLoc());		
 
 		item.setDescriptions(lines);
@@ -54,7 +55,6 @@ public class CityMenu {
 	}
 	
 	private static void createCity() {
-		if(!ChunkHandler.isClaimAble(CityMenu.p)) return;
 		
 		if(!CityMenu.p.isOp()){
 			if(CityMenu.p.hasMetadata("cityowner")){
@@ -64,16 +64,22 @@ public class CityMenu {
 			if(City.isVillager(CityMenu.p.getUniqueId())){
 				return;
 			}
+			if(!ChunkHandler.isClaimAble(CityMenu.p)){
+				if(!ChunkHandler.getOwner(CityMenu.p.getLocation().getChunk()).equals(CityMenu.p.getUniqueId())){
+					return;
+				}
+			}
 		}
+		
 		CityItem item = new CityItem("Stadt gründen",Material.BOOK_AND_QUILL);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Zurück zum Hauptmenu.");
 		item.setDescriptions(lines);
 
 		if(!CityMenu.p.isOp()){
-			CityMenu.menu.addMenuItem(item, 34);
-		}else{
 			CityMenu.menu.addMenuItem(item, 33);
+		}else{
+			CityMenu.menu.addMenuItem(item, 32);
 		}
 	}
 	

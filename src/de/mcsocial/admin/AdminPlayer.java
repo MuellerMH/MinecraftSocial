@@ -13,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import de.mcsocial.books.WelcomeBook;
 import de.mcsocial.city.City;
 import de.mcsocial.economy.Account;
 import de.mcsocial.permissions.PlayerPermissions;
@@ -23,14 +24,14 @@ public class AdminPlayer implements CommandExecutor {
 	public static Boolean debug;
 
 	public void kick (Player admin, Player player, String argument) {
-		if(!admin.hasPermission("MCSocial.kick")) return;
+		if(!admin.hasPermission("MCSocial.kicken")) return;
 
 		player.kickPlayer(argument);
 		AdminLogger.writeLog(admin, player, "kick", argument);
 	}
 	
 	public void ban (Player admin, Player player) {
-		if(!admin.hasPermission("MCSocial.ban")) return;
+		if(!admin.hasPermission("MCSocial.bannen")) return;
 
 		player.setBanned(true);
 		player.kickPlayer("Du wurdest gebannt");
@@ -49,14 +50,14 @@ public class AdminPlayer implements CommandExecutor {
 	}
 	
 	public void give (Player admin, Player player, String itemName) {
-		if(!admin.hasPermission("MCSocial.give")) return;
+		if(!admin.hasPermission("MCSocial.geben")) return;
 		ItemStack item = new ItemStack(Material.getMaterial(itemName));
 		player.getInventory().addItem(item);
 		AdminLogger.writeLog(admin, player, "give", itemName);
 	}
 	
 	public void give (Player admin, Player player, int itemID, int count) {
-		if(!admin.hasPermission("MCSocial.give")) return;
+		if(!admin.hasPermission("MCSocial.geben")) return;
 		ItemStack item = new ItemStack(Material.getMaterial(itemID));
 		player.getInventory().addItem(item);
 		AdminLogger.writeLog(admin, player, "give", Material.getMaterial(itemID).toString());
@@ -70,7 +71,7 @@ public class AdminPlayer implements CommandExecutor {
 	}
 	
 	public void tp (Player admin, Player player) {
-		if(!admin.hasPermission("MCSocial.tp")) return;
+		if(!admin.hasPermission("MCSocial.teleport")) return;
 		
 		admin.teleport(player);
 		AdminLogger.writeLog(admin, player, "tp", null);
@@ -247,14 +248,14 @@ public class AdminPlayer implements CommandExecutor {
 			}else{
 				AdminPlayer.debug = false;
 			}
-			
+						
 			return true;
 		}
 		return false;
 	}
 
 	private void tp(Player admin, Location target) {
-		if(!admin.hasPermission("MCSocial.tp")) return;
+		if(!admin.hasPermission("MCSocial.teleport")) return;
 		
 		admin.teleport(target);
 		AdminLogger.writeLog(admin, null, "tp", null);

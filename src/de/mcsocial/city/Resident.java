@@ -25,8 +25,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import de.mcsocial.admin.AdminPlayer;
+import de.mcsocial.books.WelcomeBook;
 import de.mcsocial.chat.Channel;
+import de.mcsocial.cheatprotection.Miner;
 import de.mcsocial.economy.Account;
+import de.mcsocial.economy.Jobs;
+import de.mcsocial.economy.Market;
 import de.mcsocial.gui.Menus.CityManagerMenu;
 import de.mcsocial.gui.items.CityManagerItem;
 import de.mcsocial.main.MCSocial;
@@ -34,6 +38,9 @@ import de.mcsocial.main.MySQL;
 import de.mcsocial.permissions.PlayerPermissions;
 import de.mcsocial.protection.ChunkHandler;
 import de.mcsocial.protection.CustomChunk;
+import de.mcsocial.skills.SkillListener;
+import de.mcsocial.tracker.VoteTracker;
+import de.mcsocial.trader.TraderHandler;
 
 public class Resident implements Listener {
 	
@@ -148,10 +155,13 @@ public class Resident implements Listener {
 			
 		}
 		
+		fixOpenPlayer(p);
+		
 		if(!p.hasPlayedBefore()) {
 			Account.create(p);
 			Resident.create(p);
 			p.setMetadata("newPlayer", new FixedMetadataValue(MCSocial.instance, true));
+			p.getInventory().addItem(new WelcomeBook().getBook());
 		}
 		
 		getCityOwner(p);
@@ -164,6 +174,131 @@ public class Resident implements Listener {
 		
 		Resident.setChat(p);
 		Resident.create(p);
+		
+		
+	}
+	
+	private void bugFixUpdateAccount(String uuidNew, String uuidOld){
+		String sql = "UPDATE MCS_account SET player = ? WHERE player = ? ";
+		
+		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
+		
+		try {
+			preparedStmt.setString (1, uuidNew );
+			preparedStmt.setString (2, uuidOld);		
+			MySQL.insertDB(preparedStmt);								
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void bugFixUpdateCity(String uuidNew, String uuidOld){
+		String sql = "UPDATE MCS_city SET owner = ? WHERE owner = ? ";
+		
+		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
+		
+		try {
+			preparedStmt.setString (1, uuidNew );
+			preparedStmt.setString (2, uuidOld);		
+			MySQL.insertDB(preparedStmt);								
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void bugFixUpdateCityRes(String uuidNew, String uuidOld){
+		String sql = "UPDATE MCS_city_resident SET player = ? WHERE player = ? ";
+		
+		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
+		
+		try {
+			preparedStmt.setString (1, uuidNew );
+			preparedStmt.setString (2, uuidOld);		
+			MySQL.insertDB(preparedStmt);								
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String sql2 = "UPDATE MCS_city_resident SET name = ? WHERE name = ? ";
+		
+		PreparedStatement preparedStmt2 = MySQL.getPreStat(sql2);
+		
+		try {
+			preparedStmt2.setString (1, uuidNew );
+			preparedStmt2.setString (2, uuidOld);		
+			MySQL.insertDB(preparedStmt2);								
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void bugFixUpdateChunks(String uuidNew, String uuidOld){
+		String sql = "UPDATE MCS_chunkowner SET ownerid = ? WHERE ownerid = ? ";
+		
+		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
+		
+		try {
+			preparedStmt.setString (1, uuidNew );
+			preparedStmt.setString (2, uuidOld);		
+			MySQL.insertDB(preparedStmt);								
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void bugFixUpdateProfil(String uuidNew, String uuidOld){
+		String sql = "UPDATE MCS_player SET uuid = ? WHERE uuid = ? ";
+		
+		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
+		
+		try {
+			preparedStmt.setString (1, uuidNew );
+			preparedStmt.setString (2, uuidOld);		
+			MySQL.insertDB(preparedStmt);								
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void fixOpenPlayer(Player p){
+		PreparedStatement preparedStmt = MySQL.getPreStat("SELECT * FROM MCS_player WHERE name=?");
+		ResultSet result = null;
+		try {
+			preparedStmt.setString(1, p.getName().toString());
+			result = MySQL.callDB(preparedStmt);
+			while(result.next()){
+				if( result.getString("uuid").equalsIgnoreCase(p.getUniqueId().toString()) )continue;
+				
+				Miner.saveMinerData();
+				Market.savePrices();
+				SkillListener.saveSkills();	
+				VoteTracker.onDisable();
+				TraderHandler.onDisable();
+				City.saveAllVillager();
+				
+				bugFixUpdateProfil( p.getUniqueId().toString(), result.getString("uuid"));
+				bugFixUpdateAccount( p.getUniqueId().toString(), result.getString("uuid"));
+				bugFixUpdateCity( p.getUniqueId().toString(), result.getString("uuid"));
+				bugFixUpdateCityRes( p.getUniqueId().toString(), result.getString("uuid"));
+				bugFixUpdateChunks( p.getUniqueId().toString(), result.getString("uuid"));
+				
+				TraderHandler.loadShops();
+				Miner.loadMinerData();
+				City.loadAllCitys();
+				City.loadAllVillager();	
+				Market.loadPrices();
+				Jobs.loadJobs();
+			}
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private static void setChat(Player p) {
@@ -178,10 +313,10 @@ public class Resident implements Listener {
 		){
 
 			Channel.join(p,"Support");
-		}
-		Channel.join(p,"Global");
-		Channel.join(p,"Handel");	
+		}	
 		Channel.join(p,"Lokal");
+		Channel.join(p,"Handel");
+		Channel.join(p,"Global");
 	}
 
 	@EventHandler

@@ -69,36 +69,36 @@ commands:
     usage: /s
     permission: MCSocial.s
     permission-message: You do not have Permission MCSocial.s
-  kick:
+  kicken:
     description: Betreten des Chat Support
-    usage: /kick [player] [message]
-    permission: MCSocial.kick
-    permission-message: You do not have Permission MCSocial..kick
-  ban:
+    usage: /kicken [player] [message]
+    permission: MCSocial.kicken
+    permission-message: You do not have Permission MCSocial..kicken
+  bannen:
     description: Betreten des Chat Support
-    usage: /ban [player]
-    permission: MCSocial.ban
-    permission-message: You do not have Permission MCSocial..ban
+    usage: /bannennen [player]
+    permission: MCSocial.bannennen
+    permission-message: You do not have Permission MCSocial..bannennen
   timeban:
     description: Betreten des Chat Support
-    usage: /timeban [player] [minutes]
-    permission: MCSocial.timeban
-    permission-message: You do not have Permission MCSocial.timeban
-  give:
+    usage: /timebannennen [player] [minutes]
+    permission: MCSocial.timebannennen
+    permission-message: You do not have Permission MCSocial.timebannennen
+  geben:
     description: gibt Gegenstand in der Hand dem Spieler
-    usage: /give [player]
-    permission: MCSocial.give
-    permission-message: You do not have Permission MCSocial.give
+    usage: /geben [player]
+    permission: MCSocial.geben
+    permission-message: You do not have Permission MCSocial.geben
   money:
     description: Betreten des Chat Support
     usage: /money [player] [amount]
     permission: MCSocial.money
     permission-message: You do not have Permission MCSocial.money
-  tp:
+  teleport:
     description: Betreten des Chat Support
-    usage: /tp [player] [player]
-    permission: MCSocial.tp
-    permission-message: You do not have Permission MCSocial.tp
+    usage: /teleport [player] [player]
+    permission: MCSocial.teleport
+    permission-message: You do not have Permission MCSocial.teleport
   gm:
     description: Betreten des Chat Support
     usage: /gm
@@ -130,12 +130,12 @@ permissions:
       MCSocial.h: true
       MCSocial.a: true
       MCSocial.s: true
-      MCSocial.kick: false
-      MCSocial.ban: false
+      MCSocial.kicken: false
+      MCSocial.bannen: false
       MCSocial.timeban: false
-      MCSocial.give: false
+      MCSocial.geben: false
       MCSocial.money: false
-      MCSocial.tp: false
+      MCSocial.teleport: false
       MCSocial.fly: false
       MCSocial.debug: false
   MCSocial.menu:
@@ -164,15 +164,15 @@ permissions:
     default: true
   MCSocial.s:
     default: true
-  MCSocial.kick:
+  MCSocial.kicken:
     default: false
-  MCSocial.ban:
+  MCSocial.bannen:
     default: false
   MCSocial.timeban:
     default: false
   MCSocial.money:
     default: false
-  MCSocial.give:
+  MCSocial.geben:
     default: false
   MCSocial.fly:
     default: false

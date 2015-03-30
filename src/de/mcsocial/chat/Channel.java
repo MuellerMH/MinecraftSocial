@@ -41,10 +41,6 @@ public class Channel {
 			p.sendMessage("Du bist im Gefängniss und kannst keinen anderen Channel beitreten.");
 			return;
 		}
-		if(!Channel.channels.contains(name)){
-			p.sendMessage("Channel "+name+" existiert nicht.");
-			return;
-		}
 		if(Channel.inChannel == null){
 			Channel.inChannel = new HashMap<UUID,List<String>>();
 		}

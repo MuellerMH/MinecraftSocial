@@ -38,12 +38,14 @@ public class ShopBuyItem extends MenuItem {
 			player.sendMessage("Du hast nicht genügend Geld.");
 			return;
 		}
-
+		
 				
 		Account.remove(player, total);
 		ItemStack item = getItem();
-		item.setAmount(this.amount);
-		player.getInventory().addItem(item);				
+		
+		ItemStack sellItem = new ItemStack(item.getType(),1,item.getDurability());
+		sellItem.setAmount(this.amount);
+		player.getInventory().addItem(sellItem);				
 		player.updateInventory();
 		
 		Market.setPrice(item.getType().toString()+":"+item.getDurability(), this.buy+(this.buy*0.10));

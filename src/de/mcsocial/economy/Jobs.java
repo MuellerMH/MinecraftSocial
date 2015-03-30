@@ -43,8 +43,11 @@ public class Jobs implements Listener {
 		Jobs.JobList.put(name, job);		
 		
 	}
+	
+	
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event){
+		if(Jobs.JobList == null) loadJobs();
 		List<ItemStack> items = event.getDrops();
 		EntityType en = event.getEntityType();
 		
@@ -89,8 +92,27 @@ public class Jobs implements Listener {
 					}				
 					if(playerjob.equalsIgnoreCase("Soldat")){	
 						if(en.equals(EntityType.VILLAGER)){
-							claimedMoney -=100;
-						}else{
+							claimedMoney -=1000;
+							player.sendMessage("Du hast einen unschuldigen getötet!");
+						}else if(event.getEntity() instanceof Player){
+							Player target = (Player)event.getEntity();
+							if(target.hasMetadata("folk") && player.hasMetadata("folk")){
+								if(target.getMetadata("folk").get(0).asString().equalsIgnoreCase(player.getMetadata("folk").get(0).asString())){
+									claimedMoney -=1000;
+									player.sendMessage("Du hast jemanden deines Volkes getötet!");
+								}else{
+									claimedMoney +=100;
+								}
+							} else
+							if(target.hasMetadata("city") && player.hasMetadata("city")){
+								if(target.getMetadata("city").get(0).asString().equalsIgnoreCase(player.getMetadata("city").get(0).asString())){
+									claimedMoney -=1000;
+									player.sendMessage("Du hast einen Bürger deiner Stadt getötet!!");
+								}else{
+									claimedMoney +=100;
+								}
+							}
+						} else {
 							claimedMoney +=100;
 						}					
 					}
@@ -103,6 +125,7 @@ public class Jobs implements Listener {
 	
 	@EventHandler
 	public void onFishing(PlayerFishEvent event){
+		if(Jobs.JobList == null) loadJobs();
 		if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
 			if (!(event.getCaught() instanceof Item)) return; //no catch
 			
@@ -135,6 +158,7 @@ public class Jobs implements Listener {
 	
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event){
+		if(Jobs.JobList == null) loadJobs();
 		Block block = event.getBlock();
 		Double itemPrice = 25.00;
 		Player player = event.getPlayer();	
@@ -214,6 +238,7 @@ public class Jobs implements Listener {
 	
 	@EventHandler
 	public void onBlockBreack(BlockBreakEvent event){
+		if(Jobs.JobList == null) loadJobs();
 		Block block = event.getBlock();
 		List<ItemStack> listItems = (ArrayList<ItemStack>) block.getDrops();
 		Double itemPrice = 25.00;
@@ -279,6 +304,7 @@ public class Jobs implements Listener {
 	
 	@EventHandler
 	public void onCraftEvent(CraftItemEvent event){
+		if(Jobs.JobList == null) loadJobs();
 		ItemStack item = event.getInventory().getResult();
 		String mat = item.getType().toString()+":"+((ItemStack) item).getDurability();
 		Player player = (Player)event.getWhoClicked();		
@@ -324,13 +350,7 @@ public class Jobs implements Listener {
 	
 	public static void loadJobs() {
 		
-		if(Jobs.JobList != null){
-			return;
-		}
-		
-		if(Jobs.allJobItems == null){
-			Jobs.allJobItems = new HashMap<String,Job>();
-		}
+		Jobs.allJobItems = new HashMap<String,Job>();
 		
 		PreparedStatement preparedStmt = MySQL.getPreStat("SELECT name, description, items FROM MCS_jobs WHERE status=1");
 		ResultSet result = null;
