@@ -45,10 +45,10 @@ public class ShopSellItem extends MenuItem {
 				player.getInventory().addItem(itemStack);				
 				player.updateInventory();
 		
-				player.sendMessage("Verkauft für: "+total+" SD");
-				Market.setPrice(itemStack.getType().toString()+":"+itemStack.getDurability(), this.buy-(this.buy*0.14));
+				Market.setPrice(item.getType().toString()+":"+item.getDurability(), this.buy-(this.buy*0.14));
 				this.sell = Math.max(1, Market.getPrice(item.getType().toString()+":"+item.getDurability())*0.6);
 				this.buy = Math.max(1, Market.getPrice(item.getType().toString()+":"+item.getDurability()));
+				player.sendMessage("Verkauft für: "+total+" SD");
 				
 
 				ShopMenu.trademenu.updateMenu();

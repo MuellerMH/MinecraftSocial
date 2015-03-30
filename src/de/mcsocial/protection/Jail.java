@@ -75,6 +75,9 @@ public class Jail {
 	}
 	
 	private static  void returnOwnItems(Player p){
+		if(Jail.playerItems == null){
+			Jail.playerItems = new HashMap<Player,ItemStack[]>();
+		}
 		ItemStack[] tmpToRemove = Jail.playerItems.get(p);
 		for(ItemStack item: tmpToRemove){
 			if(item == null)
@@ -99,8 +102,8 @@ public class Jail {
 
 	public static HashMap<Location, JailChunk> getList() {
 		// TODO Auto-generated method stub
-		
 		HashMap<Location,JailChunk>allCells = new HashMap<Location,JailChunk>();
+		
 		if(Jail.jailChunks == null){
 			Jail.jailChunks = new ArrayList<JailChunk>();
 		}

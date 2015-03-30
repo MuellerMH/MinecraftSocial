@@ -109,13 +109,13 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		getCommand("l").setExecutor((CommandExecutor) chatListener);
 		getCommand("menu").setExecutor(MCSocial.guiHandler);	
 		getCommand("fly").setExecutor(adminPlayer);	
-		getCommand("kick").setExecutor(adminPlayer);	
-		getCommand("ban").setExecutor(adminPlayer);	
+		getCommand("kicken").setExecutor(adminPlayer);	
+		getCommand("bannen").setExecutor(adminPlayer);	
 		getCommand("timeban").setExecutor(adminPlayer);	
-		getCommand("give").setExecutor(adminPlayer);	
+		getCommand("geben").setExecutor(adminPlayer);	
 		getCommand("money").setExecutor(adminPlayer);	
 		getCommand("gm").setExecutor(adminPlayer);	
-		getCommand("tp").setExecutor(adminPlayer);	
+		getCommand("teleport").setExecutor(adminPlayer);	
 		getCommand("debug").setExecutor(adminPlayer);	
 		
 		Market.loadPrices();
@@ -155,9 +155,11 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 			e.printStackTrace();
 		}
 		
-		Resident.onEnable();	
 		City.loadAllCitys();
 		City.loadAllVillager();
+		
+
+		Resident.onEnable();	
 	}
 	
 	public void onDisable(){ 

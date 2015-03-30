@@ -34,6 +34,7 @@ public class City {
 	private String name;
 	private UUID owner;
 	private Location loc;
+	private int maxPlots = 100;
 
 	public void create(Player p, String arg1) {
 		String sql = "insert into MCS_city (name, owner, x, y, z)"
@@ -84,7 +85,7 @@ public class City {
 	}
 	
 	public static void leave(Player p, City city){
-		if(!city.getOwner().equals(p.getUniqueId())){
+		if(city.getOwner().equals(p.getUniqueId())){
 			p.sendMessage("Du bist der Lehsnherr dieser Stadt, du kannst sie nicht verlassen.");
 			return;
 		}
@@ -209,12 +210,13 @@ public class City {
 				MySQL.insertDB(preparedStmt);
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}catch (NullPointerException e) {
 			}
-			City.cityList=null;
-			City.residentList=null;
 		}	
+
+		City.cityList=null;
+		City.residentList=null;
 	}
 	
 	@SuppressWarnings("deprecation")

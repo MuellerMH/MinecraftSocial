@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import de.mcsocial.economy.Account;
 import de.mcsocial.gui.MenuItem;
 import de.mcsocial.protection.Jail;
 
@@ -22,6 +23,11 @@ public class HomeItem extends MenuItem {
 		if(Jail.isInJail(p)){
 			return;
 	    }
+		 if(Account.getBalance(p) < 100.00){
+			p.sendMessage("Schnellreise nicht möglich. Du hast nicht genügend Geld. Du benötigst 100 SD");
+			return;
+		}
+		 
 		Location goHome = p.getBedSpawnLocation();
 		if(goHome == null) {
 			p.sendMessage("Stelle zuerst ein Bett in deiner Home Location auf um diesen Befehl nutzen zu können.");

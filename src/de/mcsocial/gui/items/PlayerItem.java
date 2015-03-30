@@ -59,6 +59,13 @@ public class PlayerItem extends MenuItem {
 				Gui.switchMenu(p, PlayerMenu.menu, Hauptmenu.menu);
 				break;
 			case "Beruf annehmen":
+				if(p.hasMetadata("lastJobChange"))
+				{
+					if((System.currentTimeMillis() - p.getMetadata("lastJobChange").get(0).asLong()) < (1*20*60*24*7)){
+						p.sendMessage("Du kannst dein Beruf nur alle sieben Tage wechseln");
+						return;
+					}
+				}
 				// TODO Auto-generated method stub
 				Menu jobMenuSelect = new Menu("Berufe",3);
 				Gui.switchMenu(p, PlayerMenu.menu, jobMenuSelect);

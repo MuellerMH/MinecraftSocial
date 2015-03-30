@@ -75,7 +75,7 @@ public class VoteTracker extends Thread {
 				InputStream in = socket.getInputStream();
 
 				// Send them our version.
-				writer.write("MCSocial 0.0.0.0.7");
+				writer.write("MCSocial 0.0.0.1.7");
 				writer.newLine();
 				writer.flush();
 

@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import de.mcsocial.city.City;
+import de.mcsocial.economy.Account;
 import de.mcsocial.gui.Gui;
 import de.mcsocial.gui.Menu;
 import de.mcsocial.gui.MenuItem;
@@ -50,6 +51,10 @@ public class CityItem extends MenuItem {
 				ChunkHandler.claimChunk(p, 4000.00);
 				Hauptmenu.menu.closeMenu(p);				
 			break;
+			case "Grundstueck verkaufen":
+				ChunkHandler.unclaimChunk(p, 2000.00);
+				Hauptmenu.menu.closeMenu(p);				
+			break;
 			case "Stadt verlassen":
 				if(!p.hasMetadata("city"))
 					return;
@@ -59,6 +64,7 @@ public class CityItem extends MenuItem {
 					Hauptmenu.menu.closeMenu(p);
 					p.sendMessage("Du bist aus der Stadt ausgetreten");
 				}catch(NullPointerException e){
+					p.removeMetadata("city", MCSocial.instance);
 					p.sendMessage("Du konntest die Stadt nicht verlassen. Versuch es später noch einmal.");
 				}
 				
@@ -71,6 +77,11 @@ public class CityItem extends MenuItem {
 			break;
 			case "Stadt gründen":
 				if(!p.isOp()){
+					
+					if(Account.getBalance(p) < 15000.00){
+						p.sendMessage("Du hast nicht genügend Geld. Du benötigst 15000 SD");
+						return;
+					}
 					if(City.cityList.containsKey(p.getUniqueId())) {
 						p.sendMessage(ChatColor.GREEN + "CityEditor: " + "Gründung nicht Möglich. Du bist bereits Bürgermeister einer Stadt.");
 						return;
@@ -124,6 +135,10 @@ public class CityItem extends MenuItem {
 			   if(Jail.isInJail(p)){
 				   break;
 			   }
+			   if(Account.getBalance(p) < 500.00){
+					p.sendMessage("Schnellreise nicht möglich. Du hast nicht genügend Geld. Du benötigst 500 SD");
+					return;
+				}
 			   p.teleport(this.loc);
 			   break;
 		}

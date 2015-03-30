@@ -23,23 +23,24 @@ public class PlayerPermissions {
 	
 	private static void loadPermissions(Player player) {
 		
-			if(PlayerPermissions.hasAccess(player,"admin")){
-				PlayerPermissions.setPermission(player,"MCSocial.bannen",true);
-				PlayerPermissions.setPermission(player,"MCSocial.money",true);	
-				PlayerPermissions.setPermission(player,"MCSocial.debug",true);		
-			}
-			
-			if(PlayerPermissions.hasAccess(player,"moderator")){
-				PlayerPermissions.setPermission(player,"MCSocial.timeban",true);
-				PlayerPermissions.setPermission(player,"MCSocial.miner",true);	
-				PlayerPermissions.setPermission(player,"MCSocial.gm",true);			
-			}
-			
-			if(PlayerPermissions.hasAccess(player,"supporter")){
-				PlayerPermissions.setPermission(player,"MCSocial.kicken",true);
-				PlayerPermissions.setPermission(player,"MCSocial.fly",true);
-				PlayerPermissions.setPermission(player,"MCSocial.teleport",true);
-			}
+		if(PlayerPermissions.hasAccess(player,"admin")){
+			PlayerPermissions.setPermission(player,"MCSocial.bannen",true);
+			PlayerPermissions.setPermission(player,"MCSocial.money",true);	
+			PlayerPermissions.setPermission(player,"MCSocial.debug",true);	
+			PlayerPermissions.setPermission(player,"MCSocial.geben",true);		
+		}
+		
+		if(PlayerPermissions.hasAccess(player,"moderator")){
+			PlayerPermissions.setPermission(player,"MCSocial.timeban",true);
+			PlayerPermissions.setPermission(player,"MCSocial.miner",true);	
+			PlayerPermissions.setPermission(player,"MCSocial.gm",true);			
+		}
+		
+		if(PlayerPermissions.hasAccess(player,"supporter")){
+			PlayerPermissions.setPermission(player,"MCSocial.kicken",true);
+			PlayerPermissions.setPermission(player,"MCSocial.fly",true);
+			PlayerPermissions.setPermission(player,"MCSocial.teleport",true);
+		}
 			
 			
 	}

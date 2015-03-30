@@ -111,6 +111,7 @@ public class Hauptmenu {
 		HomeItem home = new HomeItem("Home",Material.COMPASS);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Teleportiert dich zu deinem Bett.");
+		lines.add("Kostet 100 SD.");
 		home.setDescriptions(lines);
 		Hauptmenu.menu.addMenuItem(home, 0);
 	}
@@ -131,6 +132,7 @@ public class Hauptmenu {
 		WorldSpawn spawn = new WorldSpawn("World Spawn",Material.COMPASS);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Teleportiert dich zum WeltSpawn.");
+		lines.add("Kostet 100 SD.");
 		spawn.setDescriptions(lines);
 
 		Hauptmenu.menu.addMenuItem(spawn, 1);
