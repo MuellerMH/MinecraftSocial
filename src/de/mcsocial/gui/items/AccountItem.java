@@ -1,5 +1,6 @@
 package de.mcsocial.gui.items;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.conversations.ConversationContext;
@@ -10,6 +11,7 @@ import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import de.mcsocial.economy.Account;
 import de.mcsocial.gui.Gui;
 import de.mcsocial.gui.MenuItem;
 import de.mcsocial.gui.Menus.AccountMenu;
@@ -60,8 +62,13 @@ public class AccountItem extends MenuItem {
 
 		@Override
 		public Prompt acceptInput(ConversationContext arg0, String arg1) {
-			// TODO Auto-generated method stub
-			
+			try{
+				Player sender = (Player)arg0.getForWhom();
+				Player reciver = (Player)Bukkit.getOfflinePlayer(arg1.split(" ")[0]);
+				Double amount = Double.parseDouble(arg1.split(" ")[1]);
+				// TODO Auto-generated method stub
+				Account.trans(sender , reciver , amount );
+			}catch(Exception e){}
 			return null;
 		}
 

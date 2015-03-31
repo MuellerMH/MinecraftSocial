@@ -73,17 +73,17 @@ commands:
     description: Betreten des Chat Support
     usage: /kicken [player] [message]
     permission: MCSocial.kicken
-    permission-message: You do not have Permission MCSocial..kicken
+    permission-message: You do not have Permission MCSocial.kicken
   bannen:
     description: Betreten des Chat Support
     usage: /bannennen [player]
-    permission: MCSocial.bannennen
-    permission-message: You do not have Permission MCSocial..bannennen
+    permission: MCSocial.bannen
+    permission-message: You do not have Permission MCSocial.bannen
   timeban:
     description: Betreten des Chat Support
     usage: /timebannennen [player] [minutes]
-    permission: MCSocial.timebannennen
-    permission-message: You do not have Permission MCSocial.timebannennen
+    permission: MCSocial.timeban
+    permission-message: You do not have Permission MCSocial.timeban
   geben:
     description: gibt Gegenstand in der Hand dem Spieler
     usage: /geben [player]
@@ -114,6 +114,11 @@ commands:
     usage: /debug
     permission: MCSocial.fly
     permission-message: You do not have Permission MCSocial.debug
+  balance:
+    description: Zeigt den Kontostand eines Spielers
+    usage: /balance (Spieler)
+    permission: MCSocial.balance
+    permission-message: You do not have Permission MCSocial.balance
 permissions:
   MCSocial.*:
     children:
@@ -138,6 +143,7 @@ permissions:
       MCSocial.teleport: false
       MCSocial.fly: false
       MCSocial.debug: false
+      MCSocial.balance: false
   MCSocial.menu:
     default: true
   MCSocial.miner:
@@ -179,4 +185,6 @@ permissions:
   MCSocial.gm:
     default: false
   MCSocial.debug:
+    default: false
+  MCSocial.balance:
     default: false

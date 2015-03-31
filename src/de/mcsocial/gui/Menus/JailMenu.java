@@ -41,7 +41,7 @@ public class JailMenu {
 		item.setIsCellSpawn(true);
 		item.setLocation(cell);
 		List<String> lines = new LinkedList<String>();
-		lines.add("lässt einen Spieler aus dem Gefängniss.");
+		lines.add("Telport zur Zelle.");
 		item.setDescriptions(lines);
 		JailMenu.nextAction="teleport";
 		JailMenu.menu.addMenuItem(item, pos);

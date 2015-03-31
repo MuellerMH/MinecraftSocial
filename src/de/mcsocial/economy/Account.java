@@ -33,8 +33,9 @@ public class Account {
 		}
 			
 		money = player.getMetadata("account").get(0).asDouble();
-		money+=amount;
+		money =money+amount;
 		player.setMetadata("account", new FixedMetadataValue(MCSocial.instance, money));
+		Account.create(player);
 	}
 	
 	public static void  remove(Player player, Double amount){
@@ -43,13 +44,16 @@ public class Account {
 			player.setMetadata("account", new FixedMetadataValue(MCSocial.instance, 4000.00));
 		}
 		money = player.getMetadata("account").get(0).asDouble();
-		money-=amount;
+		money =money-amount;
 		player.setMetadata("account", new FixedMetadataValue(MCSocial.instance, money));
+		Account.create(player);
 	}
 	
 	public static void  trans(Player sender, Player reciver, Double amount){
 		Account.remove(sender,amount);
 		Account.add(reciver,amount);
+		sender.sendMessage( amount + " wurde an " +reciver.getName() + " überwiesen");
+		reciver.sendMessage("Neuer Geldeingang von " + sender.getName() + ": "+ amount);
 	}
 	
 	public static void  delete(){

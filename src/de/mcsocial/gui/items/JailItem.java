@@ -76,8 +76,14 @@ public class JailItem  extends MenuItem {
 			default:
 				switch(JailMenu.nextAction){
 				case"teleport":
-					p.teleport(this.cellLocation);
-					JailMenu.menu.closeMenu(p);	  
+					try{
+						p.teleport(this.cellLocation);
+						JailMenu.menu.closeMenu(p);	
+					}catch(Exception e){
+						if(p.isOp()){
+							p.sendMessage(e.getMessage());
+						}
+					}
 					break;
 				case"select":
 					Random randomGenerator = new Random();

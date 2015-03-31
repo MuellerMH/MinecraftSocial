@@ -116,7 +116,9 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		getCommand("money").setExecutor(adminPlayer);	
 		getCommand("gm").setExecutor(adminPlayer);	
 		getCommand("teleport").setExecutor(adminPlayer);	
-		getCommand("debug").setExecutor(adminPlayer);	
+		getCommand("debug").setExecutor(adminPlayer);		
+		getCommand("balance").setExecutor(adminPlayer);		
+		getCommand("gs").setExecutor((CommandExecutor) chunkListener);	
 		
 		Market.loadPrices();
 		Jobs.loadJobs();

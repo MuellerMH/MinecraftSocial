@@ -132,14 +132,15 @@ public class ChunkHandler implements Listener,CommandExecutor {
 	public static void unclaimChunk(Player p, double price) {
 		// TODO Auto-generated method stub
 		Chunk chunk = p.getLocation().getChunk();
-
-		if(!ChunkHandler.ownedChunks.containsKey(chunk.toString())){
-			return;
-		}
-			
-		if(ChunkHandler.getOwner(chunk) != null){
-			if(!ChunkHandler.getOwner(chunk).equals(p.getUniqueId())){
+		if(!p.isOp()){
+			if(!ChunkHandler.ownedChunks.containsKey(chunk.toString())){
 				return;
+			}
+				
+			if(ChunkHandler.getOwner(chunk) != null){
+				if(!ChunkHandler.getOwner(chunk).equals(p.getUniqueId())){
+					return;
+				}
 			}
 		}
 		
@@ -253,7 +254,7 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		if(chunk.isCity())
 			return chunk.getCityName();
 		else
-			return Bukkit.getPlayer(chunk.getOwner()).getName();
+			return Bukkit.getOfflinePlayer(chunk.getOwner()).getName();
 	}
 	
 	private Location loadCellSpawns(JailChunk chunk){
@@ -711,19 +712,45 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		}
 		
 		Player p = (Player)sender;
+		Chunk chunk = p.getLocation().getChunk();
 		
 		if(cmd.getName().equalsIgnoreCase("gs")) {
 			switch(args.length){
+			case 1:
+				if(args[0].equalsIgnoreCase("remove")){
+					if(p.isOp()){
+						ChunkHandler.unclaimChunk(p,0);
+						return true;
+					}
+				} 
+				return false;
+			case 2:
+				if(args[0].equalsIgnoreCase("add")){
+					if(p.isOp()){
+						ChunkHandler.claimChunk(Bukkit.getPlayer(args[1]),0.00);
+						return true;
+					}
+				}
+				return false;
 			default: 
 				ChunkHandler.markEdges(p);
-				Chunk chunk = p.getLocation().getChunk();
 				if(ChunkHandler.ownedChunks.containsKey(chunk.toString())) {
-					if(ChunkHandler.getOwnerName(chunk.toString())==null)
+					if(ChunkHandler.getOwnerName(chunk.toString())==null){
+						if(p.isOp()){
+							p.sendMessage("Grundstück " + chunk.toString() );
+						}
 						p.sendMessage("Grundstück gehört: unbekaannt" );
-					else
+					}else
 						p.sendMessage("Grundstück gehört: " + ChunkHandler.getOwnerName(chunk.toString()) );
+
+					return true;
+				}else{
+					if(p.isOp()){
+						p.sendMessage("Grundstück " + chunk.toString() );
+						return true;
+					}
+					return false;
 				}
-				break;
 			}
 		}
 		return false;

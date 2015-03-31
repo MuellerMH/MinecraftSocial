@@ -232,6 +232,21 @@ public class AdminPlayer implements CommandExecutor {
 			}
 			return false;
 		}
+		if(cmd.getName().equalsIgnoreCase("balance")) {
+			if(args.length == 1){
+				try{
+					Player p = (Player) Bukkit.getPlayer(args[0]);
+					admin.sendMessage(p.getName() + " KontoStand: " + Account.getBalance(p));
+					return true;
+				} catch( NumberFormatException e ){
+					admin.sendMessage("Geldmenge ist falsch.");
+				}catch( NullPointerException e ){
+					admin.sendMessage("Spieler ist nicht online.");
+				}
+				return false;
+			}
+			return false;
+		}
 		if(cmd.getName().equalsIgnoreCase("fly")) {
 			fly(admin);
 			return true;

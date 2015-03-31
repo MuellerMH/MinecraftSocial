@@ -28,6 +28,7 @@ public class PlayerPermissions {
 			PlayerPermissions.setPermission(player,"MCSocial.money",true);	
 			PlayerPermissions.setPermission(player,"MCSocial.debug",true);	
 			PlayerPermissions.setPermission(player,"MCSocial.geben",true);		
+			PlayerPermissions.setPermission(player,"MCSocial.balance",true);	
 		}
 		
 		if(PlayerPermissions.hasAccess(player,"moderator")){
