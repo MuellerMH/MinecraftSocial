@@ -84,26 +84,32 @@ public class City {
 		//system.out.println("Spieler "+p.getName()+" wurde der Stadt "+city.getName()+" hinzugefügt.");
 	}
 	
-	public static void leave(Player p, City city){
-
-		if(city != null){
-			if(city.getOwner().equals(p.getUniqueId())){
-				p.sendMessage("Du bist der Lehsnherr dieser Stadt, du kannst sie nicht verlassen.");
-				return;
-			}
-		}
-		if(City.residentList == null)return;
-		if(!City.residentList.containsKey(p.getUniqueId()))return;
-		p.removeMetadata("city", MCSocial.instance);
-		City.residentList.remove(p.getUniqueId());
+	public static void leave(Player p, City city){		
+		try{
+			City.residentList.remove(p.getUniqueId());
+		}catch(Exception e){}
+		try{
+			p.removeMetadata("city", MCSocial.instance);
+		}catch(Exception e){}	
+		try{
+			p.removeMetadata("cityowner", MCSocial.instance);
+		}catch(Exception e){}	
+		City.saveAllVillager();	
+		City.loadAllVillager();
+		p.sendMessage("Du hast die Stadt verlassen.");
 	}
 	
 	public static void remove(Player p, City city){
-		if(City.residentList == null)return;
-		if(!City.residentList.containsKey(p.getUniqueId()))return;
-		p.removeMetadata("city", MCSocial.instance);	
-		City.residentList.remove(p.getUniqueId());
-		//system.out.println("Spieler "+p.getName()+" wurde aus der Stadt "+city.getName()+" entfernt.");
+		try{
+			City.residentList.remove(p.getUniqueId());
+		}catch(Exception e){}
+		try{
+			p.removeMetadata("city", MCSocial.instance);
+		}catch(Exception e){}	
+		try{
+			p.removeMetadata("cityowner", MCSocial.instance);
+		}catch(Exception e){}	
+		City.saveAllVillager();	
 	}
 	
 	public void delete() {
@@ -224,8 +230,6 @@ public class City {
 			}
 		}	
 
-		City.cityList=null;
-		City.residentList=null;
 	}
 	
 	@SuppressWarnings("deprecation")

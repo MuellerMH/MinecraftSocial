@@ -569,6 +569,7 @@ public class ChunkHandler implements Listener,CommandExecutor {
 			player.sendMessage("Du besitzt keine Berechtigungen auf diesem Grundstück.");
 			event.setUseInteractedBlock(Result.DENY);
 			event.setUseItemInHand(Result.ALLOW);
+			event.setCancelled(true);
 		}
     }
 	
