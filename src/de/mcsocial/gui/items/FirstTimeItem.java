@@ -1,11 +1,8 @@
 package de.mcsocial.gui.items;
 
-import java.util.ArrayList;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BookMeta;
 
 import de.mcsocial.city.Resident;
 import de.mcsocial.gui.MenuItem;

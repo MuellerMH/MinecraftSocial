@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
@@ -26,7 +25,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-import de.mcsocial.city.City;
 import de.mcsocial.gui.Gui;
 import de.mcsocial.gui.Menu;
 import de.mcsocial.gui.Menus.Hauptmenu;

@@ -1,7 +1,6 @@
 package de.mcsocial.gui;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

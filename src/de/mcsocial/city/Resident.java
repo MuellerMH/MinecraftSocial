@@ -4,8 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -31,8 +29,6 @@ import de.mcsocial.cheatprotection.Miner;
 import de.mcsocial.economy.Account;
 import de.mcsocial.economy.Jobs;
 import de.mcsocial.economy.Market;
-import de.mcsocial.gui.Menus.CityManagerMenu;
-import de.mcsocial.gui.items.CityManagerItem;
 import de.mcsocial.main.MCSocial;
 import de.mcsocial.main.MySQL;
 import de.mcsocial.permissions.PlayerPermissions;
@@ -146,6 +142,7 @@ public class Resident implements Listener {
 	@EventHandler
 	public void onPlayerJoinEvent(PlayerJoinEvent event) {
 		Player p = event.getPlayer();
+		
 		if(AdminPlayer.bannedPlayer != null){
 			if(AdminPlayer.bannedPlayer.containsKey(p.getUniqueId())){
 				if(System.currentTimeMillis() < AdminPlayer.bannedPlayer.get(p.getUniqueId())){
@@ -155,7 +152,7 @@ public class Resident implements Listener {
 			
 		}
 		
-		fixOpenPlayer(p);
+		//fixOpenPlayer(p);
 		
 		if(!p.hasPlayedBefore()) {
 			Account.create(p);
@@ -163,18 +160,15 @@ public class Resident implements Listener {
 			p.setMetadata("newPlayer", new FixedMetadataValue(MCSocial.instance, true));
 			p.getInventory().addItem(new WelcomeBook().getBook());
 		}
-		
+				
+		Resident.initPlayer(p);
+		PlayerPermissions.initPlayerPermission(p);		
+		Resident.setChat(p);
+		Resident.create(p);
+
 		getCityOwner(p);
 		getCityResident(p);
 		getMoney(p);
-		
-		Resident.initPlayer(p);
-
-		PlayerPermissions.initPlayerPermission(p);
-		
-		Resident.setChat(p);
-		Resident.create(p);
-		
 		
 	}
 	
@@ -294,6 +288,7 @@ public class Resident implements Listener {
 				City.loadAllVillager();	
 				Market.loadPrices();
 				Jobs.loadJobs();
+				initPlayer(p);
 			}
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -332,10 +327,12 @@ public class Resident implements Listener {
 	}
 	
 	private static void initPlayer(Player p){
-		PreparedStatement preparedStmt = MySQL.getPreStat("SELECT isSupporter,isModerator,isAdmin,isDonator,job,folk,nation,lastJobChange FROM MCS_player WHERE uuid = ?");
+		PreparedStatement preparedStmt = MySQL.getPreStat("SELECT * FROM MCS_player WHERE uuid = ?");
 		ResultSet result = null;
 		try {
 			preparedStmt.setString(1, p.getUniqueId().toString());
+			result = MySQL.callDB(preparedStmt);
+			
 			p.removeMetadata("isSupporter", MCSocial.instance);
 			p.removeMetadata("isModerator", MCSocial.instance);
 			p.removeMetadata("isAdmin", MCSocial.instance);
@@ -345,7 +342,7 @@ public class Resident implements Listener {
 			p.removeMetadata("nation", MCSocial.instance);
 			p.removeMetadata("lastJobChange", MCSocial.instance);
 			p.removeMetadata("channel", MCSocial.instance);
-			result = MySQL.callDB(preparedStmt);
+			
 			while(result.next()){
 				p.setMetadata("isSupporter", new FixedMetadataValue(MCSocial.instance, result.getBoolean("isSupporter")));
 				p.setMetadata("isModerator", new FixedMetadataValue(MCSocial.instance, result.getBoolean("isModerator")));
@@ -397,14 +394,12 @@ public class Resident implements Listener {
 	public static void onEnable(){
 		for(Player pl: Bukkit.getOnlinePlayers()){		
 			if(pl == null) {
-				System.out.println("Spieler existiert nicht");
+				//System.out.println("Spieler existiert nicht");
 				continue;
 			}
 			
 			Resident.initPlayer(pl);
-
-			PlayerPermissions.initPlayerPermission(pl);
-			
+			PlayerPermissions.initPlayerPermission(pl);			
 			Resident.setChat(pl);
 			
 		}	

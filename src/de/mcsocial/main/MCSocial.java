@@ -122,6 +122,9 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		
 		Market.loadPrices();
 		Jobs.loadJobs();
+	
+		City.loadAllCitys();
+		City.loadAllVillager();			
 		
 		new BukkitRunnable() {           
 	        @Override
@@ -156,12 +159,6 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		City.loadAllCitys();
-		City.loadAllVillager();
-		
-
-		Resident.onEnable();	
 	}
 	
 	public void onDisable(){ 

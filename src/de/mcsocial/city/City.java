@@ -6,21 +6,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import de.mcsocial.gui.Menus.CityManagerMenu;
-import de.mcsocial.gui.items.CityManagerItem;
 import de.mcsocial.main.MCSocial;
 import de.mcsocial.main.MySQL;
 import de.mcsocial.protection.ChunkHandler;
@@ -135,12 +131,12 @@ public class City {
 	}
 
 	public static boolean isVillager(UUID playerID, UUID city){
-		System.out.println(City.residentList.toString());
+		//System.out.println(City.residentList.toString());
 		try{
 		if(City.residentList == null)
 			City.loadAllVillager();
 		if(City.residentList.containsKey(playerID)){
-			System.out.println("IS IN LIST " + City.residentList.get(playerID).getOwner() + " " + city);
+			//System.out.println("IS IN LIST " + City.residentList.get(playerID).getOwner() + " " + city);
 			if(City.residentList.get(playerID).getOwner().equals(city)){
 				return true;
 			}

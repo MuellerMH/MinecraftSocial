@@ -5,8 +5,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 import de.mcsocial.city.City;
 import de.mcsocial.gui.Menu;
 import de.mcsocial.gui.items.CityManagerItem;
-import de.mcsocial.gui.items.JailItem;
 import de.mcsocial.protection.ChunkHandler;
 
 public class CityManagerMenu {
@@ -132,20 +131,20 @@ public class CityManagerMenu {
 			Map.Entry pair = (Map.Entry)allResidents.next();
 			Player pl = (Player) (Bukkit.getPlayer((UUID) pair.getKey()));
 			if(pl == null) {
-				System.out.println("Spieler existiert nicht");
+				//System.out.println("Spieler existiert nicht");
 				continue;
 			}
 			if(!City.cityList.containsKey(CityManagerMenu.getP().getUniqueId()))
 			{
-				System.out.println("Stadt existiert nicht");
+				//System.out.println("Stadt existiert nicht");
 				continue;
 			}
 			if(!pl.hasMetadata("city")){
-				System.out.println("Spieler gehört keiner Stadt an");
+				//System.out.println("Spieler gehört keiner Stadt an");
 				continue;
 			}
 			if(!CityManagerMenu.getP().getUniqueId().equals(UUID.fromString(pl.getMetadata("city").get(0).asString()))){
-				System.out.println("Spieler gehört nicht dieser Stadt an");
+				//System.out.println("Spieler gehört nicht dieser Stadt an");
 				continue;
 			}
 			CityManagerItem item = new CityManagerItem(pl.getName(),Material.BARRIER);
@@ -165,16 +164,16 @@ public class CityManagerMenu {
 		int i=0;
 		for(Player pl: allPlayer){		
 			if(pl == null) {
-				System.out.println("Spieler existiert nicht");
+				//System.out.println("Spieler existiert nicht");
 				continue;
 			}
 			if(!City.cityList.containsKey(CityManagerMenu.getP().getUniqueId()))
 			{
-				System.out.println("Stadt existiert nicht");
+				//System.out.println("Stadt existiert nicht");
 				continue;
 			}
 			if(pl.hasMetadata("city")){
-				System.out.println("Spieler gehört einer Stadt an");
+				//System.out.println("Spieler gehört einer Stadt an");
 				continue;
 			}
 			CityManagerItem item = new CityManagerItem(pl.getName(),Material.BARRIER);

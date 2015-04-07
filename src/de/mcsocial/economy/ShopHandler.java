@@ -435,7 +435,7 @@ public class ShopHandler implements Listener {
 				x = Integer.parseInt(position[0]);
 				z = Integer.parseInt(position[1]);
 				y = Integer.parseInt(position[2]);
-				System.out.println("Block suchen an Position  "+x+" "+z+" "+y);
+				//System.out.println("Block suchen an Position  "+x+" "+z+" "+y);
 				Location locSign = new Location(Bukkit.getWorld("world"),x,y,z);
 				Block block  = locSign.getBlock();
 				if(block.getType().equals(Material.SIGN) || block.getType().equals(Material.SIGN_POST) || block.getType().equals(Material.WALL_SIGN)){
@@ -459,8 +459,8 @@ public class ShopHandler implements Listener {
 					shop.setPriceSell(result.getDouble("pricesell"));
 					ShopHandler.shops.put(sign, shop);
 				}else{
-					System.out.println("Shop "+result.getString("shopName")+" auf position "+result.getString("sign")+" konnte nicht geladen werden.");
-					System.out.println("Block an Position  "+block.getLocation()+" ist ein "+ block.getType().toString());
+					//System.out.println("Shop "+result.getString("shopName")+" auf position "+result.getString("sign")+" konnte nicht geladen werden.");
+					//System.out.println("Block an Position  "+block.getLocation()+" ist ein "+ block.getType().toString());
 					destroy(x+" "+z+" "+y);
 				}
 			}
@@ -480,7 +480,7 @@ public class ShopHandler implements Listener {
 			
 			preparedStmt.setString (1, string );					
 			MySQL.insertDB(preparedStmt);	
-			System.out.println("Lösche  " + string);
+			//System.out.println("Lösche  " + string);
 			
 			if(ShopHandler.shops==null){
 				return;
@@ -509,7 +509,7 @@ public class ShopHandler implements Listener {
 			
 			preparedStmt.setString (1, x +","+z+","+y );					
 			MySQL.insertDB(preparedStmt);	
-			System.out.println("Lösche  "+x +","+z+","+y);
+			//System.out.println("Lösche  "+x +","+z+","+y);
 			
 			if(ShopHandler.shops==null){
 				return;

@@ -2,7 +2,6 @@ package de.mcsocial.gui.items;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -16,10 +15,8 @@ import de.mcsocial.gui.Menu;
 import de.mcsocial.gui.MenuItem;
 import de.mcsocial.gui.Menus.CityManagerMenu;
 import de.mcsocial.gui.Menus.Hauptmenu;
-import de.mcsocial.gui.Menus.CityManagerMenu;
 import de.mcsocial.protection.ChunkHandler;
 import de.mcsocial.protection.CustomChunk;
-import de.mcsocial.protection.Jail;
 
 public class CityManagerItem extends MenuItem {
 

@@ -353,35 +353,6 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		if(PlayerPermissions.hasAccess(player,"supporter"))
 			return;
 		
-		switch(block.getType()){
-		
-		case AIR:		
-		case APPLE:			
-		case BAKED_POTATO:
-		case BOAT:
-		case BOOK_AND_QUILL:
-		case BREAD:
-		case CAKE:
-		case CARROT:
-		case COMPASS:
-		case COOKED_BEEF:
-		case COOKED_CHICKEN:
-		case COOKED_FISH:
-		case COOKED_MUTTON:
-		case COOKED_RABBIT:
-		case COOKIE:
-		case GOLDEN_APPLE:
-		case GOLDEN_CARROT:
-		case GRILLED_PORK:
-		case MUSHROOM_SOUP:
-		case RABBIT_FOOT:
-			event.setCancelled(false);
-			return;
-		default:
-			break;
-		
-		}
-
 		if(ChunkHandler.ownedChunks.containsKey(chunk.toString())) {
 			CustomChunk cChunk = ChunkHandler.ownedChunks.get(chunk.toString());
 			
@@ -426,37 +397,7 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		
 		if(PlayerPermissions.hasAccess(player,"supporter"))
 			return;
-		
-		
-		switch(block.getType()){
-		
-		case AIR:		
-		case APPLE:			
-		case BAKED_POTATO:
-		case BOAT:
-		case BOOK_AND_QUILL:
-		case BREAD:
-		case CAKE:
-		case CARROT:
-		case COMPASS:
-		case COOKED_BEEF:
-		case COOKED_CHICKEN:
-		case COOKED_FISH:
-		case COOKED_MUTTON:
-		case COOKED_RABBIT:
-		case COOKIE:
-		case GOLDEN_APPLE:
-		case GOLDEN_CARROT:
-		case GRILLED_PORK:
-		case MUSHROOM_SOUP:
-		case RABBIT_FOOT:
-			event.setCancelled(false);
-			return;
-		default:
-			break;
-		
-		}
-				
+							
 		if(ChunkHandler.ownedChunks.containsKey(chunk.toString())) {
 			CustomChunk cChunk = ChunkHandler.ownedChunks.get(chunk.toString());
 			
@@ -503,36 +444,7 @@ public class ChunkHandler implements Listener,CommandExecutor {
 		
 		if(block.getType().equals(Material.AIR))
 			return;
-		
-		switch(block.getType()){
-		
-		case AIR:		
-		case APPLE:			
-		case BAKED_POTATO:
-		case BOAT:
-		case BOOK_AND_QUILL:
-		case BREAD:
-		case CAKE:
-		case CARROT:
-		case COMPASS:
-		case COOKED_BEEF:
-		case COOKED_CHICKEN:
-		case COOKED_FISH:
-		case COOKED_MUTTON:
-		case COOKED_RABBIT:
-		case COOKIE:
-		case GOLDEN_APPLE:
-		case GOLDEN_CARROT:
-		case GRILLED_PORK:
-		case MUSHROOM_SOUP:
-		case RABBIT_FOOT:
-			event.setUseInteractedBlock(Result.ALLOW);
-			event.setUseItemInHand(Result.ALLOW);
-			return;
-		default:
-			break;
-		
-		}
+				
 		Chunk chunk = block.getLocation().getChunk();
 		Player player = event.getPlayer();
 		

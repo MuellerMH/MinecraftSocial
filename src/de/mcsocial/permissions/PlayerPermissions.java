@@ -41,8 +41,7 @@ public class PlayerPermissions {
 			PlayerPermissions.setPermission(player,"MCSocial.kicken",true);
 			PlayerPermissions.setPermission(player,"MCSocial.fly",true);
 			PlayerPermissions.setPermission(player,"MCSocial.teleport",true);
-		}
-			
+		}		
 			
 	}
 

@@ -13,7 +13,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import de.mcsocial.books.WelcomeBook;
 import de.mcsocial.city.City;
 import de.mcsocial.economy.Account;
 import de.mcsocial.permissions.PlayerPermissions;

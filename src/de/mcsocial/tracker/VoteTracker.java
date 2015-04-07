@@ -48,7 +48,7 @@ public class VoteTracker extends Thread {
 			server = new ServerSocket();
 			server.bind(new InetSocketAddress(host, port));
 		} catch (IOException e) {
-			System.out.println("[MCSocial] startSocket." + e.getMessage());
+			//System.out.println("[MCSocial] startSocket." + e.getMessage());
 		}
 	}
 	
@@ -90,12 +90,12 @@ public class VoteTracker extends Thread {
 				// Perform the opcode check.
 				
 				
-				System.out.println("[MCSocial] Vote incomming." + block.toString());
+				//System.out.println("[MCSocial] Vote incomming." + block.toString());
 				// Perform the opcode check.
 				String opcode = readString(block, position);
 				position += opcode.length() + 1;
 				
-				System.out.println("[MCSocial] Vote incomming." + opcode);
+				//System.out.println("[MCSocial] Vote incomming." + opcode);
 				
 				// Parse the block.
 				String serviceName = readString(block, position);
@@ -130,11 +130,11 @@ public class VoteTracker extends Thread {
 				in.close();
 				socket.close();
 			} catch (SocketException ex) {
-				System.out.println("[MCSocial] Vote incomming." + ex.getMessage());
+				//System.out.println("[MCSocial] Vote incomming." + ex.getMessage());
 			} catch (BadPaddingException ex) {
-				System.out.println("[MCSocial] Vote incomming." + ex.getMessage());
+				//System.out.println("[MCSocial] Vote incomming." + ex.getMessage());
 			} catch (Exception ex) {
-				System.out.println("[MCSocial] Vote incomming." + ex.getMessage());
+				//System.out.println("[MCSocial] Vote incomming." + ex.getMessage());
 			}
 		}
 	}
@@ -195,7 +195,7 @@ public class VoteTracker extends Thread {
 		if (hostAddr == null || hostAddr.length() == 0)
 			hostAddr = "0.0.0.0";
 
-		System.out.println("[MCSocial] getHost." + hostAddr);
+		//System.out.println("[MCSocial] getHost." + hostAddr);
 		return hostAddr;
 	}
 
