@@ -36,7 +36,7 @@ public class ShopSellItem extends MenuItem {
 			if(itemStack.getType().equals(mat)){	
 				
 				int totalStack = Math.min(this.amount,itemStack.getAmount());				
-				double total = this.sell*totalStack;
+				double total = Math.round(this.sell*totalStack);
 						
 				Account.add(player, total);
 				

@@ -32,7 +32,7 @@ public class ShopBuyItem extends MenuItem {
 
 		
 		int totalStack = this.amount;				
-		double total = this.buy*totalStack;
+		double total = Math.round(this.buy*totalStack);
 		
 		if(Account.getBalance(player) < total){
 			player.sendMessage("Du hast nicht genügend Geld.");
