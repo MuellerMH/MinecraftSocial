@@ -23,6 +23,7 @@ import de.mcsocial.economy.Jobs;
 import de.mcsocial.economy.Market;
 import de.mcsocial.economy.ShopHandler;
 import de.mcsocial.gui.Gui;
+import de.mcsocial.notification.CommandPlayer;
 import de.mcsocial.notification.Server;
 import de.mcsocial.notification.WebListener;
 import de.mcsocial.protection.ChunkCleaner;
@@ -73,6 +74,7 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		Listener traderListener = new TraderHandler();
 		Listener skillListener = new SkillListener();
 		CommandExecutor adminPlayer = new AdminPlayer();
+		CommandExecutor commandPlayer = new CommandPlayer();
 
 		Miner.loadMinerData();
 		((ShopHandler) shopListener).load();
@@ -113,12 +115,17 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		getCommand("bannen").setExecutor(adminPlayer);	
 		getCommand("timeban").setExecutor(adminPlayer);	
 		getCommand("geben").setExecutor(adminPlayer);	
-		getCommand("money").setExecutor(adminPlayer);	
+		getCommand("bank").setExecutor(adminPlayer);	
 		getCommand("gm").setExecutor(adminPlayer);	
 		getCommand("teleport").setExecutor(adminPlayer);	
 		getCommand("debug").setExecutor(adminPlayer);		
 		getCommand("balance").setExecutor(adminPlayer);		
 		getCommand("gs").setExecutor((CommandExecutor) chunkListener);	
+		getCommand("home").setExecutor((CommandExecutor) commandPlayer);	
+		getCommand("money").setExecutor((CommandExecutor) commandPlayer);	
+		getCommand("spawn").setExecutor((CommandExecutor) commandPlayer);	
+		getCommand("ts").setExecutor((CommandExecutor) commandPlayer);		
+		getCommand("vote").setExecutor((CommandExecutor) commandPlayer);
 		
 		Market.loadPrices();
 		Jobs.loadJobs();

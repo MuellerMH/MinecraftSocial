@@ -10,16 +10,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import de.mcsocial.admin.AdminPlayer;
@@ -40,6 +45,25 @@ import de.mcsocial.trader.TraderHandler;
 
 public class Resident implements Listener {
 	
+	@EventHandler
+	public void on(PlayerTeleportEvent e){
+		if ((e.getCause() == TeleportCause.ENDER_PEARL)) {
+			e.setCancelled(true);
+		}
+	}
+	
+	// Events outside of onCommand
+	@EventHandler
+	public void onDeath(PlayerDeathEvent event) {
+		event.setDeathMessage(null);
+	}
+	
+	@EventHandler
+	public void onExplosion(EntityExplodeEvent e){
+		if(e.getEntity().getType() == EntityType.PRIMED_TNT){
+			e.setCancelled(true);
+		}
+	}
 	/**
 	 * Prevent PvP and PvM damage dependent upon PvP settings and location.
 	 * 

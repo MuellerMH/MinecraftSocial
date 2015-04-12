@@ -20,10 +20,35 @@ commands:
     permission: MCSocial.miner
     permission-message: You do not have Permission MCSocial.infoitem
   gs:
-    description: Display Player Mining
+    description: Show Plot Information
     usage: /gs
     permission: MCSocial.gs
     permission-message: You do not have Permission MCSocial.gs
+  home:
+    description: Teleport to Home
+    usage: /home
+    permission: MCSocial.home
+    permission-message: You do not have Permission MCSocial.home
+  spawn:
+    description: Teleport to Worldspawn
+    usage: /spawn
+    permission: MCSocial.spawn
+    permission-message: You do not have Permission MCSocial.spawn
+  ts:
+    description: Display TeamSpeak Information
+    usage: /ts
+    permission: MCSocial.ts
+    permission-message: You do not have Permission MCSocial.ts
+  vote:
+    description: Display Vote Information
+    usage: /vote
+    permission: MCSocial.vote
+    permission-message: You do not have Permission MCSocial.vote
+  money:
+    description: Display Account Information
+    usage: /money
+    permission: MCSocial.money
+    permission-message: You do not have Permission MCSocial.money
   join:
     description: Betritt einen Chatraum
     usage: /join ChannelName
@@ -76,12 +101,12 @@ commands:
     permission-message: You do not have Permission MCSocial.kicken
   bannen:
     description: Betreten des Chat Support
-    usage: /bannennen [player]
+    usage: /bannen [player]
     permission: MCSocial.bannen
     permission-message: You do not have Permission MCSocial.bannen
   timeban:
     description: Betreten des Chat Support
-    usage: /timebannennen [player] [minutes]
+    usage: /timeban [player] [minutes]
     permission: MCSocial.timeban
     permission-message: You do not have Permission MCSocial.timeban
   geben:
@@ -89,11 +114,11 @@ commands:
     usage: /geben [player]
     permission: MCSocial.geben
     permission-message: You do not have Permission MCSocial.geben
-  money:
+  bank:
     description: Betreten des Chat Support
-    usage: /money [player] [amount]
-    permission: MCSocial.money
-    permission-message: You do not have Permission MCSocial.money
+    usage: /bank [player] [amount]
+    permission: MCSocial.bank
+    permission-message: You do not have Permission MCSocial.bank
   teleport:
     description: Betreten des Chat Support
     usage: /teleport [player] [player]
@@ -126,6 +151,11 @@ permissions:
       MCSocial.miner: false
       MCSocial.infoitem: true
       MCSocial.gs: true
+      MCSocial.money: true
+      MCSocial.home: true
+      MCSocial.spawn: true
+      MCSocial.ts: true
+      MCSocial.vote: true
       MCSocial.join: true
       MCSocial.leave: true
       MCSocial.list: true
@@ -139,7 +169,7 @@ permissions:
       MCSocial.bannen: false
       MCSocial.timeban: false
       MCSocial.geben: false
-      MCSocial.money: false
+      MCSocial.bank: false
       MCSocial.teleport: false
       MCSocial.fly: false
       MCSocial.debug: false
@@ -151,6 +181,16 @@ permissions:
   MCSocial.miner:
     default: true
   MCSocial.gs:
+    default: true
+  MCSocial.home:
+    default: true
+  MCSocial.ts:
+    default: true
+  MCSocial.money:
+    default: true
+  MCSocial.vote:
+    default: true
+  MCSocial.spawn:
     default: true
   MCSocial.join:
     default: true
@@ -176,7 +216,7 @@ permissions:
     default: false
   MCSocial.timeban:
     default: false
-  MCSocial.money:
+  MCSocial.bank:
     default: false
   MCSocial.geben:
     default: false
