@@ -149,14 +149,14 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 	
 		City.loadAllCitys();
 		City.loadAllVillager();			
-		
+
+    	final ChunkCleaner clean = new ChunkCleaner();
 		new BukkitRunnable() {           
 	        @Override
 	        public void run() {
-		    	ChunkCleaner clean = new ChunkCleaner();
 		    	clean.run();
 	        }
-	    }.runTaskTimer(MCSocial.instance, 320L, 320L);
+	    }.runTaskTimer(MCSocial.instance, 32L, 32L);
 		
 	    new BukkitRunnable() {	           
 	        @Override
