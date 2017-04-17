@@ -262,6 +262,7 @@ public class Miner implements Listener, CommandExecutor {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {

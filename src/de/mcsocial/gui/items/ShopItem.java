@@ -9,9 +9,6 @@ import de.mcsocial.gui.Menus.ShopMenu;
 
 public class ShopItem extends MenuItem {
 	private ItemStack item;
-	private short durability;
-	private Material mat;
-
 	public ShopItem(String text, Material icon) {
 		// TODO Auto-generated constructor stub
 		super(text, new ItemStack(icon,1));
@@ -36,13 +33,10 @@ public class ShopItem extends MenuItem {
 	}
 
 	public void setMat(Material type) {
-		this.mat = type;
 		
 	}
 
 	public void setDurability(short durability) {
-		// TODO Auto-generated method stub
-		this.durability = durability;
 		
 	}
 	

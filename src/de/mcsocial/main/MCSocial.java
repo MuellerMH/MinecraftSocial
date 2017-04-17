@@ -1,6 +1,7 @@
 package de.mcsocial.main;
 
 import java.io.File;
+import java.io.IOException;
 import java.security.KeyPair;
 
 import net.minecraft.server.v1_8_R1.EntityVillager;
@@ -8,6 +9,8 @@ import net.minecraft.server.v1_8_R1.EntityVillager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -41,6 +44,8 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 	private static Server notificationServer;
 	public static Channel channel;
 	private static KeyPair keyPair;
+
+	public static FileConfiguration config;
 	
 	public KeyPair getKeyPair(){
 		return MCSocial.keyPair;
@@ -50,10 +55,23 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 	@SuppressWarnings("static-access")
 	public void onEnable(){ 
 		
+		
 		File pluginFolder = new File(getDataFolder().toString());
+		
 		if(!pluginFolder.exists()){
 			pluginFolder.mkdir();
 		}
+
+		loadProperties();
+		
+		if ( !MCSocial.config.getBoolean("dbCreated") )
+		{
+			MySQLSetup.createTables();
+			MCSocial.config.set("dbCreated", true);
+			saveProperties();
+		}
+			
+		
 		/*
 		 * Create RSA directory and keys if it does not exist; otherwise, read
 		 * keys.
@@ -80,7 +98,6 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 		((ShopHandler) shopListener).load();
 		TraderHandler.loadShops();
 		
-
 		MCSocial.setChannel(new Channel());
 		MCSocial.channel.create("Support");
 		MCSocial.channel.create("Admin");
@@ -166,6 +183,24 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	private void saveProperties() {
+		// TODO Auto-generated method stub
+		File configFile = new File(getDataFolder(),"mcsocial.yml");
+		try {
+			MCSocial.config.save(configFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void loadProperties()
+	{
+		File configFile = new File(getDataFolder(),"mcsocial.yml");
+		MCSocial.config = YamlConfiguration.loadConfiguration(configFile);
 	}
 	
 	public void onDisable(){ 

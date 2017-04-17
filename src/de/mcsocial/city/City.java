@@ -30,8 +30,6 @@ public class City {
 	private String name;
 	private UUID owner;
 	private Location loc;
-	private int maxPlots = 100;
-
 	public void create(Player p, String arg1) {
 		String sql = "insert into MCS_city (name, owner, x, y, z)"
 		        + " values (?, ?, ?, ?, ?)";
@@ -163,6 +161,7 @@ public class City {
 		this.loc = loc2;
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void loadAllVillager(){		
 		if(City.residentList == null)
 			City.residentList = new HashMap<UUID,City>();
@@ -194,9 +193,7 @@ public class City {
 	public static void debug(){
 		Iterator<Entry<UUID, City>> allResidents = City.residentList.entrySet().iterator();
 		while(allResidents.hasNext()){	
-			@SuppressWarnings("rawtypes")
-			Map.Entry pair = (Map.Entry)allResidents.next();
-			//system.out.println(pair.getKey() +  ": " + ((City)pair.getValue()).getName() +" - " + pair.getValue().toString());
+			allResidents.next();
 		}
 		//system.out.println(City.residentList.toString());
 	}

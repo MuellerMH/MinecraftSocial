@@ -13,20 +13,14 @@ public class WelcomeBook {
 	private String author;
 	private String title;
 	private List<String> customPages;
-	private BookMeta bm;
 	protected ItemStack book;
 	
 	public WelcomeBook(){
 		author = "MuellerMH";
 		title = "Willkommen!";
-		customPages = new ArrayList<String>();
+		setCustomPages(new ArrayList<String>());
 	}
 
-	
-	private void addPage(String string) {
-		// TODO Auto-generated method stub
-		customPages.add(string);		
-	}
 	
 	public ItemStack getBook(){
 		ItemStack book = new ItemStack(Material.BOOK_AND_QUILL, 1);			
@@ -117,5 +111,15 @@ public class WelcomeBook {
 		content.add("http://minecraft-social.de\n");	
 		bm2.setPage(7,content.toString());
 		
+	}
+
+
+	public List<String> getCustomPages() {
+		return customPages;
+	}
+
+
+	public void setCustomPages(List<String> customPages) {
+		this.customPages = customPages;
 	}
 }

@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class MySQL {
-	private static String host="5.62.115.189";
-	private static int port=3306;
-	private static String name="ni394187_4_DB";
-	private static String user="ni394187_4_DB";
-	private static String pass="logj1BR8";
+	private static String host = 	(String) MCSocial.config.getString("mysqlHost");
+	private static int port = 		(int) MCSocial.config.getInt("mysqlPort");
+	private static String name = 	(String) MCSocial.config.getString("mysqlDatabase");
+	private static String user = 	(String) MCSocial.config.getString("mysqlUser");
+	private static String pass = 	(String) MCSocial.config.getString("mysqlPassword");
 	
 	private static Connection connection = null;
 	
@@ -92,4 +92,26 @@ public class MySQL {
 		return null;
 		
 	}
+	
+
+	
+	
+	public static int callDBUpdate (String sql) {
+		MySQL.connection = getInstance();
+		if(MySQL.connection == null){
+			return 0;
+		}
+		
+		Statement query = null;		
+		try{
+			query = MySQL.connection.createStatement();
+			int result = query.executeUpdate(sql);
+			return result;
+		}catch(SQLException e){
+			e.printStackTrace();			
+		}
+		return 0;
+		
+	}
+	
 }

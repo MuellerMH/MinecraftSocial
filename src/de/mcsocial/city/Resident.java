@@ -81,7 +81,6 @@ public class Resident implements Listener {
 			}
 			
 			if (event instanceof EntityDamageByEntityEvent){
-				boolean proceed = false;
 				Player damager = null;
 				EntityDamageByEntityEvent edbye = (EntityDamageByEntityEvent) event;
 				
@@ -284,6 +283,7 @@ public class Resident implements Listener {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void fixOpenPlayer(Player p){
 		PreparedStatement preparedStmt = MySQL.getPreStat("SELECT * FROM MCS_player WHERE name=?");
 		ResultSet result = null;
@@ -415,6 +415,7 @@ public class Resident implements Listener {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void onEnable(){
 		for(Player pl: Bukkit.getOnlinePlayers()){		
 			if(pl == null) {

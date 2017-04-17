@@ -132,8 +132,7 @@ public abstract class MenuItem {
         descriptions.add(line);
     }
 
-    @SuppressWarnings("deprecation")
-	protected ItemStack getItemStack() {
+    protected ItemStack getItemStack() {
         
         return this.iconItem;
     }

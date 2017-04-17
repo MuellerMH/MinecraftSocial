@@ -158,6 +158,7 @@ public class ChatListener implements Listener, CommandExecutor {
 		
 		
 		if(args.length >=1 ){
+			@SuppressWarnings("deprecation")
 			List<Player> allPlayer = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
 
 			if(Jail.isInJail(p)){
@@ -388,6 +389,7 @@ public class ChatListener implements Listener, CommandExecutor {
 		}
         return l.distanceSquared(ll) > 460;
     }
+	@SuppressWarnings("unused")
 	private Boolean outOfRange(Location l, Location ll) {  
 		if(l.equals(ll)){
 			return false;

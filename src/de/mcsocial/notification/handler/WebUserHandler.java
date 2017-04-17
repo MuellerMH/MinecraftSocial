@@ -15,10 +15,13 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public class WebUserHandler implements HttpHandler {
-    public void handle(HttpExchange exchange) throws IOException {
+    private String requestMethod;
+	private Headers requestHeaders;
+
+	public void handle(HttpExchange exchange) throws IOException {
     	InputStream is=exchange.getRequestBody();
 		BufferedReader in=new BufferedReader(new InputStreamReader(is));
-		String requestMethod=exchange.getRequestMethod();
+		setRequestMethod(exchange.getRequestMethod());
 		
 		CharBuffer cb = CharBuffer.allocate(256);
 		
@@ -36,13 +39,14 @@ public class WebUserHandler implements HttpHandler {
 		
 		exchange.sendResponseHeaders(200,0);
 		OutputStream responseBody=exchange.getResponseBody();
-		Headers requestHeaders=exchange.getRequestHeaders();
+		setRequestHeaders(exchange.getRequestHeaders());
 		
 		responseBody.write(getOnlineUser().getBytes());
 		responseBody.close();
     }
     
-    private String getOnlineUser(){
+    @SuppressWarnings("deprecation")
+	private String getOnlineUser(){
     	String s="{\"player\":[";
 
 		Player[] players = Bukkit.getOnlinePlayers();
@@ -57,4 +61,20 @@ public class WebUserHandler implements HttpHandler {
 		
 		return s;
     }
+
+	public Headers getRequestHeaders() {
+		return requestHeaders;
+	}
+
+	public void setRequestHeaders(Headers requestHeaders) {
+		this.requestHeaders = requestHeaders;
+	}
+
+	public String getRequestMethod() {
+		return requestMethod;
+	}
+
+	public void setRequestMethod(String requestMethod) {
+		this.requestMethod = requestMethod;
+	}
 }

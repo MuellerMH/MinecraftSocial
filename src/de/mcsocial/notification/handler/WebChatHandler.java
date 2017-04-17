@@ -19,7 +19,7 @@ public class WebChatHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
     	InputStream is=exchange.getRequestBody();
 		BufferedReader in=new BufferedReader(new InputStreamReader(is));
-		String requestMethod=exchange.getRequestMethod();
+		exchange.getRequestMethod();
 		
 		CharBuffer cb = CharBuffer.allocate(256);
 		
@@ -37,7 +37,7 @@ public class WebChatHandler implements HttpHandler {
 		
 		exchange.sendResponseHeaders(200,0);
 		OutputStream responseBody=exchange.getResponseBody();
-		Headers requestHeaders=exchange.getRequestHeaders();
+		exchange.getRequestHeaders();
 		
 		responseBody.write(getLastChatMessage().getBytes());
 		responseBody.close();

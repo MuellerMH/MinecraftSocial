@@ -82,6 +82,7 @@ public class CityManagerItem extends MenuItem {
 				Gui.switchMenu(p, CityManagerMenu.menu, playerSelect);
 				return;
 			case "Spieler hinzufuegen":
+				@SuppressWarnings("deprecation")
 				List<Player> allPlayer = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
 				needetRows = Math.max(1,(int)Math.ceil(allPlayer.size()/9));
 				playerSelect = new Menu("Spieler wählen",needetRows);

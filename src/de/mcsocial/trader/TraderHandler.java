@@ -81,10 +81,39 @@ public class TraderHandler implements Listener, CommandExecutor{
 				return false;
 			}
 			
+			if(args.length == 2){
+				if(args[0].equalsIgnoreCase("reload")){
+					VillagerShop.despawn((Villager)villagerList.get(args[1]));
+					TraderHandler.loadShop(args[1]);
+					p.sendMessage("Shop " + args[1] + " reloaded");
+					return true;
+				}
+				
+				if(args[0].equalsIgnoreCase("move")){
+					Villager village = villagerList.get(args[1]);
+					VillagerShop.despawn(village);
+					Villager newVillage = VillagerShop.spawn(p.getLocation());
+					villagerList.replace(args[1], village, newVillage);
+					TraderHandler.loadShop(args[1]);
+					
+					p.sendMessage("Shop " + args[1] + " moved");
+					return true;
+				}
+				
+				if(args[0].equalsIgnoreCase("remove")){
+					removeShop(args[1]);
+					VillagerShop.despawn((Villager)villagerList.get(args[1]));
+					VillagerShop.spawn(p.getLocation());
+					TraderHandler.saveShop((ShopData)villagerList.get(args[1]));
+					p.sendMessage("Shop mit dem Namen " + args[1] + " entfernt.");
+					return true;
+				}
+				return false;
+			}
+			
 			if(args.length >= 3){
 				if(args[0].equalsIgnoreCase("add")){
-					Villager village = VillagerShop.spawn(((Player)sender).getLocation(), args[1]);
-					
+					Villager village = VillagerShop.spawn(((Player)sender).getLocation(), args[1]);					
 					if(args[2]!=null){
 						switch(args[2]){
 						case"0":
@@ -104,15 +133,12 @@ public class TraderHandler implements Listener, CommandExecutor{
 							break;
 						}
 					}
+					if(TraderHandler.villagerList==null){
+						TraderHandler.villagerList = new HashMap<String,Villager>();
+					}
+					TraderHandler.villagerList.put(args[1],village);
 
 					p.sendMessage("Shop mit dem Namen " + args[1] + " hinzugefügt.");
-					return true;
-				}
-				
-				if(args[0].equalsIgnoreCase("remove")){
-					//TODO: entfernen ? VillagerShop.spawn(((Player)sender).getLocation(), args[2]);
-					p.sendMessage("Shop mit dem Namen " + args[1] + " entfernt.");
-					p.sendMessage("TODO: geht noch nicht... ");
 					return true;
 				}
 				return false;
@@ -159,6 +185,25 @@ public class TraderHandler implements Listener, CommandExecutor{
 		  out.append(",");
 		}
 		return out.toString();
+	}
+	
+	static void removeShop(String shopName){
+
+		String sql;
+		
+			sql = "DELETE FROM MCS_npcshop WHERE"
+		        + " name = ?";
+			PreparedStatement preparedStmt = MySQL.getPreStat(sql);
+			try {
+				preparedStmt.setString (1, shopName);
+				
+				MySQL.insertDB(preparedStmt);								
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		
 	}
 	
 	static void saveShop(ShopData shop){

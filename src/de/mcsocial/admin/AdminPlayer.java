@@ -29,6 +29,7 @@ public class AdminPlayer implements CommandExecutor {
 		AdminLogger.writeLog(admin, player, "kick", argument);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void ban (Player admin, Player player) {
 		if(!admin.hasPermission("MCSocial.bannen")) return;
 
@@ -55,6 +56,7 @@ public class AdminPlayer implements CommandExecutor {
 		AdminLogger.writeLog(admin, player, "give", itemName);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void give (Player admin, Player player, int itemID, int count) {
 		if(!admin.hasPermission("MCSocial.geben")) return;
 		ItemStack item = new ItemStack(Material.getMaterial(itemID));

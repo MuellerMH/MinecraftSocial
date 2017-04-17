@@ -12,10 +12,12 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public class WebVoteHandler implements HttpHandler {
-    public void handle(HttpExchange exchange) throws IOException {
+    private Headers requestHeaders;
+
+	public void handle(HttpExchange exchange) throws IOException {
     	InputStream is=exchange.getRequestBody();
 		BufferedReader in=new BufferedReader(new InputStreamReader(is));
-		String requestMethod=exchange.getRequestMethod();
+		exchange.getRequestMethod();
 		
 		CharBuffer cb = CharBuffer.allocate(256);
 		
@@ -33,10 +35,18 @@ public class WebVoteHandler implements HttpHandler {
 		
 		exchange.sendResponseHeaders(200,0);
 		OutputStream responseBody=exchange.getResponseBody();
-		Headers requestHeaders=exchange.getRequestHeaders();
+		setRequestHeaders(exchange.getRequestHeaders());
 		String s="thx";
 		
 		responseBody.write(s.getBytes());
 		responseBody.close();
     }
+
+	public Headers getRequestHeaders() {
+		return requestHeaders;
+	}
+
+	public void setRequestHeaders(Headers requestHeaders) {
+		this.requestHeaders = requestHeaders;
+	}
 }

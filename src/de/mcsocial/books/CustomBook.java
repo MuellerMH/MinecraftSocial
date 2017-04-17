@@ -8,8 +8,6 @@ import org.bukkit.inventory.meta.BookMeta;
 
 public class CustomBook {
 	
-	private String author;
-	private String title;
 	private List<String> customPages;
 	private BookMeta bm;
 	protected ItemStack book;

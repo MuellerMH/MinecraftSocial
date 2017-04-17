@@ -64,6 +64,7 @@ public class AccountItem extends MenuItem {
 		public Prompt acceptInput(ConversationContext arg0, String arg1) {
 			try{
 				Player sender = (Player)arg0.getForWhom();
+				@SuppressWarnings("deprecation")
 				Player reciver = (Player)Bukkit.getOfflinePlayer(arg1.split(" ")[0]);
 				Double amount = Double.parseDouble(arg1.split(" ")[1]);
 				// TODO Auto-generated method stub

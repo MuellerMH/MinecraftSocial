@@ -68,5 +68,12 @@ public class VillagerShop extends CustomVillager {
 		// TODO Auto-generated method stub
 		this.owner = player;
 	}
+
+
+	@SuppressWarnings("deprecation")
+	public static void despawn(Villager shop) {
+		shop.setHealth(0);
+		shop.damage(100);
+	}
 	
 }
