@@ -158,6 +158,8 @@ public class MCSocial  extends JavaPlugin  implements Listener {
 	        }
 	    }.runTaskTimer(MCSocial.instance, 32L, 32L);
 		
+	    
+	    // refactor
 	    new BukkitRunnable() {	           
 	        @Override
 	        public void run() {

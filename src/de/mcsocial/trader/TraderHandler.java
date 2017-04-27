@@ -20,6 +20,7 @@ import org.bukkit.craftbukkit.v1_8_R1.entity.CraftVillager;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
+import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -89,50 +90,23 @@ public class TraderHandler implements Listener, CommandExecutor{
 					return true;
 				}
 				
-				if(args[0].equalsIgnoreCase("move")){
-					Villager village = villagerList.get(args[1]);
-					VillagerShop.despawn(village);
-					Villager newVillage = VillagerShop.spawn(p.getLocation());
-					villagerList.replace(args[1], village, newVillage);
-					TraderHandler.loadShop(args[1]);
-					
-					p.sendMessage("Shop " + args[1] + " moved");
-					return true;
-				}
-				
 				if(args[0].equalsIgnoreCase("remove")){
 					removeShop(args[1]);
 					VillagerShop.despawn((Villager)villagerList.get(args[1]));
-					VillagerShop.spawn(p.getLocation());
-					TraderHandler.saveShop((ShopData)villagerList.get(args[1]));
+					TraderHandler.removeShop(args[1]);
 					p.sendMessage("Shop mit dem Namen " + args[1] + " entfernt.");
 					return true;
 				}
 				return false;
 			}
 			
-			if(args.length >= 3){
+			if(args.length == 3){
+				
+				Integer profession = Integer.parseInt(args[2]);
+				
 				if(args[0].equalsIgnoreCase("add")){
-					Villager village = VillagerShop.spawn(((Player)sender).getLocation(), args[1]);					
-					if(args[2]!=null){
-						switch(args[2]){
-						case"0":
-							village.setProfession(Villager.Profession.FARMER);
-							break;
-						case"1":
-							village.setProfession(Villager.Profession.LIBRARIAN);
-							break;
-						case"2":
-							village.setProfession(Villager.Profession.PRIEST);
-							break;
-						case"3":
-							village.setProfession(Villager.Profession.BLACKSMITH);
-							break;
-						case"4":
-							village.setProfession(Villager.Profession.BUTCHER);
-							break;
-						}
-					}
+					Villager village = VillagerShop.spawn(((Player)sender).getLocation(), args[1],profession);					
+					village.setProfession(TraderHandler.getProfession(profession));
 					if(TraderHandler.villagerList==null){
 						TraderHandler.villagerList = new HashMap<String,Villager>();
 					}
@@ -141,6 +115,26 @@ public class TraderHandler implements Listener, CommandExecutor{
 					p.sendMessage("Shop mit dem Namen " + args[1] + " hinzugefügt.");
 					return true;
 				}
+				
+				if(args[0].equalsIgnoreCase("move")){
+					try{
+						ShopData shop = TraderHandler.shopList.get(args[1]);
+						Villager village = villagerList.get(args[1]);
+						Villager newVillage = VillagerShop.spawn(((Player)sender).getLocation(), args[1], profession);
+						villagerList.replace(args[1], village, newVillage);				
+						village.setProfession(TraderHandler.getProfession(profession));
+						shop.setLocation(((Player)sender).getLocation());
+						VillagerShop.despawn(village);
+						TraderHandler.saveShop(shop);
+					
+						p.sendMessage("Shop " + args[1] + " moved");
+					} catch ( Exception e) {
+						e.printStackTrace();
+						p.sendMessage("Error move shop " +args[1]+": " + e.getMessage()  + "!");
+					}
+					return true;
+				}
+				
 				return false;
 			}
 			
@@ -149,23 +143,24 @@ public class TraderHandler implements Listener, CommandExecutor{
 	}
 	
 	
-	
-/*
- * 
- * VillagerShop villShop = new VillagerShop((World) Bukkit.getWorld("world"));
-		Location loc = new Location(Bukkit.getWorld("world"),29.50,63.50,44.50);
-		// x Y z
-		villShop.setPosition(-240.50, 65.50, 236.50 );
+	private static Profession getProfession(Integer prof)
+	{
+		switch(prof){
+		case 0:
+			return Villager.Profession.FARMER;
+		case 1:
+			return Villager.Profession.LIBRARIAN;
+		case 2:
+			return Villager.Profession.PRIEST;
+		case 3:
+			return Villager.Profession.BLACKSMITH;
+		case 4:
+			return Villager.Profession.BUTCHER;
+		default: 
+			return Villager.Profession.FARMER;
+		}
 		
-		0 = Villager
-		1 = Librarian
-		2 = Priest
-		3 = Blacksmith
-		4 = Butcher
-		 
-		VillagerShop villager = (VillagerShop)Bukkit.getWorld("world").spawnCreature(loc, CreatureType.VILLAGER);	
- */
-	
+	}
 
 	public static ShopData getShop(CraftVillager shop) {
 		if(TraderHandler.shopList == null){
@@ -176,7 +171,8 @@ public class TraderHandler implements Listener, CommandExecutor{
 		}
 		return TraderHandler.shopList.get(shop.getCustomName());
 	}
-	private static String itemToString(List<ItemStack> item) {
+	
+	private static String itemsToString(List<ItemStack> item) {
 		if(item == null) return null;
 		StringBuilder out = new StringBuilder();
 		for (ItemStack o : item)
@@ -208,8 +204,11 @@ public class TraderHandler implements Listener, CommandExecutor{
 	
 	static void saveShop(ShopData shop){
 
-		String items = TraderHandler.itemToString(shop.getItems());
+		
+		String items = TraderHandler.itemsToString(shop.getItems());
 		String sql;
+
+		Bukkit.getLogger().info(items);
 		
 		if(items== null)
 		{
@@ -230,9 +229,10 @@ public class TraderHandler implements Listener, CommandExecutor{
 			return;
 		}
 		
+		
 		sql = "insert into MCS_npcshop (name,items,location,profession)"
 		        + " values (?, ?, ?, ?)"
-		        + " ON DUPLICATE KEY UPDATE items= ?";
+		        + " ON DUPLICATE KEY UPDATE items= ?,location = ?, profession=?";
 		
 		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
 		try {
@@ -241,6 +241,8 @@ public class TraderHandler implements Listener, CommandExecutor{
 			preparedStmt.setString (3, shop.getLocation());
 			preparedStmt.setInt(4, shop.getProfession());
 			preparedStmt.setString (5, items);
+			preparedStmt.setString (6, shop.getLocation());
+			preparedStmt.setInt (7, shop.getProfession());
 			
 			MySQL.insertDB(preparedStmt);								
 		} catch (SQLException e) {
@@ -259,29 +261,7 @@ public class TraderHandler implements Listener, CommandExecutor{
 			if(result == null) return;
 			
 			while(result.next()){
-				ShopData shop = new ShopData();
-				shop.setName(customName);
-				String itemString = result.getString("items");
-				if(itemString!=null){
-					String[] items = itemString.split(",");
-					List<ItemStack> itemStack = new ArrayList<ItemStack>();	
-					for(String item: items){
-						Material itemMaterial = Material.getMaterial(item.split(":")[0]);
-						ItemStack generatetItem;
-						generatetItem = new ItemStack(itemMaterial,1);
-						if(item.split(":").length == 2){
-							generatetItem = new ItemStack(itemMaterial,1,(short)Integer.parseInt(item.split(":")[1]));
-						}
-						
-						itemStack.add(generatetItem);
-						
-					}
-					shop.setItems(itemStack);
-				}
-				shop.setProfession(result.getInt("profession"));
-				shop.setLocation(result.getString("location"));
-				initVillager(shop);
-				TraderHandler.shopList.put(customName, shop);
+				TraderHandler.initShop(result);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -289,9 +269,50 @@ public class TraderHandler implements Listener, CommandExecutor{
 		}
 	}
 	
-	public static void loadShops(){
-		if(TraderHandler.shopList == null)
+	private static ShopData initShop(ResultSet result) throws SQLException
+	{
+		if(TraderHandler.shopList == null){
 			TraderHandler.shopList = new HashMap<String,ShopData>();
+		}
+		
+		String shopName = result.getString("name");
+		
+		Bukkit.getLogger().info(result.getString("name")+ " : " +result.getString("items"));
+		
+		if(shopName!=null){
+			ShopData shop = new ShopData();
+			shop.setName(shopName);
+			String itemString = result.getString("items");
+			if(itemString!=null){
+				String[] items = itemString.split(",");
+				List<ItemStack> itemStack = new ArrayList<ItemStack>();	
+				for(String item: items){
+					Material itemMaterial = Material.getMaterial(item.split(":")[0]);
+					if(itemMaterial==null) continue;
+					ItemStack generatetItem;
+					generatetItem = new ItemStack(itemMaterial,1);
+					if(item.split(":").length == 2){
+						generatetItem = new ItemStack(itemMaterial,1,(short)Integer.parseInt(item.split(":")[1]));
+					}
+					
+					itemStack.add(generatetItem);
+				}
+				shop.setItems(itemStack);
+			}
+	
+			shop.setProfession(result.getInt("profession"));
+			shop.setLocation(result.getString("location"));
+			
+			initVillager(shop);
+			TraderHandler.shopList.put(result.getString("name"), shop);
+			return shop;
+
+		}
+		return null;
+	}
+	
+	public static void loadShops(){
+		TraderHandler.shopList = new HashMap<String,ShopData>();
 		PreparedStatement preparedStmt = MySQL.getPreStat("SELECT name,items,location,profession FROM MCS_npcshop");
 		ResultSet result = null;
 		try {
@@ -300,31 +321,7 @@ public class TraderHandler implements Listener, CommandExecutor{
 			if(result == null) return;
 			
 			while(result.next()){
-				ShopData shop = new ShopData();
-				shop.setName(result.getString("name"));
-				String itemString = result.getString("items");
-				if(itemString!=null){
-					String[] items = itemString.split(",");
-					List<ItemStack> itemStack = new ArrayList<ItemStack>();	
-					for(String item: items){
-						Material itemMaterial = Material.getMaterial(item.split(":")[0]);
-						if(itemMaterial==null) continue;
-						ItemStack generatetItem;
-						generatetItem = new ItemStack(itemMaterial,1);
-						if(item.split(":").length == 2){
-							generatetItem = new ItemStack(itemMaterial,1,(short)Integer.parseInt(item.split(":")[1]));
-						}
-						
-						itemStack.add(generatetItem);
-					}
-					shop.setItems(itemStack);
-				}
-
-				shop.setProfession(result.getInt("profession"));
-				shop.setLocation(result.getString("location"));
-				
-				initVillager(shop);
-				TraderHandler.shopList.put(result.getString("name"), shop);
+				TraderHandler.initShop(result);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -350,28 +347,9 @@ public class TraderHandler implements Listener, CommandExecutor{
 		z = Double.parseDouble(locdata[2]);
 		Location loc = new Location(Bukkit.getWorld("world"),x,y,z);
 		
-		Villager village = VillagerShop.spawn(loc,shop.getName());
+		Villager village = VillagerShop.spawn(loc,shop.getName(),shop.getProfession());
+		village.setProfession(TraderHandler.getProfession(shop.getProfession()));
 		
-		switch(shop.getProfession()){
-		case 0:
-			village.setProfession(Villager.Profession.FARMER);
-			break;
-		case 1:
-			village.setProfession(Villager.Profession.LIBRARIAN);
-			break;
-		case 2:
-			village.setProfession(Villager.Profession.PRIEST);
-			break;
-		case 3:
-			village.setProfession(Villager.Profession.BLACKSMITH);
-			break;
-		case 4:
-			village.setProfession(Villager.Profession.BUTCHER);
-			break;
-		default:
-			village.setProfession(Villager.Profession.FARMER);
-			break;
-		}
 		if(TraderHandler.villagerList==null){
 			TraderHandler.villagerList = new HashMap<String,Villager>();
 		}

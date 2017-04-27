@@ -16,3 +16,6 @@ Get a Patron on Patreon https://www.patreon.com/deronkozockt
 You can Donate on Paypal muellermh.media@gmail.com
 
 
+java -Xmx8G -Xms1G -Xdebug -Xrunjdwp:transport=dt_socket,address=1000,server=y,suspend=n -jar craftbukkit.jar 
+
+

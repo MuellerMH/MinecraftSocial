@@ -1,7 +1,4 @@
 /**
- * 
- */
-/**
  * @author MuellerMH
  *
  */

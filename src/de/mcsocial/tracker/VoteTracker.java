@@ -33,6 +33,10 @@ public class VoteTracker extends Thread {
 	private ServerSocket server;
 	private boolean running;
 	
+	/**
+	 * S
+	 * @param plugin
+	 */
 	public VoteTracker(MCSocial plugin){
 		VoteTracker.plugin = plugin;
 		this.host = getHost();

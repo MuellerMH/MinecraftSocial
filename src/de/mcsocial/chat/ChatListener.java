@@ -25,6 +25,7 @@ import de.mcsocial.economy.Account;
 import de.mcsocial.main.MCSocial;
 import de.mcsocial.notification.VoteNotificationEvent;
 import de.mcsocial.notification.VoteNotify;
+import de.mcsocial.notification.handler.WebChatHandler;
 import de.mcsocial.permissions.PlayerPermissions;
 import de.mcsocial.protection.Jail;
 
@@ -269,9 +270,18 @@ public class ChatListener implements Listener, CommandExecutor {
 	@SuppressWarnings("static-access")
 	@EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
+		try {
+			ChatLogger.writeLog(event.getPlayer(), event.getMessage());
+		} catch( Exception e){
+			event.getPlayer().sendMessage(ChatColor.RED + e.getMessage());
+		}
+		try {
+			WebChatHandler.executePost("http://hook.crank.zone/mc","{\"player\":\""+event.getPlayer()+"\",\"msg\":\""+event.getMessage()+"\"}");
+		} catch( Exception e){
+			event.getPlayer().sendMessage(ChatColor.RED + e.getMessage());
+		}
 		
-		ChatLogger.writeLog(event.getPlayer(), event.getMessage());
-		  
+		
         if(event.getMessage().equalsIgnoreCase("MuellerMH") 
         		|| event.getMessage().equalsIgnoreCase("mueller")
         ) {

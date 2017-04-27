@@ -25,7 +25,6 @@ public class WebVoteHandler implements HttpHandler {
 		in.read(cb);
 		
 		// flip the char buffer
-		cb.flip();
 		
 		// print the char buffer
 		

@@ -2,6 +2,7 @@ package de.mcsocial.trader;
 
 import java.util.List;
 
+import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
 public class ShopData {
@@ -48,6 +49,10 @@ public class ShopData {
 	
 	public void setLocation(String string) {
 		this.location = string;
+	}
+	public void setLocation(Location location2) {
+		// TODO Auto-generated method stub
+		this.location = location2.getX() +","+location2.getY()+","+location2.getZ();
 	}
 	
 

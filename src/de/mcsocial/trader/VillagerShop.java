@@ -38,7 +38,7 @@ public class VillagerShop extends CustomVillager {
         return (CraftVillager) customEntity.getBukkitEntity();
     }
 
-	public static Villager spawn(Location location, String string) {
+	public static Villager spawn(Location location, String string, Integer profession) {
 		// TODO Auto-generated method stub
 		 World mcWorld = (World) ((CraftWorld) location.getWorld()).getHandle();
 	        final VillagerShop customEntity = new VillagerShop(
@@ -51,11 +51,30 @@ public class VillagerShop extends CustomVillager {
 	        mcWorld.addEntity(customEntity, SpawnReason.CUSTOM);
 	        ShopData shop = new ShopData();
 	        shop.setName(string);	
-	        shop.setProfession(customEntity.getProfession());
+	        shop.setProfession(profession);
 	        shop.setLocation(location.getX(), location.getY(),
 	                location.getZ());
 	        TraderHandler.saveShop(shop);
 	        return (Villager) customEntity.getBukkitEntity();
+	}
+
+
+	public static Villager spawn(Location location, String string, Integer profession, ShopData shop) {
+		World mcWorld = (World) ((CraftWorld) location.getWorld()).getHandle();
+        final VillagerShop customEntity = new VillagerShop(
+                mcWorld);
+        customEntity.setName(string);	 
+        customEntity.setLocation(location.getX(), location.getY(),
+                location.getZ(), location.getYaw(), location.getPitch());
+        ((CraftLivingEntity) customEntity.getBukkitEntity())
+                .setRemoveWhenFarAway(false);	        
+        mcWorld.addEntity(customEntity, SpawnReason.CUSTOM);
+        
+        shop.setLocation(location.getX(), location.getY(),
+                location.getZ());
+        
+        TraderHandler.saveShop(shop);
+        return (Villager) customEntity.getBukkitEntity();
 	}
 
 
