@@ -14,9 +14,9 @@ public class MySQL {
 	private static String name = 	(String) MCSocial.config.getString("mysqlDatabase");
 	private static String user = 	(String) MCSocial.config.getString("mysqlUser");
 	private static String pass = 	(String) MCSocial.config.getString("mysqlPassword");
-	
+
 	private static Connection connection = null;
-	
+
 	public MySQL ()
 	{
 		try{
@@ -26,15 +26,15 @@ public class MySQL {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
-	
+
 	private static Connection getInstance(){
 	    if(MySQL.connection == null)
 	        new MySQL();
 	    return MySQL.connection;
 	}
-	
+
 	public static PreparedStatement getPreStat(String sql){
 		MySQL.connection = getInstance();
 		if(MySQL.connection == null){
@@ -83,10 +83,10 @@ public class MySQL {
 		return null;
 	}
 <<<<<<< HEAD
-	
+
 	public static void insertDB (PreparedStatement sql){
 		MySQL.connection = getInstance();
-		
+
 =======
 
 	public static void insertDB(PreparedStatement sql) {
@@ -100,115 +100,60 @@ public class MySQL {
 			e.printStackTrace();
 		}
 	}
-<<<<<<< HEAD
-	
+
 	public static ResultSet callDB (PreparedStatement sql) {
 		MySQL.connection = getInstance();
 		if(MySQL.connection == null){
 			return null;
 		}
-		
+
 		try{
 			return sql.executeQuery();
 		}catch(SQLException e){
-			e.printStackTrace();			
+			e.printStackTrace();
 		}
 		return null;
-		
+
 	}
-	
-	
+
+
 	public static ResultSet callDB (String sql) {
 		MySQL.connection = getInstance();
 		if(MySQL.connection == null){
 			return null;
 		}
-		
-		Statement query = null;		
+
+		Statement query = null;
 		try{
 			query = MySQL.connection.createStatement();
 			ResultSet result = query.executeQuery(sql);
 			return result;
 		}catch(SQLException e){
-			e.printStackTrace();			
+			e.printStackTrace();
 		}
 		return null;
-		
-	}
-	
 
-	
-	
+	}
+
+
+
+
 	public static int callDBUpdate (String sql) {
 		MySQL.connection = getInstance();
 		if(MySQL.connection == null){
 			return 0;
 		}
-		
-		Statement query = null;		
+
+		Statement query = null;
 		try{
 			query = MySQL.connection.createStatement();
 			int result = query.executeUpdate(sql);
 			return result;
 		}catch(SQLException e){
-			e.printStackTrace();			
-		}
-		return 0;
-		
-	}
-	
-=======
-
-	public static ResultSet callDB(PreparedStatement sql) {
-		MySQL.connection = getInstance();
-		if (MySQL.connection == null) {
-			return null;
-		}
-
-		try {
-			return sql.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-
-	}
-
-	public static ResultSet callDB(String sql) {
-		MySQL.connection = getInstance();
-		if (MySQL.connection == null) {
-			return null;
-		}
-
-		Statement query = null;
-		try {
-			query = MySQL.connection.createStatement();
-			ResultSet result = query.executeQuery(sql);
-			return result;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-
-	}
-
-	public static int callDBUpdate(String sql) {
-		MySQL.connection = getInstance();
-		if (MySQL.connection == null) {
-			return 0;
-		}
-
-		Statement query = null;
-		try {
-			query = MySQL.connection.createStatement();
-			int result = query.executeUpdate(sql);
-			return result;
-		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return 0;
 
 	}
 
->>>>>>> b4ade11... add new directory
 }

@@ -15,7 +15,6 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public class WebUserHandler implements HttpHandler {
-<<<<<<< HEAD
     private String requestMethod;
 	private Headers requestHeaders;
 
@@ -23,29 +22,29 @@ public class WebUserHandler implements HttpHandler {
     	InputStream is=exchange.getRequestBody();
 		BufferedReader in=new BufferedReader(new InputStreamReader(is));
 		setRequestMethod(exchange.getRequestMethod());
-		
+
 		CharBuffer cb = CharBuffer.allocate(256);
-		
+
 		// read characters into a char buffer
 		in.read(cb);
-		
+
 		// flip the char buffer
 		cb.flip();
-		
+
 		// print the char buffer
-		
+
 		Headers responseHeaders=exchange.getResponseHeaders();
 		responseHeaders.set("Content-Type","application/json");
 		responseHeaders.set("Access-Control-Allow-Origin","http://minecraft-social.de");
-		
+
 		exchange.sendResponseHeaders(200,0);
 		OutputStream responseBody=exchange.getResponseBody();
 		setRequestHeaders(exchange.getRequestHeaders());
-		
+
 		responseBody.write(getOnlineUser().getBytes());
 		responseBody.close();
     }
-    
+
     @SuppressWarnings("deprecation")
 	private String getOnlineUser(){
     	String s="{\"player\":[";
@@ -55,54 +54,12 @@ public class WebUserHandler implements HttpHandler {
 		for(Player player: players){
 			s += "{\"name\": \"" + player.getName()+"\",\"onlinetime\":\""+player.getPlayerTime()+"\",\"level\":\""+player.getLevel()+"\"}";
 			if(count++ < players.length){
-=======
-	private String requestMethod;
-	private Headers requestHeaders;
-
-	public void handle(HttpExchange exchange) throws IOException {
-		InputStream is = exchange.getRequestBody();
-		@SuppressWarnings("resource")
-		BufferedReader in = new BufferedReader(new InputStreamReader(is));
-		setRequestMethod(exchange.getRequestMethod());
-
-		CharBuffer cb = CharBuffer.allocate(256);
-
-		// read characters into a char buffer
-		in.read(cb);
-
-		// flip the char buffer
-		cb.flip();
-
-		// print the char buffer
-
-		Headers responseHeaders = exchange.getResponseHeaders();
-		responseHeaders.set("Content-Type", "application/json");
-		responseHeaders.set("Access-Control-Allow-Origin", "*");
-
-		exchange.sendResponseHeaders(200, 0);
-		OutputStream responseBody = exchange.getResponseBody();
-		setRequestHeaders(exchange.getRequestHeaders());
-
-		responseBody.write(getOnlineUser().getBytes());
-		responseBody.close();
-	}
-
-	private String getOnlineUser() {
-		String s = "{\"player\":[";
-
-		Player[] players = Bukkit.getOnlinePlayers().toArray(new Player[Bukkit.getOnlinePlayers().size()]);
-		int count = 1;
-		for (Player player : players) {
-			s += "{\"name\": \"" + player.getName() + "\",\"onlinetime\":\"" + player.getPlayerTime() + "\",\"level\":\""
-					+ player.getLevel() + "\"}";
-			if (count++ < players.length) {
->>>>>>> b4ade11... add new directory
 				s += ",";
 			}
 		}
 		s += "]}";
 <<<<<<< HEAD
-		
+
 		return s;
     }
 =======

@@ -27,13 +27,9 @@ import de.mcsocial.main.MySQL;
 public class WebChatHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
     	InputStream is=exchange.getRequestBody();
-<<<<<<< HEAD
-=======
-		@SuppressWarnings("resource")
->>>>>>> b4ade11... add new directory
 		BufferedReader in=new BufferedReader(new InputStreamReader(is));
 		exchange.getRequestMethod();
-		
+
 		CharBuffer cb = CharBuffer.allocate(256);
 		// read characters into a char buffer
 		in.read(cb);
@@ -55,39 +51,39 @@ public class WebChatHandler implements HttpHandler {
 		Headers responseHeaders=exchange.getResponseHeaders();
 		responseHeaders.set("Content-Type","application/json");
 		responseHeaders.set("Access-Control-Allow-Origin","*");
-		
+
 		exchange.sendResponseHeaders(200,0);
 		OutputStream responseBody=exchange.getResponseBody();
 		exchange.getRequestHeaders();
-		
+
 		responseBody.write(("{\"status\":\"OK\"}").getBytes());
 		responseBody.close();
     }
-    
+
     public static String executePost(String targetURL, String urlParameters) {
 	  HttpURLConnection connection = null;
-	
+
 	  try {
 	    //Create connection
 	    URL url = new URL(targetURL);
 	    connection = (HttpURLConnection) url.openConnection();
 	    connection.setRequestMethod("POST");
-	    connection.setRequestProperty("Content-Type", 
+	    connection.setRequestProperty("Content-Type",
 	        "application/json");
-	
-	    connection.setRequestProperty("Content-Length", 
+
+	    connection.setRequestProperty("Content-Length",
 	        Integer.toString(urlParameters.getBytes().length));
-	
+
 	    connection.setUseCaches(false);
 	    connection.setDoOutput(true);
-	
+
 	    //Send request
 	    DataOutputStream wr = new DataOutputStream (
 	    connection.getOutputStream());
 	    wr.writeBytes(urlParameters);
 	    wr.close();
-	
-	    //Get Response  
+
+	    //Get Response
 	    InputStream is = connection.getInputStream();
 	    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 	    StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
@@ -107,14 +103,14 @@ public class WebChatHandler implements HttpHandler {
 	    }
 	  }
 	}
-    
+
     @SuppressWarnings("unused")
 	private String getLastChatMessage(){
     	String returnString = "{ \"message\":[";
-    	try {		
-				ResultSet result = MySQL.callDB("SELECT * FROM MCS_chat ORDER BY chattime DESC LIMIT 0,20");	
-			
-			while(result.next()){				
+    	try {
+				ResultSet result = MySQL.callDB("SELECT * FROM MCS_chat ORDER BY chattime DESC LIMIT 0,20");
+
+			while(result.next()){
 				returnString += "{\"name\": \"" + result.getString("user")+"\",\"onlinetime\":\""+result.getTimestamp("chattime")+"\",\"message\":\""+result.getString("message")+"\"}";
 				if(!result.isLast()){
 					returnString +=",";
@@ -126,6 +122,6 @@ public class WebChatHandler implements HttpHandler {
 		}
     	returnString += "]}";
 		return returnString;
-    	
+
     }
 }
