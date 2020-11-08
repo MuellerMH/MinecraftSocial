@@ -7,38 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-<<<<<<< HEAD
-public class MySQL {
-	private static String host = 	(String) MCSocial.config.getString("mysqlHost");
-	private static int port = 		(int) MCSocial.config.getInt("mysqlPort");
-	private static String name = 	(String) MCSocial.config.getString("mysqlDatabase");
-	private static String user = 	(String) MCSocial.config.getString("mysqlUser");
-	private static String pass = 	(String) MCSocial.config.getString("mysqlPassword");
-
-	private static Connection connection = null;
-
-	public MySQL ()
-	{
-		try{
-			Class.forName("com.mysql.jdbc.Driver");
-			MySQL.connection = DriverManager.getConnection("jdbc:mysql://"+MySQL.host+":"+MySQL.port+"/"+MySQL.name+"?user="+MySQL.user+"&password="+MySQL.pass);
-		} catch( ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private static Connection getInstance(){
-	    if(MySQL.connection == null)
-	        new MySQL();
-	    return MySQL.connection;
-	}
-
-	public static PreparedStatement getPreStat(String sql){
-		MySQL.connection = getInstance();
-		if(MySQL.connection == null){
-=======
 import de.mcsocial.docctorsAddons.SimpleConfigHandler;
 
 public class MySQL {
@@ -71,7 +39,6 @@ public class MySQL {
 	public static PreparedStatement getPreStat(String sql) {
 		MySQL.connection = getInstance();
 		if (MySQL.connection == null) {
->>>>>>> b4ade11... add new directory
 			return null;
 		}
 		try {
@@ -82,17 +49,10 @@ public class MySQL {
 		}
 		return null;
 	}
-<<<<<<< HEAD
-
-	public static void insertDB (PreparedStatement sql){
-		MySQL.connection = getInstance();
-
-=======
 
 	public static void insertDB(PreparedStatement sql) {
 		MySQL.connection = getInstance();
 
->>>>>>> b4ade11... add new directory
 		try {
 			sql.execute();
 		} catch (SQLException e) {

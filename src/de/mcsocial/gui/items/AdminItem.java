@@ -12,37 +12,14 @@ import de.mcsocial.gui.Menus.Hauptmenu;
 import de.mcsocial.gui.Menus.JailMenu;
 
 public class AdminItem extends MenuItem {
-<<<<<<< HEAD
-	
-	public AdminItem(String text, Material icon) {
-		// TODO Auto-generated constructor stub
-		super(text, new ItemStack(icon,1));
-=======
 
 	public AdminItem(String text, Material icon) {
 		// TODO Auto-generated constructor stub
 		super(text, new ItemStack(icon, 1));
->>>>>>> b4ade11... add new directory
 	}
 
 	@Override
 	public void onClick(Player p) {
-<<<<<<< HEAD
-		
-		switch(this.getText()){
-			case "Hauptmenu":
-				
-				Gui.switchMenu(p, AdminMenu.menu, Hauptmenu.menu);
-				break;		
-
-			case "JailMenu":
-				Menu menuJail = new Menu("Gef�ngnis Menu",3);
-				JailMenu.loadMenu(menuJail,p);
-				Gui.switchMenu(p, AdminMenu.menu, menuJail);
-				break;			
-		}
-		
-=======
 
 		switch (this.getText()) {
 			case "Hauptmenu":
@@ -51,12 +28,11 @@ public class AdminItem extends MenuItem {
 				break;
 
 			case "JailMenu":
-				Menu menuJail = new Menu("Gef�ngnis Menu", 3);
+				Menu menuJail = new Menu("Gefï¿½ngnis Menu", 3);
 				JailMenu.loadMenu(menuJail, p);
 				Gui.switchMenu(p, AdminMenu.menu, menuJail);
 				break;
 		}
 
->>>>>>> b4ade11... add new directory
 	}
 }

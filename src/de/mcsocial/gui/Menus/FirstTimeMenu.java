@@ -13,11 +13,6 @@ public class FirstTimeMenu {
 	public static Menu menu;
 
 	private static Player p;
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> b4ade11... add new directory
 	public static void loadMenu(Menu menu, Player p) {
 		FirstTimeMenu.setP(p);
 		FirstTimeMenu.menu = menu;
@@ -33,33 +28,13 @@ public class FirstTimeMenu {
 
 	public static void setP(Player p) {
 		FirstTimeMenu.p = p;
-<<<<<<< HEAD
-	}	
-	
-	private static void addZwerg()	{
-		
-		FirstTimeItem item = new FirstTimeItem("Zwerg",Material.DIAMOND_PICKAXE);
-		List<String> lines = new LinkedList<String>();
-		lines.add("W�hle das Volk der Zwerge");
-		item.setDescriptions(lines);
-		
-		//-8000,8000
-
-		FirstTimeMenu.menu.addMenuItem(item, 1);
-	}
-	private static void addElf()	{
-		//8000,-8000
-		FirstTimeItem item = new FirstTimeItem("Elf",Material.BOW);
-		List<String> lines = new LinkedList<String>();
-		lines.add("W�hle das Volk der Elfen");
-=======
 	}
 
 	private static void addZwerg() {
 
 		FirstTimeItem item = new FirstTimeItem("Zwerg", Material.DIAMOND_PICKAXE);
 		List<String> lines = new LinkedList<String>();
-		lines.add("W�hle das Volk der Zwerge");
+		lines.add("Wï¿½hle das Volk der Zwerge");
 		item.setDescriptions(lines);
 
 		// -8000,8000
@@ -71,36 +46,17 @@ public class FirstTimeMenu {
 		// 8000,-8000
 		FirstTimeItem item = new FirstTimeItem("Elf", Material.BOW);
 		List<String> lines = new LinkedList<String>();
-		lines.add("W�hle das Volk der Elfen");
->>>>>>> b4ade11... add new directory
+		lines.add("Wï¿½hle das Volk der Elfen");
 		item.setDescriptions(lines);
 
 		FirstTimeMenu.menu.addMenuItem(item, 2);
 	}
-<<<<<<< HEAD
-	private static void addMensch()	{
-		//8000,8000
-		FirstTimeItem item = new FirstTimeItem("Mensch",Material.DIAMOND_SWORD);
-		List<String> lines = new LinkedList<String>();
-		lines.add("W�hle das Volk der Menschen");
-		item.setDescriptions(lines);
-	
-		FirstTimeMenu.menu.addMenuItem(item, 0);
-	}
-	private static void addOrc()	{
-		//-8000,-8000
-		FirstTimeItem item = new FirstTimeItem("Orc",Material.DIRT);
-		List<String> lines = new LinkedList<String>();
-		lines.add("W�hle das Volk der Orcs");
-		item.setDescriptions(lines);
-	
-=======
 
 	private static void addMensch() {
 		// 8000,8000
 		FirstTimeItem item = new FirstTimeItem("Mensch", Material.DIAMOND_SWORD);
 		List<String> lines = new LinkedList<String>();
-		lines.add("W�hle das Volk der Menschen");
+		lines.add("Wï¿½hle das Volk der Menschen");
 		item.setDescriptions(lines);
 
 		FirstTimeMenu.menu.addMenuItem(item, 0);
@@ -110,10 +66,9 @@ public class FirstTimeMenu {
 		// -8000,-8000
 		FirstTimeItem item = new FirstTimeItem("Orc", Material.DIRT);
 		List<String> lines = new LinkedList<String>();
-		lines.add("W�hle das Volk der Orcs");
+		lines.add("Wï¿½hle das Volk der Orcs");
 		item.setDescriptions(lines);
 
->>>>>>> b4ade11... add new directory
 		FirstTimeMenu.menu.addMenuItem(item, 3);
 	}
 }

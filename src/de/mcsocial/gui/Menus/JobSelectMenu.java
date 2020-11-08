@@ -19,43 +19,6 @@ import de.mcsocial.gui.items.JobSelectItem;
 public class JobSelectMenu {
 	public static Menu menu;
 	private static Player p;
-<<<<<<< HEAD
-	
-	public static void loadMenu(Menu menuAccount,Player p) {
-		JobSelectMenu.setP(p);
-		JobSelectMenu.menu = menuAccount;
-		
-		displayJobs();
-		closeMenu();
-	}
-	
-	@SuppressWarnings("rawtypes")
-	private static void displayJobs(){
-		Iterator it = Jobs.JobList.entrySet().iterator();
-		Integer i = 0;
-	    while (it.hasNext()) {
-	        Map.Entry pair = (Map.Entry)it.next();
-	        Job job = (Job)pair.getValue();
-	        JobSelectItem item = new JobSelectItem(job.getName(),Material.BEACON);
-	        
-	        List<String> desLines = new ArrayList<String>(Arrays.asList(job.getDescription().split("##")));
-/*	        List<String> lines = new LinkedList<String>();
-	        for(String dLine : desLines ) {
-	        	lines.add(dLine);
-	        }
-*/
-			item.setDescriptions(desLines);
-	        JobSelectMenu.menu.addMenuItem(item, i++);
-	    }
-	}
-
-	
-	private static void closeMenu()	{
-		
-		JobItem item = new JobItem("Spieler Menu",Material.ENDER_PEARL);
-		List<String> lines = new LinkedList<String>();
-		lines.add("Zur�ck zum SpielerMenu.");
-=======
 
 	public static void loadMenu(Menu menuAccount, Player p) {
 		JobSelectMenu.setP(p);
@@ -88,8 +51,7 @@ public class JobSelectMenu {
 
 		JobItem item = new JobItem("Spieler Menu", Material.ENDER_PEARL);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Zur�ck zum SpielerMenu.");
->>>>>>> b4ade11... add new directory
+		lines.add("Zurï¿½ck zum SpielerMenu.");
 		item.setDescriptions(lines);
 
 		JobSelectMenu.menu.addMenuItem(item, 26);

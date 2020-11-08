@@ -14,11 +14,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class Jail {
-	
+
 	private static HashMap<Player,ItemStack[]>playerItems;
 	private static HashMap<Player,Integer>playerInJail;
 	private static List<JailChunk>jailChunks;
-	
+
 	public static Boolean isInJail(Player p){
 		if(Jail.playerInJail == null){
 			Jail.playerInJail = new HashMap<Player,Integer>();
@@ -29,7 +29,7 @@ public class Jail {
 	public static HashMap<Player,Integer> getPrisonerAll(){
 		return playerInJail;
 	}
-	
+
 	public static int getPrisonerCount(){
 		return playerInJail.size();
 	}
@@ -41,16 +41,16 @@ public class Jail {
 		Jail.playerInJail.put(p,seconds);
 		Jail.saveOwnItems(p);
 		Jail.giveJailItems(p);
-		
+
 		//TODO JailTeleport
 	}
-	
+
 	public static void remove(Player p){
 		Jail.playerInJail.remove(p);
 		Jail.removeJailItems(p);
 		Jail.returnOwnItems(p);
 	}
-	
+
 	private static void saveOwnItems(Player p){
 		if(Jail.playerItems == null){
 			Jail.playerItems = new HashMap<Player,ItemStack[]>();
@@ -61,23 +61,19 @@ public class Jail {
 			p.getInventory().remove(item);
 		}
 	}
-	
+
 	private static void giveJailItems(Player p){
 		p.getInventory().addItem(new ItemStack(Material.BREAD,4));
-<<<<<<< HEAD
-		p.getInventory().addItem(new ItemStack(Material.BOOK_AND_QUILL,4));		
-=======
-		p.getInventory().addItem(new ItemStack(Material.WRITABLE_BOOK,4));		
->>>>>>> b4ade11... add new directory
+		p.getInventory().addItem(new ItemStack(Material.WRITABLE_BOOK,4));
 	}
-	
+
 	private static  void removeJailItems(Player p){
 		ItemStack[] tmpToRemove = p.getInventory().getContents();
 		for(ItemStack item: tmpToRemove){
 			p.getInventory().remove(item);
 		}
 	}
-	
+
 	private static  void returnOwnItems(Player p){
 		if(Jail.playerItems == null){
 			Jail.playerItems = new HashMap<Player,ItemStack[]>();
@@ -90,15 +86,12 @@ public class Jail {
 		}
 	}
 
-<<<<<<< HEAD
-=======
 	@SuppressWarnings("unlikely-arg-type")
->>>>>>> b4ade11... add new directory
 	public static Boolean isJailChunks(Chunk chunk) {
 		if(Jail.jailChunks== null){
 			Jail.jailChunks = new ArrayList<JailChunk>();
 		}
-		return Jail.jailChunks.contains(chunk);			 
+		return Jail.jailChunks.contains(chunk);
 	}
 
 	public static void setJailChunks(JailChunk jailChunk) {
@@ -111,7 +104,7 @@ public class Jail {
 	public static HashMap<Location, JailChunk> getList() {
 		// TODO Auto-generated method stub
 		HashMap<Location,JailChunk>allCells = new HashMap<Location,JailChunk>();
-		
+
 		if(Jail.jailChunks == null){
 			Jail.jailChunks = new ArrayList<JailChunk>();
 		}
@@ -122,7 +115,7 @@ public class Jail {
 		}
 		return allCells;
 	}
-	
+
 	public static List<Location> getCellList(){
 		List<Location>allCellLocation = new ArrayList<Location>();
 		Iterator<Entry<Location, JailChunk>> allCell = Jail.getList().entrySet().iterator();
@@ -130,8 +123,8 @@ public class Jail {
 			@SuppressWarnings("rawtypes")
 			Map.Entry pair = (Map.Entry)allCell.next();
 			allCellLocation.add((Location) pair.getKey());
-			
+
 		}
-		return allCellLocation;	
+		return allCellLocation;
 	}
 }

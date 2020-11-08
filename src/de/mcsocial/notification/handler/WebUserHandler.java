@@ -49,7 +49,7 @@ public class WebUserHandler implements HttpHandler {
 	private String getOnlineUser(){
     	String s="{\"player\":[";
 
-		Player[] players = Bukkit.getOnlinePlayers();
+		Player[] players = Bukkit.getOnlinePlayers().toArray(new Player[Bukkit.getOnlinePlayers().size()]);
 		int count = 1;
 		for(Player player: players){
 			s += "{\"name\": \"" + player.getName()+"\",\"onlinetime\":\""+player.getPlayerTime()+"\",\"level\":\""+player.getLevel()+"\"}";
@@ -58,15 +58,9 @@ public class WebUserHandler implements HttpHandler {
 			}
 		}
 		s += "]}";
-<<<<<<< HEAD
-
-		return s;
-    }
-=======
 
 		return s;
 	}
->>>>>>> b4ade11... add new directory
 
 	public Headers getRequestHeaders() {
 		return requestHeaders;

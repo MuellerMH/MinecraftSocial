@@ -16,69 +16,25 @@ public class ShopBuyItem extends MenuItem {
 	private double sell;
 	private double buy;
 	private ItemStack item;
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> b4ade11... add new directory
 	public ShopBuyItem(String text, ItemStack icon) {
 		// TODO Auto-generated constructor stub
 		super(text, icon);
 	}
 
-<<<<<<< HEAD
-	@Override
-	public void onClick(Player player) {
-		// TODO Auto-generated method stub		
-		if(this.getText().equalsIgnoreCase("zur�ck")){
-=======
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onClick(Player player) {
 		// TODO Auto-generated method stub
-		if (this.getText().equalsIgnoreCase("zur�ck")) {
->>>>>>> b4ade11... add new directory
+		if (this.getText().equalsIgnoreCase("zurï¿½ck")) {
 			Gui.switchMenu(player, ShopMenu.trademenu, ShopMenu.menu);
 			return;
 		}
 
-<<<<<<< HEAD
-		
-		int totalStack = this.amount;				
-		double total = Math.round(this.buy*totalStack);
-		
-		if(Account.getBalance(player) < total){
-			player.sendMessage("Du hast nicht gen�gend Geld.");
-			return;
-		}
-		
-				
-		Account.remove(player, total);
-		ItemStack item = getItem();
-		
-		ItemStack sellItem = new ItemStack(item.getType(),1,item.getDurability());
-		sellItem.setAmount(this.amount);
-		player.getInventory().addItem(sellItem);				
-		player.updateInventory();
-		
-		Market.setPrice(item.getType().toString()+":"+item.getDurability(), this.buy+(this.buy*0.10));
-		this.sell = Math.max(1, Market.getPrice(item.getType().toString()+":"+item.getDurability())*0.6);
-		this.buy = Math.max(1, Market.getPrice(item.getType().toString()+":"+item.getDurability()));
-		player.sendMessage("Gekauft f�r: "+total+" SD");
-
-		ShopMenu.trademenu.updateMenu();
-		ShopMenu.menu.updateMenu();		
-		return;
-
-	}
-	
-	public ItemStack getItem(){
-=======
 		int totalStack = this.amount;
 		double total = Math.round(this.buy * totalStack);
 
 		if (Account.getBalance(player) < total) {
-			player.sendMessage("Du hast nicht gen�gend Geld.");
+			player.sendMessage("Du hast nicht genï¿½gend Geld.");
 			return;
 		}
 
@@ -93,7 +49,7 @@ public class ShopBuyItem extends MenuItem {
 		Market.setPrice(item.getType().toString() + ":" + item.getDurability(), this.buy + (this.buy * 0.10));
 		this.sell = Math.max(1, Market.getPrice(item.getType().toString() + ":" + item.getDurability()) * 0.6);
 		this.buy = Math.max(1, Market.getPrice(item.getType().toString() + ":" + item.getDurability()));
-		player.sendMessage("Gekauft f�r: " + total + " SD");
+		player.sendMessage("Gekauft fï¿½r: " + total + " SD");
 
 		ShopMenu.trademenu.updateMenu();
 		ShopMenu.menu.updateMenu();
@@ -102,7 +58,6 @@ public class ShopBuyItem extends MenuItem {
 	}
 
 	public ItemStack getItem() {
->>>>>>> b4ade11... add new directory
 		return this.item;
 	}
 
@@ -144,9 +99,5 @@ public class ShopBuyItem extends MenuItem {
 		// TODO Auto-generated method stub
 		this.item = item;
 	}
-<<<<<<< HEAD
-	
-=======
->>>>>>> b4ade11... add new directory
 
 }

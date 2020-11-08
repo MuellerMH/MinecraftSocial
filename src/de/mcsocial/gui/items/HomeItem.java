@@ -10,44 +10,24 @@ import de.mcsocial.protection.Jail;
 
 public class HomeItem extends MenuItem {
 
-<<<<<<< HEAD
-		
-	public HomeItem(String text, Material icon) {
-		// TODO Auto-generated constructor stub
-		super(text, new ItemStack(icon,1));
-=======
 	public HomeItem(String text, Material icon) {
 		// TODO Auto-generated constructor stub
 		super(text, new ItemStack(icon, 1));
->>>>>>> b4ade11... add new directory
 	}
 
 	@Override
 	public void onClick(Player p) {
 		// TODO Auto-generated method stub
-<<<<<<< HEAD
-		if(Jail.isInJail(p)){
-			return;
-	    }
-		Location goHome = p.getBedSpawnLocation();
-		if(goHome == null) {
-			p.sendMessage("Stelle zuerst ein Bett in deiner Home Location auf um diesen Befehl nutzen zu k�nnen.");
-		} else {
-			p.teleport(goHome);
-		}
-		
-=======
 		if (Jail.isInJail(p)) {
 			return;
 		}
 		Location goHome = p.getBedSpawnLocation();
 		if (goHome == null) {
-			p.sendMessage("Stelle zuerst ein Bett in deiner Home Location auf um diesen Befehl nutzen zu k�nnen.");
+			p.sendMessage("Stelle zuerst ein Bett in deiner Home Location auf um diesen Befehl nutzen zu kï¿½nnen.");
 		} else {
 			p.teleport(goHome);
 		}
 
->>>>>>> b4ade11... add new directory
 	}
 
 }

@@ -12,71 +12,40 @@ import de.mcsocial.gui.items.AccountItem;
 public class AccountMenu {
 	public static Menu menu;
 	private static Player p;
-<<<<<<< HEAD
-	
-	public static void loadMenu(Menu menuAccount,Player p) {
-		AccountMenu.setP(p);
-		AccountMenu.menu = menuAccount;
-		
-=======
 
 	public static void loadMenu(Menu menuAccount, Player p) {
 		AccountMenu.setP(p);
 		AccountMenu.menu = menuAccount;
 
->>>>>>> b4ade11... add new directory
 		AccountMenu.accountBalance();
 		AccountMenu.closeMenu();
 		AccountMenu.transMoney();
 	}
-<<<<<<< HEAD
-	
-	private static void accountBalance()	{
-		
-		AccountItem item = new AccountItem("Kontostand",Material.GOLD_INGOT);
-=======
 
 	private static void accountBalance() {
 
 		AccountItem item = new AccountItem("Kontostand", Material.GOLD_INGOT);
->>>>>>> b4ade11... add new directory
 		List<String> lines = new LinkedList<String>();
 		lines.add("Zeigt deinen Aktuellen Kontostand.");
 		item.setDescriptions(lines);
 
 		AccountMenu.menu.addMenuItem(item, 0);
 	}
-<<<<<<< HEAD
-	
-	private static void transMoney()	{
-		
-		AccountItem item = new AccountItem("Spieler Geld geben",Material.GOLD_INGOT);
-=======
 
 	private static void transMoney() {
 
 		AccountItem item = new AccountItem("Spieler Geld geben", Material.GOLD_INGOT);
->>>>>>> b4ade11... add new directory
 		List<String> lines = new LinkedList<String>();
 		item.setDescriptions(lines);
 
 		AccountMenu.menu.addMenuItem(item, 1);
 	}
-<<<<<<< HEAD
-	
-	private static void closeMenu()	{
-		
-		AccountItem item = new AccountItem("Spieler Menu",Material.ENDER_PEARL);
-		List<String> lines = new LinkedList<String>();
-		lines.add("Zur�ck zum Hauptmenu.");
-=======
 
 	private static void closeMenu() {
 
 		AccountItem item = new AccountItem("Spieler Menu", Material.ENDER_PEARL);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Zur�ck zum Hauptmenu.");
->>>>>>> b4ade11... add new directory
+		lines.add("Zurï¿½ck zum Hauptmenu.");
 		item.setDescriptions(lines);
 
 		AccountMenu.menu.addMenuItem(item, 26);

@@ -24,11 +24,6 @@ import de.mcsocial.notification.VoteNotificationEvent;
 import de.mcsocial.notification.VoteNotify;
 
 public class VoteTracker extends Thread {
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> b4ade11... add new directory
 	private static MCSocial plugin;
 	private String host;
 	private int port;
@@ -36,54 +31,31 @@ public class VoteTracker extends Thread {
 	private static VoteTracker listener;
 	private ServerSocket server;
 	private boolean running;
-<<<<<<< HEAD
-	
-	/**
-	 * S
-	 * @param plugin
-	 */
-	public VoteTracker(MCSocial plugin){
-=======
 
 	/**
 	 * S
-	 * 
+	 *
 	 * @param plugin
 	 */
 	public VoteTracker(MCSocial plugin) {
->>>>>>> b4ade11... add new directory
 		VoteTracker.plugin = plugin;
 		this.host = getHost();
 		this.port = 8192;
 		this.running = true;
 		generateSetup();
-<<<<<<< HEAD
-		
-		startSocket();
-	}
-	
-=======
 
 		startSocket();
 	}
 
->>>>>>> b4ade11... add new directory
 	private void startSocket() {
 		try {
 			server = new ServerSocket();
 			server.bind(new InetSocketAddress(host, port));
 		} catch (IOException e) {
-<<<<<<< HEAD
-			//System.out.println("[MCSocial] startSocket." + e.getMessage());
-		}
-	}
-	
-=======
 			// System.out.println("[MCSocial] startSocket." + e.getMessage());
 		}
 	}
 
->>>>>>> b4ade11... add new directory
 	private void shutdown() {
 		running = false;
 		if (server == null)
@@ -94,11 +66,6 @@ public class VoteTracker extends Thread {
 			ex.printStackTrace();
 		}
 	}
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> b4ade11... add new directory
 	@Override
 	public void run() {
 		// Main loop.
@@ -106,12 +73,7 @@ public class VoteTracker extends Thread {
 			try {
 				Socket socket = server.accept();
 				socket.setSoTimeout(5000); // Don't hang on slow connections.
-<<<<<<< HEAD
-				BufferedWriter writer = new BufferedWriter(
-						new OutputStreamWriter(socket.getOutputStream()));
-=======
 				BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
->>>>>>> b4ade11... add new directory
 				InputStream in = socket.getInputStream();
 
 				// Send them our version.
@@ -128,17 +90,6 @@ public class VoteTracker extends Thread {
 				int position = 0;
 
 				// Perform the opcode check.
-<<<<<<< HEAD
-				
-				
-				//System.out.println("[MCSocial] Vote incomming." + block.toString());
-				// Perform the opcode check.
-				String opcode = readString(block, position);
-				position += opcode.length() + 1;
-				
-				//System.out.println("[MCSocial] Vote incomming." + opcode);
-				
-=======
 
 				// System.out.println("[MCSocial] Vote incomming." + block.toString());
 				// Perform the opcode check.
@@ -147,7 +98,6 @@ public class VoteTracker extends Thread {
 
 				// System.out.println("[MCSocial] Vote incomming." + opcode);
 
->>>>>>> b4ade11... add new directory
 				// Parse the block.
 				String serviceName = readString(block, position);
 				position += serviceName.length() + 1;
@@ -157,30 +107,11 @@ public class VoteTracker extends Thread {
 				position += address.length() + 1;
 				String timeStamp = readString(block, position);
 				position += timeStamp.length() + 1;
-<<<<<<< HEAD
-				
-				
-=======
-
->>>>>>> b4ade11... add new directory
 				final VoteNotify vote = new VoteNotify();
 				vote.setServiceName(serviceName);
 				vote.setUsername(username);
 				vote.setAddress(address);
 				vote.setTimeStamp(timeStamp);
-<<<<<<< HEAD
-			
-				// Call event in a synchronized fashion to ensure that the
-				// custom event runs in the
-				// the main server thread, not this one.
-				VoteTracker.plugin.getServer().getScheduler()
-						.scheduleSyncDelayedTask(VoteTracker.plugin, new Runnable() {
-							public void run() {
-								Bukkit.getServer().getPluginManager()
-										.callEvent(new VoteNotificationEvent(vote));
-							}
-						});
-=======
 
 				// Call event in a synchronized fashion to ensure that the
 				// custom event runs in the
@@ -190,29 +121,12 @@ public class VoteTracker extends Thread {
 						Bukkit.getServer().getPluginManager().callEvent(new VoteNotificationEvent(vote));
 					}
 				});
->>>>>>> b4ade11... add new directory
 
 				// Clean up.
 				writer.close();
 				in.close();
 				socket.close();
 			} catch (SocketException ex) {
-<<<<<<< HEAD
-				//System.out.println("[MCSocial] Vote incomming." + ex.getMessage());
-			} catch (BadPaddingException ex) {
-				//System.out.println("[MCSocial] Vote incomming." + ex.getMessage());
-			} catch (Exception ex) {
-				//System.out.println("[MCSocial] Vote incomming." + ex.getMessage());
-			}
-		}
-	}
-	
-	/**
-	 * Reads a string from a block of data.
-	 * 
-	 * @param data
-	 *            The data to read from
-=======
 				// System.out.println("[MCSocial] Vote incomming." + ex.getMessage());
 			} catch (BadPaddingException ex) {
 				// System.out.println("[MCSocial] Vote incomming." + ex.getMessage());
@@ -226,7 +140,6 @@ public class VoteTracker extends Thread {
 	 * Reads a string from a block of data.
 	 *
 	 * @param data The data to read from
->>>>>>> b4ade11... add new directory
 	 * @return The string
 	 */
 	private String readString(byte[] data, int offset) {
@@ -239,27 +152,11 @@ public class VoteTracker extends Thread {
 		return builder.toString();
 	}
 
-<<<<<<< HEAD
-	public static void  onEnable(MCSocial plugin){
-=======
 	public static void onEnable(MCSocial plugin) {
->>>>>>> b4ade11... add new directory
 		VoteTracker.listener = new VoteTracker(plugin);
 		VoteTracker.listener.start();
 	}
 
-<<<<<<< HEAD
-	public static void  onDisable(){
-		VoteTracker.listener.shutdown();
-	}
-
-	private void generateSetup(){
-		File rsaDirectory = new File(VoteTracker.plugin.getDataFolder() + "/rsa");
-		
-		// Replace to remove a bug with Windows paths - SmilingDevil
-		String listenerDirectory = VoteTracker.plugin.getDataFolder().toString()
-				.replace("\\", "/") + "/listeners";
-=======
 	public static void onDisable() {
 		VoteTracker.listener.shutdown();
 	}
@@ -269,20 +166,14 @@ public class VoteTracker extends Thread {
 
 		// Replace to remove a bug with Windows paths - SmilingDevil
 		String listenerDirectory = VoteTracker.plugin.getDataFolder().toString().replace("\\", "/") + "/listeners";
->>>>>>> b4ade11... add new directory
 
 		try {
 			if (!rsaDirectory.exists()) {
 				rsaDirectory.mkdir();
 				new File(listenerDirectory).mkdir();
 				keyPair = RSAKeygen.generate(2048);
-<<<<<<< HEAD
-					RSAIO.save(rsaDirectory, keyPair);
-				
-=======
 				RSAIO.save(rsaDirectory, keyPair);
 
->>>>>>> b4ade11... add new directory
 			} else {
 				keyPair = RSAIO.load(rsaDirectory);
 			}
@@ -290,28 +181,16 @@ public class VoteTracker extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-		
-	}
-	
-	private String getHost(){
-		
-=======
 
 	}
 
 	private String getHost() {
 
->>>>>>> b4ade11... add new directory
 		String hostAddr = Bukkit.getServer().getIp();
 		if (hostAddr == null || hostAddr.length() == 0)
 			hostAddr = "0.0.0.0";
 
-<<<<<<< HEAD
-		//System.out.println("[MCSocial] getHost." + hostAddr);
-=======
 		// System.out.println("[MCSocial] getHost." + hostAddr);
->>>>>>> b4ade11... add new directory
 		return hostAddr;
 	}
 
