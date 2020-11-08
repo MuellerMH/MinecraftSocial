@@ -1,3 +1,5 @@
+![CodeQL](https://github.com/MuellerMH/MinecraftSocial/workflows/CodeQL/badge.svg)
+
 # MinecraftSocial
 Minecraft Social Minecraft Server Plugin Pack
 

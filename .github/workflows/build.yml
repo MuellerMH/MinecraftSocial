@@ -1,4 +1,4 @@
-name: Build sample Java Maven project
+name: Build compile and release Minecraft Social
 
 on: [push, pull_request]
 
