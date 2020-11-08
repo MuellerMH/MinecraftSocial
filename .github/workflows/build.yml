@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.java }}
-      - run: mvn -f github-actions-java-maven/pom.xml clean compile
+      - run: mvn clean compile
   build:
     runs-on: ubuntu-latest
     needs: compile
