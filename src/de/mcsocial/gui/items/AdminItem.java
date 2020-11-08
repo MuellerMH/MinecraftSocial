@@ -14,7 +14,7 @@ import de.mcsocial.gui.Menus.JailMenu;
 public class AdminItem extends MenuItem {
 
 	public AdminItem(String text, Material icon) {
-		// TODO Auto-generated constructor stub
+
 		super(text, new ItemStack(icon, 1));
 	}
 
@@ -28,7 +28,7 @@ public class AdminItem extends MenuItem {
 				break;
 
 			case "JailMenu":
-				Menu menuJail = new Menu("Gefï¿½ngnis Menu", 3);
+				Menu menuJail = new Menu("Gefängnis Menu", 3);
 				JailMenu.loadMenu(menuJail, p);
 				Gui.switchMenu(p, AdminMenu.menu, menuJail);
 				break;

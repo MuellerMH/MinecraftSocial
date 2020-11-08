@@ -23,16 +23,16 @@ public class AccountItem extends MenuItem {
 	private ConversationFactory conversationFactory;
 
 	public AccountItem(String text, Material icon) {
-		// TODO Auto-generated constructor stub
+
 		super(text, new ItemStack(icon, 1));
 	}
 
 	@Override
 	public void onClick(Player p) {
-		// TODO Auto-generated method stub
+
 		switch (this.getText()) {
 			case "Spieler Menu":
-				// TODO Auto-generated method stub
+
 				Gui.switchMenu(p, AccountMenu.menu, PlayerMenu.menu);
 				break;
 			case "Spieler Geld geben":
@@ -43,8 +43,8 @@ public class AccountItem extends MenuItem {
 				AccountMenu.menu.closeMenu(p);
 				break;
 			case "Kontostand":
-				// TODO Auto-generated method stub
-				p.sendMessage("ï¿½rï¿½lï¿½4Kontoverwalter: Aktueller Kontostand: " + p.getMetadata("account").get(0).asInt() + " SD");
+
+				p.sendMessage("Kontoverwalter: Aktueller Kontostand: " + p.getMetadata("account").get(0).asInt() + " SD");
 				AccountMenu.menu.closeMenu(p);
 				break;
 			default:
@@ -62,7 +62,7 @@ public class AccountItem extends MenuItem {
 				@SuppressWarnings("deprecation")
 				Player reciver = (Player) Bukkit.getOfflinePlayer(arg1.split(" ")[0]);
 				Double amount = Double.parseDouble(arg1.split(" ")[1]);
-				// TODO Auto-generated method stub
+
 				Account.trans(sender, reciver, amount);
 			} catch (Exception e) {
 			}
@@ -71,7 +71,7 @@ public class AccountItem extends MenuItem {
 
 		@Override
 		public String getPromptText(ConversationContext arg0) {
-			// TODO Auto-generated method stub
+
 			return "Gib nun den SPIELERNAMEN und den BETRAG im Chat ein: Beispiel: MuellerMH 1000";
 		}
 

@@ -48,7 +48,7 @@ public class AdminPlayer implements CommandExecutor {
 		AdminPlayer.bannedPlayer.put(player.getUniqueId(), System.currentTimeMillis() + banTime);
 		AdminLogger.writeLog(admin, player, "timeban", null);
 
-		player.kickPlayer("Du wurdest fï¿½r " + minutes + " Minuten gebannt");
+		player.kickPlayer("Du wurdest für " + minutes + " Minuten gebannt");
 
 	}
 

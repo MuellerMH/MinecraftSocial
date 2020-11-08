@@ -12,39 +12,39 @@ import de.mcsocial.gui.Menus.CityMenu;
 import de.mcsocial.gui.Menus.Hauptmenu;
 
 public class ChunkItem extends MenuItem {
-	
+
 	private Location loc;
 	private ConversationFactory conversationFactory;
-	public static String cityName = null; 
+	public static String cityName = null;
 
 
-	
+
 
 	public ChunkItem(String text, Material icon) {
-		// TODO Auto-generated constructor stub
+
 		super(text, new ItemStack(icon,1));
 	}
-	
+
 	public void setLocation(Location loc){
 		this.setLoc(loc);
 	}
-		
+
 	@Override
 	public void onClick(Player p) {
-		
+
 		switch(this.getText()){
-			
+
 			case "Hauptmenu":
-				// TODO Auto-generated method stub
+
 				Gui.switchMenu(p, CityMenu.menu, Hauptmenu.menu);
 				break;
 		   default:
 			   p.sendMessage("In Arbeit");
 			   break;
 		}
-		
+
 	}
-	
+
 	public ConversationFactory getConversationFactory() {
 		return conversationFactory;
 	}

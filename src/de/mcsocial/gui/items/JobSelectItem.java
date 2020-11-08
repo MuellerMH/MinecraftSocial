@@ -14,16 +14,16 @@ import de.mcsocial.gui.Menus.PlayerMenu;
 public class JobSelectItem  extends MenuItem {
 
 	public JobSelectItem(String text, Material icon) {
-		// TODO Auto-generated constructor stub
+
 		super(text, new ItemStack(icon,1));
 	}
 
 	@Override
 	public void onClick(Player player) {
-		// TODO Auto-generated method stub
+
 		switch(this.getText()){
 			case "Spieler Menu":
-				// TODO Auto-generated method stub
+
 				Gui.switchMenu(player, JobSelectMenu.menu, PlayerMenu.menu);
 				break;
 			default:

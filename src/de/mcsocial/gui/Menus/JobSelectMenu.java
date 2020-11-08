@@ -51,7 +51,7 @@ public class JobSelectMenu {
 
 		JobItem item = new JobItem("Spieler Menu", Material.ENDER_PEARL);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Zurï¿½ck zum SpielerMenu.");
+		lines.add("Zurück zum SpielerMenu.");
 		item.setDescriptions(lines);
 
 		JobSelectMenu.menu.addMenuItem(item, 26);

@@ -37,7 +37,7 @@ public class CustomVillager extends EntityVillager {
     }
 
     protected void setName(String name) {
-		// TODO Auto-generated method stub
+
 		this.name = name;
 		this.setCustomName(name);
 		this.setCustomNameVisible(true);

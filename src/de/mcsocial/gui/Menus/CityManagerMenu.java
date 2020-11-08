@@ -42,10 +42,9 @@ public class CityManagerMenu {
 		if (!ChunkHandler.getOwner(CityManagerMenu.p).equals(CityManagerMenu.p.getUniqueId()))
 			return;
 
-		// TODO Auto-generated method stub
 		CityManagerItem item = new CityManagerItem("Grundstueck entfernen", Material.DIRT);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Dieses Grundstï¿½ck aus der Stadt entfernen.");
+		lines.add("Dieses Grundstück aus der Stadt entfernen.");
 		item.setDescriptions(lines);
 
 		CityManagerMenu.menu.addMenuItem(item, 10);
@@ -59,17 +58,15 @@ public class CityManagerMenu {
 		if (!ChunkHandler.getOwner(CityManagerMenu.p).equals(CityManagerMenu.p.getUniqueId()))
 			return;
 
-		// TODO Auto-generated method stub
 		CityManagerItem item = new CityManagerItem("Grundstueck hinzufuegen", Material.GRASS);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Dieses Grundstï¿½ck der Stadt hinzufï¿½gen.");
+		lines.add("Dieses Grundstück der Stadt hinzufï¿½gen.");
 		item.setDescriptions(lines);
 
 		CityManagerMenu.menu.addMenuItem(item, 9);
 	}
 
 	private static void deleteCity() {
-		// TODO Auto-generated method stub
 		CityManagerItem item = new CityManagerItem("Stadt aufloesen", Material.BARRIER);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Diese Stadt wirklich auflï¿½esen und lï¿½schen?");
@@ -79,7 +76,6 @@ public class CityManagerMenu {
 	}
 
 	private static void removePlayer() {
-		// TODO Auto-generated method stub
 		CityManagerItem item = new CityManagerItem("Spieler entfernen", Material.BARRIER);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Spieler entfernen");
@@ -103,7 +99,7 @@ public class CityManagerMenu {
 
 		CityManagerItem item = new CityManagerItem("Hauptmenu", Material.ENDER_PEARL);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Zurï¿½ck zum Hauptmenu.");
+		lines.add("Zurück zum Hauptmenu.");
 		item.setDescriptions(lines);
 
 		CityManagerMenu.menu.addMenuItem(item, 26);

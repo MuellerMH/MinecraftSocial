@@ -126,7 +126,7 @@ public class ShopMenu {
 		menuSellItemStack.setSell(Math.max(1, price * 0.6));
 		ShopMenu.trademenu.addMenuItem(menuSellItemStack, 23);
 
-		ShopBuyItem menuBack = new ShopBuyItem("zurï¿½ck", new ItemStack(Material.ENDER_PEARL));
+		ShopBuyItem menuBack = new ShopBuyItem("Zurück", new ItemStack(Material.ENDER_PEARL));
 		ShopMenu.trademenu.addMenuItem(menuBack, 35);
 		ShopMenu.trademenu.updateMenu();
 		ShopMenu.menu.updateMenu();

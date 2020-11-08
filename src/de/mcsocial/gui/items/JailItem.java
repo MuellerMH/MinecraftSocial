@@ -28,7 +28,7 @@ public class JailItem extends MenuItem {
 	private UUID uuid;
 
 	public JailItem(String text, Material icon) {
-		// TODO Auto-generated constructor stub
+
 		super(text, new ItemStack(icon, 1));
 	}
 
@@ -40,7 +40,7 @@ public class JailItem extends MenuItem {
 			case "einsperren":
 				List<Player> allPlayer = new ArrayList<Player>(Bukkit.getServer().getOnlinePlayers());
 				needetRows = Math.max(1, (int) Math.ceil(allPlayer.toArray().length / 9));
-				playerSelect = new Menu("Spieler wï¿½hlen", needetRows);
+				playerSelect = new Menu("Spieler Wählen", needetRows);
 				JailMenu.createPlayerMenu(playerSelect, allPlayer, "select");
 				Gui.switchMenu(p, JailMenu.menu, playerSelect);
 				break;
@@ -62,12 +62,12 @@ public class JailItem extends MenuItem {
 
 				jailChunk.createCellSpawn(p);
 				ChunkHandler.insertChunkOwner(jailChunk);
-				p.sendMessage("Gefï¿½ngnis Zelle hinzugefï¿½gt.");
+				p.sendMessage("Gefï¿½ngnis Zelle hinzugefügt.");
 				JailMenu.menu.closeMenu(p);
 				break;
 			case "frei lassen":
 				needetRows = Math.max(1, (int) Math.ceil(Jail.getPrisonerCount() / 9));
-				playerSelect = new Menu("Spieler wï¿½hlen", (int) Math.ceil(needetRows));
+				playerSelect = new Menu("Spieler Wählen", (int) Math.ceil(needetRows));
 				JailMenu.createPlayerMenu(playerSelect, Jail.getPrisonerAll(), "remove");
 				Gui.switchMenu(p, JailMenu.menu, playerSelect);
 				break;

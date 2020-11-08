@@ -25,48 +25,44 @@ public class ChunkMenu {
 	}
 
 	private static void addForSellButton() {
-		// TODO Auto-generated method stub
 		ChunkItem item = new ChunkItem("Grundstueck verkaufen", Material.GOLD_BLOCK);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Aktuelles Grundst�ck verkaufen?");
+		lines.add("Aktuelles Grundstück verkaufen?");
 		lines.add("Kann nur von Stadt Bewohnern gekauft werden.");
-		lines.add("Klicken um das Grundst�ck zu verkaufen.");
+		lines.add("Klicken um das Grundstück zu verkaufen.");
 		item.setDescriptions(lines);
 
 		ChunkMenu.menu.addMenuItem(item, 0);
 	}
 
 	private static void addSetOwnerButton() {
-		// TODO Auto-generated method stub
 		ChunkItem item = new ChunkItem("Grundstueck vergeben", Material.WRITABLE_BOOK);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Aktuelles Grundst�ck vergeben?");
-		lines.add("Grundst�ck einem Bewohner zuweisen.");
-		lines.add("Klicken und das Grundst�ck zuweisen.");
+		lines.add("Aktuelles Grundstück vergeben?");
+		lines.add("Grundstück einem Bewohner zuweisen.");
+		lines.add("Klicken und das Grundstück zuweisen.");
 		item.setDescriptions(lines);
 
 		ChunkMenu.menu.addMenuItem(item, 1);
 	}
 
 	private static void addRemoveButton() {
-		// TODO Auto-generated method stub
 		ChunkItem item = new ChunkItem("Grundstueck aufgeben", Material.DIRT);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Aktuelles Grundst�ck aufgeben?");
-		lines.add("Grundst�ck geh�rt dann nicht mehr der Stadt.");
-		lines.add("Klicken um das Grundst�ck aufzugeben.");
+		lines.add("Aktuelles Grundstück aufgeben?");
+		lines.add("Grundstück gehört dann nicht mehr der Stadt.");
+		lines.add("Klicken um das Grundstück aufzugeben.");
 		item.setDescriptions(lines);
 
 		ChunkMenu.menu.addMenuItem(item, 9);
 	}
 
 	private static void addButton() {
-		// TODO Auto-generated method stub
 		ChunkItem item = new ChunkItem("Grundstueck einnehmen", Material.GRASS);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Aktuelles Grundst�ck einnehmen?");
-		lines.add("Grundst�ck geh�rt dann der Stadt.");
-		lines.add("Klicken um das Grundst�ck einzunehmen.");
+		lines.add("Aktuelles Grundstück einnehmen?");
+		lines.add("Grundstück gehört dann der Stadt.");
+		lines.add("Klicken um das Grundstück einzunehmen.");
 		item.setDescriptions(lines);
 
 		ChunkMenu.menu.addMenuItem(item, 10);
@@ -76,7 +72,7 @@ public class ChunkMenu {
 
 		ChunkItem item = new ChunkItem("Hauptmenu", Material.ENDER_PEARL);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Zur�ck zum Hauptmenu.");
+		lines.add("Zurück zum Hauptmenu.");
 		item.setDescriptions(lines);
 
 		ChunkMenu.menu.addMenuItem(item, 26);

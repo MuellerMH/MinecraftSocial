@@ -87,7 +87,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 					}
 				}
 			} catch (NullPointerException e) {
-				player.sendMessage("Du besitzt keine Berechtigungen auf diesem Grundstï¿½ck.");
+				player.sendMessage("Du besitzt keine Berechtigungen auf diesem Grundstück.");
 				event.setCancelled(true);
 				return;
 			}
@@ -104,7 +104,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 					// system.out.println("not in City Resis");
 				}
 			}
-			player.sendMessage("Du besitzt keine Berechtigungen auf diesem Grundstï¿½ck.");
+			player.sendMessage("Du besitzt keine Berechtigungen auf diesem Grundstück.");
 			event.setCancelled(true);
 		}
 	}
@@ -129,7 +129,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 	}
 
 	public static void unclaimChunk(Player p, double price) {
-		// TODO Auto-generated method stub
+
 		Chunk chunk = p.getLocation().getChunk();
 		if(!p.isOp()){
 			if(!ChunkHandler.ownedChunks.containsKey(chunk.toString())){
@@ -149,7 +149,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 	}
 
 	private static void remove(String string) {
-		// TODO Auto-generated method stub
+
 		String sql = "DELETE FROM MCS_chunkowner WHERE chunkid = ?";
 
 		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
@@ -158,13 +158,13 @@ public class ChunkHandler implements Listener, CommandExecutor {
 			preparedStmt.setString (1, string);
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
 
 	public static CustomChunk getChunk(Chunk chunk) {
-		// TODO Auto-generated method stub
+
 		if(ChunkHandler.ownedChunks.containsKey(chunk.toString()))
 			return ChunkHandler.ownedChunks.get(chunk.toString());
 		return null;
@@ -268,7 +268,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 				return  new Location(Bukkit.getWorld("world"),x,y,z);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return null;
@@ -290,7 +290,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 				preparedStmt.setString (3, loc.getBlockX()+","+ loc.getBlockZ()+","+ loc.getBlockY());
 				MySQL.insertDB(preparedStmt);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 
@@ -335,7 +335,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 				ChunkHandler.ownedChunks.put(name,chunk);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -521,7 +521,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
     }
 
 	public static void save(CustomChunk chunk) {
-		// TODO Auto-generated method stub
+
 
 	        saveChunkAccess(chunk);
 	        saveChunkFlags(chunk);
@@ -530,7 +530,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 
 	@SuppressWarnings("rawtypes")
 	private static void saveChunkFlags(CustomChunk chunk) {
-		// TODO Auto-generated method stub
+
 		Iterator it = chunk.flags.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry flag = (Map.Entry)it.next();
@@ -550,13 +550,13 @@ public class ChunkHandler implements Listener, CommandExecutor {
 			preparedStmt.setBoolean(2, access);
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
 	@SuppressWarnings("rawtypes")
 	private static void saveChunkAccess(CustomChunk chunk) {
-		// TODO Auto-generated method stub
+
 		Iterator it = chunk.access.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry player = (Map.Entry)it.next();
@@ -576,7 +576,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 			preparedStmt.setBoolean(2, access);
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -608,7 +608,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 			preparedStmt.setBoolean (14, chunk.getIsJail());
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -616,7 +616,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {
-		// TODO Auto-generated method stub
+
 		if(!(sender instanceof Player))
 		{
 			return false;
@@ -668,21 +668,21 @@ public class ChunkHandler implements Listener, CommandExecutor {
 	}
 
 	public static void setAccess(Chunk chunk, Player player) {
-		// TODO Auto-generated method stub
+
 		if(ChunkHandler.ownedChunks.containsKey(chunk.toString())){
 			ChunkHandler.ownedChunks.get(chunk.toString()).getOwner();
 		}
 	}
 
 	public static void removeAccess(Chunk chunk, Player player) {
-		// TODO Auto-generated method stub
+
 		if(ChunkHandler.ownedChunks.containsKey(chunk.toString())){
 			ChunkHandler.ownedChunks.get(chunk.toString()).getOwner();
 		}
 	}
 
 	public static UUID getOwner(Chunk chunk) {
-		// TODO Auto-generated method stub
+
 		if(ChunkHandler.ownedChunks.containsKey(chunk.toString())){
 			return ChunkHandler.ownedChunks.get(chunk.toString()).getOwner();
 		}
@@ -690,7 +690,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 	}
 
 	public static UUID getOwner(Player p) {
-		// TODO Auto-generated method stub
+
 		if(ChunkHandler.ownedChunks.containsKey(p.getLocation().getChunk().toString())){
 			return ChunkHandler.ownedChunks.get(p.getLocation().getChunk().toString()).getOwner();
 		}
@@ -699,7 +699,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 
 
 	public static void removeCity(Player p) {
-		// TODO Auto-generated method stub
+
 		String sql = "UPDATE MCS_chunkowner SET iscity=0, cityname=null WHERE ownerid=?";
 
 		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
@@ -708,7 +708,7 @@ public class ChunkHandler implements Listener, CommandExecutor {
 			preparedStmt.setString (1, p.getUniqueId().toString());
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}

@@ -33,7 +33,7 @@ public class CityItem extends MenuItem {
 	public static String cityName = null;
 
 	public CityItem(String text, Material icon) {
-		// TODO Auto-generated constructor stub
+
 		super(text, new ItemStack(icon, 1));
 	}
 
@@ -64,45 +64,45 @@ public class CityItem extends MenuItem {
 					p.sendMessage("Du bist aus der Stadt ausgetreten");
 				} catch (NullPointerException e) {
 					p.removeMetadata("city", MCSocial.instance);
-					p.sendMessage("Du konntest die Stadt nicht verlassen. Versuch es spï¿½ter noch einmal.");
+					p.sendMessage("Du konntest die Stadt nicht verlassen. Versuch es später noch einmal.");
 				}
 
 				break;
-			case "Stï¿½dte Menu":
-				// TODO Auto-generated method stub
+			case "Städte Menu":
+
 				Menu cityMenu = new Menu("City", 4);
 				Gui.switchMenu(p, Hauptmenu.menu, cityMenu);
 				CityMenu.loadMenu(cityMenu, p);
 				break;
-			case "Stadt grï¿½nden":
+			case "Stadt gründen":
 				if (!p.isOp()) {
 
 					if (Account.getBalance(p) < 15000.00) {
-						p.sendMessage("Du hast nicht genï¿½gend Geld. Du benï¿½tigst 15000 SD");
+						p.sendMessage("Du hast nicht genügend Geld. Du benötigst 15000 SD");
 						return;
 					}
 					if (City.cityList.containsKey(p.getUniqueId())) {
 						p.sendMessage(ChatColor.GREEN + "CityEditor: "
-								+ "Grï¿½ndung nicht Mï¿½glich. Du bist bereits Bï¿½rgermeister einer Stadt.");
+								+ "Gründung nicht Möglich. Du bist bereits Bürgermeister einer Stadt.");
 						return;
 					}
 
 					if (City.residentList.containsValue(p.getUniqueId())) {
 						p.sendMessage(ChatColor.GREEN + "CityEditor: "
-								+ "Grï¿½ndung nicht Mï¿½glich. Du bist bereits Bï¿½rgermeister einer Stadt.");
+								+ "Gründung nicht Möglich. Du bist bereits Bürgermeister einer Stadt.");
 						return;
 					}
 				}
 
 				this.conversationFactory = new ConversationFactory(MCSocial.instance).withModality(true)
 						.withPrefix(new SummoningConversationPrefix()).withFirstPrompt(new CityNamePrompt())
-						.withEscapeSequence("/quit").withTimeout(5).thatExcludesNonPlayersWithMessage("Go away evil console!");
+						.withEscapeSequence("/quit").withTimeout(15).thatExcludesNonPlayersWithMessage("Go away evil console!");
 				conversationFactory.buildConversation(p).begin();
 
 				CityMenu.menu.closeMenu(p);
 				break;
 			case "Stadt verwalten":
-				// TODO Auto-generated method stub
+
 				Menu cityManagerMenu = new Menu("Stadt verwalten", 3);
 				CityManagerMenu.loadMenu(cityManagerMenu, p);
 				Gui.switchMenu(p, CityMenu.menu, cityManagerMenu);
@@ -110,21 +110,21 @@ public class CityItem extends MenuItem {
 				break;
 			case "Grundstueck belegt":
 			case "GS Information":
-				// TODO Auto-generated method stub
+
 				ChunkHandler.markEdges(p);
 				Chunk chunkinfo = p.getLocation().getChunk();
 				if (ChunkHandler.ownedChunks.containsKey(chunkinfo.toString())) {
 					String owner = ChunkHandler.getOwnerName(chunkinfo.toString());
 					if (owner == null)
-						p.sendMessage("Grundstï¿½ck gehï¿½rt: unbekannt");
+						p.sendMessage("Grundstück gehört: unbekannt");
 					else
-						p.sendMessage("Grundstï¿½ck gehï¿½rt: " + owner);
+						p.sendMessage("Grundstück gehört: " + owner);
 				}
 
 				Hauptmenu.menu.closeMenu(p);
 				break;
 			case "Hauptmenu":
-				// TODO Auto-generated method stub
+
 				Gui.switchMenu(p, CityMenu.menu, Hauptmenu.menu);
 				break;
 
@@ -133,7 +133,7 @@ public class CityItem extends MenuItem {
 					break;
 				}
 				if (Account.getBalance(p) < 500.00) {
-					p.sendMessage("Schnellreise nicht mï¿½glich. Du hast nicht genï¿½gend Geld. Du benï¿½tigst 500 SD");
+					p.sendMessage("Schnellreise nicht möglich. Du hast nicht genügend Geld. Du benötigst 500 SD");
 					return;
 				}
 				p.teleport(this.loc);
@@ -146,7 +146,7 @@ public class CityItem extends MenuItem {
 
 		@Override
 		public Prompt acceptInput(ConversationContext arg0, String arg1) {
-			// TODO Auto-generated method stub
+
 			City city = new City();
 			city.create(((Player) arg0.getForWhom()), arg1);
 			return null;
@@ -154,8 +154,8 @@ public class CityItem extends MenuItem {
 
 		@Override
 		public String getPromptText(ConversationContext arg0) {
-			// TODO Auto-generated method stub
-			return "Gibt den Namen deiner Stadt im Chat ein, du hast 5 Sekunden Zeit:";
+
+			return "Gibt den Namen deiner Stadt im Chat ein, du hast 15 Sekunden Zeit:";
 		}
 
 	}

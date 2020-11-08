@@ -37,7 +37,7 @@ public class AdminMenu {
 
 		AdminItem item = new AdminItem("Hauptmenu", Material.ENDER_PEARL);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Zurï¿½ck zum Hauptmenu.");
+		lines.add("Zurück zum Hauptmenu.");
 		item.setDescriptions(lines);
 
 		AdminMenu.menu.addMenuItem(item, 26);

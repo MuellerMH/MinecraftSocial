@@ -16,7 +16,7 @@ public class ShopSellItem extends MenuItem {
 	private double buy;
 	private ItemStack item;
 	public ShopSellItem(String text, ItemStack icon) {
-		// TODO Auto-generated constructor stub
+
 		super(text, icon);
 	}
 
@@ -48,7 +48,7 @@ public class ShopSellItem extends MenuItem {
 				Market.setPrice(item.getType().toString() + ":" + item.getDurability(), this.buy - (this.buy * 0.14));
 				this.sell = Math.max(1, Market.getPrice(item.getType().toString() + ":" + item.getDurability()) * 0.6);
 				this.buy = Math.max(1, Market.getPrice(item.getType().toString() + ":" + item.getDurability()));
-				player.sendMessage("Verkauft fï¿½r: " + total + " SD");
+				player.sendMessage("Verkauft für: " + total + " SD");
 
 				ShopMenu.trademenu.updateMenu();
 				ShopMenu.menu.updateMenu();
@@ -87,17 +87,17 @@ public class ShopSellItem extends MenuItem {
 	}
 
 	public void setMat(Material mat) {
-		// TODO Auto-generated method stub
+
 		this.mat = mat;
 	}
 
 	public Material getMat() {
-		// TODO Auto-generated method stub
+
 		return this.mat;
 	}
 
 	public void setItem(ItemStack item) {
-		// TODO Auto-generated method stub
+
 		this.item = item;
 	}
 

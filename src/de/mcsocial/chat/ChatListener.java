@@ -41,7 +41,7 @@ public class ChatListener implements Listener, CommandExecutor {
 
 		if (cmd.getName().equalsIgnoreCase("list")) {
 			p.sendMessage("---------------------------");
-			p.sendMessage("Verfï¿½gbare Chat Kanï¿½le");
+			p.sendMessage("Verfügbare Chat Kanäle");
 			p.sendMessage("---------------------------");
 
 			List<String> channels = MCSocial.channel.getList();
@@ -82,7 +82,7 @@ public class ChatListener implements Listener, CommandExecutor {
 				p.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "---------------------------");
 				p.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "Bitte Chat Namen angeben");
 				p.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "---------------------------");
-				p.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "Verfï¿½gbare Chat Kanï¿½le");
+				p.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "Verfügbare Chat Kanäle");
 				p.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "---------------------------");
 
 				List<String> channels = MCSocial.channel.getList();
@@ -124,7 +124,7 @@ public class ChatListener implements Listener, CommandExecutor {
 				p.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "---------------------------");
 				p.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "Bitte Chat Namen angeben");
 				p.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "---------------------------");
-				p.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "Verfï¿½gbare Chat Kanï¿½le");
+				p.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "Verfügbare Chat Kanäle");
 				p.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "---------------------------");
 
 				List<String> channels = MCSocial.channel.getList();
@@ -153,7 +153,7 @@ public class ChatListener implements Listener, CommandExecutor {
 			List<Player> allPlayer = new ArrayList<Player>(Bukkit.getServer().getOnlinePlayers());
 
 			if (Jail.isInJail(p)) {
-				p.sendMessage(ChatColor.RED + "Du bist im Gefï¿½ngniss. Schweige und schreibe deine Sï¿½nden in das Buch!");
+				p.sendMessage(ChatColor.RED + "Du bist im Gefängniss. Schweige und schreibe deine Sünden in das Buch!");
 				MCSocial.channel.join(p, "Lokal");
 			}
 
@@ -224,7 +224,6 @@ public class ChatListener implements Listener, CommandExecutor {
 			}
 		}
 
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -272,7 +271,7 @@ public class ChatListener implements Listener, CommandExecutor {
 		 */
 
 		if (event.getMessage().equalsIgnoreCase("MuellerMH") || event.getMessage().equalsIgnoreCase("mueller")) {
-			event.getPlayer().sendMessage(ChatColor.RED + "Bei Fragen kommen sie persï¿½nlich zu einer Audienz.");
+			event.getPlayer().sendMessage(ChatColor.RED + "Bei Fragen kommen sie persönlich zu einer Audienz.");
 			event.setCancelled(true);
 			return;
 		}
@@ -280,14 +279,14 @@ public class ChatListener implements Listener, CommandExecutor {
 		if (event.getMessage().equalsIgnoreCase("admin") || event.getMessage().equalsIgnoreCase("op")
 				|| event.getMessage().equalsIgnoreCase("hilfe")) {
 			event.getPlayer()
-					.sendMessage(ChatColor.RED + "Bitte betreten Sie fï¿½r Fragen den Supportchannel. Zu finden in Ihrem Menu.");
+					.sendMessage(ChatColor.RED + "Bitte betreten Sie für Fragen den Supportchannel. Zu finden in Ihrem Menu.");
 			event.setCancelled(true);
 			return;
 		}
 
 		if (Jail.isInJail(event.getPlayer())) {
 			event.getPlayer()
-					.sendMessage(ChatColor.RED + "Du bist im Gefï¿½ngniss. Schweige und schreibe deine Sï¿½nden in das Buch!");
+					.sendMessage(ChatColor.RED + "Du bist im Gefängniss. Schweige und schreibe deine Sünden in das Buch!");
 			MCSocial.channel.join(event.getPlayer(), "Lokal");
 		}
 
@@ -371,7 +370,7 @@ public class ChatListener implements Listener, CommandExecutor {
 				+ messagePrefix + event.getPlayer().getName() + ChatColor.WHITE + ": " + event.getMessage().replace("$", ""));
 
 		if (event.getRecipients().size() == 1) {
-			event.getPlayer().sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "Niemand kann dich hï¿½ren.");
+			event.getPlayer().sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "Niemand kann dich hören.");
 		}
 		return;
 

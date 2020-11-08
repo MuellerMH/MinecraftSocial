@@ -24,7 +24,7 @@ public class Hauptmenu {
 		if (!p.hasMetadata("folk")) {
 			menu.setExitOnClickOutside(false);
 			FirstTimeMenu.loadMenu(menu, p);
-			p.sendMessage("Bevor du das Menu nutzen kannst wï¿½hle ein Volk!");
+			p.sendMessage("Bevor du das Menu nutzen kannst Wähle ein Volk!");
 			return;
 		}
 		Hauptmenu.setP(p);
@@ -53,7 +53,6 @@ public class Hauptmenu {
 	private static void adminMenu() {
 		if (!PlayerPermissions.hasAccess(p, "supporter"))
 			return;
-		// TODO Auto-generated method stub
 		PlayerItem item = new PlayerItem("Admin Menu", Material.ENCHANTED_BOOK);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Admin Funktionen.");
@@ -68,7 +67,7 @@ public class Hauptmenu {
 				if (ChunkHandler.getOwner(Hauptmenu.p).equals(Hauptmenu.p.getUniqueId())) {
 					CityItem itemBarrier = new CityItem("Grundstueck verkaufen", Material.DIRT);
 					List<String> lines = new LinkedList<String>();
-					lines.add("Dieses Grundstï¿½ck gehï¿½rt dir.");
+					lines.add("Dieses Grundstück gehï¿½rt dir.");
 					lines.add("Zum verkaufen klicken.");
 					lines.add("Verkaufspreis 2000.00");
 					itemBarrier.setDescriptions(lines);
@@ -91,7 +90,7 @@ public class Hauptmenu {
 		if (!ChunkHandler.isClaimAble(Hauptmenu.p)) {
 			CityItem itemBarrier = new CityItem("Grundstueck belegt", Material.BARRIER);
 			List<String> lines = new LinkedList<String>();
-			lines.add("Dieses Grundstï¿½ck steht nicht zum verkauf.");
+			lines.add("Dieses Grundstück steht nicht zum verkauf.");
 			itemBarrier.setDescriptions(lines);
 			Hauptmenu.menu.addMenuItem(itemBarrier, 19);
 			return;
@@ -99,9 +98,9 @@ public class Hauptmenu {
 
 		CityItem item = new CityItem("Grundstueck kaufen", Material.GRASS);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Dieses Grundstï¿½ck kannst du kaufen.");
-		lines.add("Klicken um das Grundstï¿½ck jetzt zu kaufen.");
-		lines.add("Preis eines Wilden Grundstï¿½ckes: 4000.00 Social Dollar");
+		lines.add("Dieses Grundstück kannst du kaufen.");
+		lines.add("Klicken um das Grundstück jetzt zu kaufen.");
+		lines.add("Preis eines Wilden Grundstückes: 4000.00 Social Dollar");
 		item.setDescriptions(lines);
 		Hauptmenu.menu.addMenuItem(item, 19);
 	}
@@ -120,7 +119,7 @@ public class Hauptmenu {
 		CityItem item = new CityItem("GS Information", Material.GRASS);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Zeigt Informationen zu dem");
-		lines.add("aktuellen Grundstï¿½ck an ");
+		lines.add("aktuellen Grundstück an ");
 		lines.add("auf dem du dich befindest.");
 		item.setDescriptions(lines);
 

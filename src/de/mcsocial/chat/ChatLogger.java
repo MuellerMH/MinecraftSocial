@@ -15,10 +15,9 @@ public class ChatLogger {
 		try {
 			preparedStmt.setString (1, player.getName());
 			preparedStmt.setString (2, message);
-			
-			MySQL.insertDB(preparedStmt);								
+
+			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

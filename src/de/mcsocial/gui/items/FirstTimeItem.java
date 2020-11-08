@@ -11,17 +11,17 @@ import de.mcsocial.gui.Menus.FirstTimeMenu;
 public class FirstTimeItem extends MenuItem {
 
 	public FirstTimeItem(String text, Material icon) {
-		// TODO Auto-generated constructor stub
+
 		super(text, new ItemStack(icon, 1));
 	}
 
 	@Override
 	public void onClick(Player player) {
-		// TODO Auto-generated method stub
+
 		Resident.addFolk(player, this.getText());
 		player.sendMessage("Du bist nun ein " + this.getText() + "!");
-		player.sendMessage("Wï¿½hle als nï¿½chstes dein Beruf!");
-		player.sendMessage("Du findest alle Berufe im Spieler Menu. Tippe dafï¿½r einfach /m in den Chat");
+		player.sendMessage("Wähle als nächstes dein Beruf!");
+		player.sendMessage("Du findest alle Berufe im Spieler Menu. Tippe dafür einfach /m in den Chat");
 		player.sendMessage("Dann solltest du dich zu dem Land deines Volkes gehen.");
 		player.sendMessage("Und nun viel Spass " + this.getText() + " hab viele Erfolge!");
 

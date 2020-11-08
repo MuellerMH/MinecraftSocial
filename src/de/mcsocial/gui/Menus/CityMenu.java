@@ -37,7 +37,6 @@ public class CityMenu {
 	}
 
 	private static void addCityButton(String key, City city, int pos) {
-		// TODO Auto-generated method stub
 		CityItem item = new CityItem(key, Material.MAP);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Stadthalter:  " + Bukkit.getOfflinePlayer(city.getOwner()).getName());
@@ -71,7 +70,7 @@ public class CityMenu {
 
 		CityItem item = new CityItem("Stadt grï¿½nden", Material.WRITABLE_BOOK);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Zurï¿½ck zum Hauptmenu.");
+		lines.add("Zurück zum Hauptmenu.");
 		item.setDescriptions(lines);
 
 		if (!CityMenu.p.isOp()) {
@@ -89,7 +88,7 @@ public class CityMenu {
 
 		CityItem item = new CityItem("Stadt verwalten", Material.WRITABLE_BOOK);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Zurï¿½ck zum Hauptmenu.");
+		lines.add("Zurück zum Hauptmenu.");
 		item.setDescriptions(lines);
 
 		CityMenu.menu.addMenuItem(item, 34);
@@ -99,7 +98,7 @@ public class CityMenu {
 
 		CityItem item = new CityItem("Hauptmenu", Material.ENDER_PEARL);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Zurï¿½ck zum Hauptmenu.");
+		lines.add("Zurück zum Hauptmenu.");
 		item.setDescriptions(lines);
 
 		CityMenu.menu.addMenuItem(item, 35);

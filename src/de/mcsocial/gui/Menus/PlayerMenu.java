@@ -129,7 +129,7 @@ public class PlayerMenu {
 
 		PlayerItem item = new PlayerItem("Hauptmenu", Material.ENDER_PEARL);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Zurï¿½ck zum Hauptmenu.");
+		lines.add("Zurück zum Hauptmenu.");
 		item.setDescriptions(lines);
 
 		PlayerMenu.menu.addMenuItem(item, 26);

@@ -20,13 +20,13 @@ public class VillagerShop extends CustomVillager {
 
 	public VillagerShop(net.minecraft.server.v1_14_R1.World world) {
 		super(world);
-		// TODO Auto-generated constructor stub
+
 	}
 
 /*
 	public VillagerShop(net.minecraft.server.v1_14_R1.World world, int i) {
 		super(world, i);
-		// TODO Auto-generated constructor stub
+
 	}
 	*/
 
@@ -70,7 +70,7 @@ public class VillagerShop extends CustomVillager {
 		return shop;
 
 		/*
-		// TODO Auto-generated method stub
+
 		 World mcWorld = location.getWorld();
 	        final VillagerShop customEntity = new VillagerShop(mcWorld);
 	        customEntity.setName(string);
@@ -127,12 +127,12 @@ public class VillagerShop extends CustomVillager {
 
 
 	public UUID getOwner() {
-		// TODO Auto-generated method stub
+
 		return this.owner;
 	}
 
 	public void setOwner(UUID player) {
-		// TODO Auto-generated method stub
+
 		this.owner = player;
 	}
 

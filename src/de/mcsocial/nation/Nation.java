@@ -16,7 +16,6 @@ public class Nation {
 	}
 
 	private String getName() {
-		// TODO Auto-generated method stub
 		return this.name;
 	}
 }

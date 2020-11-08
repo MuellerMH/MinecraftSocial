@@ -44,7 +44,6 @@ public class MySQL {
 		try {
 			return MySQL.connection.prepareStatement(sql);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -56,7 +55,6 @@ public class MySQL {
 		try {
 			sql.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

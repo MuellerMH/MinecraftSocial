@@ -61,7 +61,6 @@ public class Account {
 	}
 
 	public static void create(Player player) {
-		// TODO Auto-generated method stub
 		String sql = "insert into MCS_account (player, balance)" + " values (?, ?) ON DUPLICATE KEY UPDATE  balance = ?";
 		Double money = 4000.00;
 		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
@@ -76,7 +75,6 @@ public class Account {
 			player.setMetadata("account", new FixedMetadataValue(MCSocial.instance, money));
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

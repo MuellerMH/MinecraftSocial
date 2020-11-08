@@ -20,10 +20,9 @@ public class AdminLogger {
 			preparedStmt.setString (3, action);
 			if(argument != null)preparedStmt.setString (4, argument);
 			else preparedStmt.setString (4, null);
-			
-			MySQL.insertDB(preparedStmt);								
+
+			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

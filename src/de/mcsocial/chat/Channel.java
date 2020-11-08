@@ -38,7 +38,7 @@ public class Channel {
 
 	public static void join(Player p, String name) {
 		if (Jail.isInJail(p)) {
-			p.sendMessage("Du bist im Gefï¿½ngniss und kannst keinen anderen Channel beitreten.");
+			p.sendMessage("Du bist im Gefängniss und kannst keinen anderen Channel beitreten.");
 			return;
 		}
 		if (Channel.inChannel == null) {
@@ -53,7 +53,7 @@ public class Channel {
 
 	public static void leave(Player p, String name) {
 		if (Jail.isInJail(p)) {
-			p.sendMessage("Du bist im Gefï¿½ngniss und kannst keine anderen Channel verlassen.");
+			p.sendMessage("Du bist im Gefängniss und kannst keine anderen Channel verlassen.");
 			return;
 		}
 		if (!Channel.channels.contains(name)) {
@@ -70,12 +70,10 @@ public class Channel {
 	}
 
 	public static List<String> getList() {
-		// TODO Auto-generated method stub
 		return Channel.channels;
 	}
 
 	static boolean channelExist(String string) {
-		// TODO Auto-generated method stub
 		return Channel.channels.contains(string);
 	}
 }

@@ -102,7 +102,7 @@ public class Jail {
 	}
 
 	public static HashMap<Location, JailChunk> getList() {
-		// TODO Auto-generated method stub
+
 		HashMap<Location,JailChunk>allCells = new HashMap<Location,JailChunk>();
 
 		if(Jail.jailChunks == null){

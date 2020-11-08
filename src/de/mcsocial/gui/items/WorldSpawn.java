@@ -9,20 +9,20 @@ import de.mcsocial.protection.Jail;
 
 public class WorldSpawn extends MenuItem {
 
-		
+
 	public WorldSpawn(String text, Material icon) {
-		// TODO Auto-generated constructor stub
+
 		super(text, new ItemStack(icon,1));
 	}
 
 	@Override
 	public void onClick(Player p) {
-		// TODO Auto-generated method stub
+
 
 		if(Jail.isInJail(p)){
 			return;
-	    }		 
-		p.teleport(p.getServer().getWorld("world").getSpawnLocation());	
+	    }
+		p.teleport(p.getServer().getWorld("world").getSpawnLocation());
 	}
 
 }

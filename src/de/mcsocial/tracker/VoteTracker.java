@@ -178,7 +178,7 @@ public class VoteTracker extends Thread {
 				keyPair = RSAIO.load(rsaDirectory);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 

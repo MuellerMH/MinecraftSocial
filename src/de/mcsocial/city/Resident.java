@@ -207,7 +207,6 @@ public class Resident implements Listener {
 			preparedStmt.setString(2, uuidOld);
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -222,7 +221,6 @@ public class Resident implements Listener {
 			preparedStmt.setString(2, uuidOld);
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -237,7 +235,6 @@ public class Resident implements Listener {
 			preparedStmt.setString(2, uuidOld);
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -250,7 +247,6 @@ public class Resident implements Listener {
 			preparedStmt2.setString(2, uuidOld);
 			MySQL.insertDB(preparedStmt2);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -265,7 +261,6 @@ public class Resident implements Listener {
 			preparedStmt.setString(2, uuidOld);
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -280,7 +275,6 @@ public class Resident implements Listener {
 			preparedStmt.setString(2, uuidOld);
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -318,13 +312,11 @@ public class Resident implements Listener {
 				initPlayer(p);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	private static void setChat(Player p) {
-		// TODO Auto-generated method stub
 		if ((p.hasMetadata("isAdmin") && p.getMetadata("isAdmin").get(0).asBoolean())) {
 			Channel.join(p, "Admin");
 		}
@@ -387,14 +379,11 @@ public class Resident implements Listener {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public static void create(Player player) {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
 		String sql = "insert ignore into MCS_player (name, uuid)" + " values (?, ?)"
 				+ " ON DUPLICATE KEY UPDATE job= ?, lastJobChange=?, folk=?, lastlogin=NOW()";
 
@@ -409,7 +398,6 @@ public class Resident implements Listener {
 			preparedStmt.setString(5, player.hasMetadata("folk") ? player.getMetadata("folk").get(0).asString() : null);
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -439,7 +427,6 @@ public class Resident implements Listener {
 				p.setMetadata("cityowner", new FixedMetadataValue(MCSocial.instance, result.getString("name")));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -454,7 +441,6 @@ public class Resident implements Listener {
 				p.setMetadata("city", new FixedMetadataValue(MCSocial.instance, result.getString("name")));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -469,47 +455,39 @@ public class Resident implements Listener {
 				p.setMetadata("account", new FixedMetadataValue(MCSocial.instance, result.getDouble("balance")));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public static String getName(UUID owner) {
-		// TODO Auto-generated method stub
 		Player p = Bukkit.getPlayer(owner);
 		return p.getName();
 	}
 
 	public static void removeFolk(Player p) {
-		// TODO Auto-generated method stub
 		p.removeMetadata("folk", MCSocial.instance);
 		Resident.create(p);
 	}
 	public static void addFolk(Player p, String string) {
-		// TODO Auto-generated method stub
 		p.setMetadata("folk", new FixedMetadataValue(MCSocial.instance, string));
 		Resident.create(p);
 	}
 
 	public static void removeNation(Player p) {
-		// TODO Auto-generated method stub
 		p.removeMetadata("nation", MCSocial.instance);
 		Resident.create(p);
 	}
 	public static void addNation(Player p, String string) {
-		// TODO Auto-generated method stub
 		p.setMetadata("nation", new FixedMetadataValue(MCSocial.instance, string));
 		Resident.create(p);
 	}
 
 	public static void removeJob(Player p) {
-		// TODO Auto-generated method stub
 		p.removeMetadata("job", MCSocial.instance);
 		Resident.create(p);
 	}
 
 	public static void addJob(Player p, String string) {
-		// TODO Auto-generated method stub
 		p.setMetadata("job", new FixedMetadataValue(MCSocial.instance, string));
 		p.setMetadata("lastJobChange", new FixedMetadataValue(MCSocial.instance, System.currentTimeMillis()));
 		Resident.create(p);

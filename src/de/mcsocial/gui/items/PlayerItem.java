@@ -22,40 +22,40 @@ import de.mcsocial.permissions.PlayerPermissions;
 public class PlayerItem extends MenuItem {
 
 	public PlayerItem(String text, Material icon) {
-		// TODO Auto-generated constructor stub
+
 		super(text, new ItemStack(icon, 1));
 	}
 
 	@Override
 	public void onClick(Player p) {
-		// TODO Auto-generated method stub
+
 		switch (this.getText()) {
 			case "Spieler Menu":
-				// TODO Auto-generated method stub
+
 				Menu menuPlayer = new Menu("Spieler", 3);
 				Gui.switchMenu(p, Hauptmenu.menu, menuPlayer);
 				PlayerMenu.loadMenu(menuPlayer, p);
 				break;
 			case "Admin Menu":
-				// TODO Auto-generated method stub
+
 				Menu menuAdmin = new Menu("Admin Menu", 3);
 				Gui.switchMenu(p, Hauptmenu.menu, menuAdmin);
 				AdminMenu.loadMenu(menuAdmin, p);
 				break;
 			case "Konto":
-				// TODO Auto-generated method stub
+
 				Menu menuAccount = new Menu("Konto", 3);
 				Gui.switchMenu(p, PlayerMenu.menu, menuAccount);
 				AccountMenu.loadMenu(menuAccount, p);
 				break;
 			case "Berufe Uebersicht":
-				// TODO Auto-generated method stub
+
 				Menu jobMenu = new Menu("Berufe", 3);
 				Gui.switchMenu(p, PlayerMenu.menu, jobMenu);
 				JobMenu.loadMenu(jobMenu, p);
 				break;
 			case "Hauptmenu":
-				// TODO Auto-generated method stub
+
 				Gui.switchMenu(p, PlayerMenu.menu, Hauptmenu.menu);
 				break;
 			case "Beruf annehmen":
@@ -65,7 +65,7 @@ public class PlayerItem extends MenuItem {
 						return;
 					}
 				}
-				// TODO Auto-generated method stub
+
 				Menu jobMenuSelect = new Menu("Berufe", 3);
 				Gui.switchMenu(p, PlayerMenu.menu, jobMenuSelect);
 				JobSelectMenu.loadMenu(jobMenuSelect, p);
@@ -77,12 +77,12 @@ public class PlayerItem extends MenuItem {
 						return;
 					}
 				}
-				// TODO Auto-generated method stub
+
 				Resident.removeJob(p);
 				Gui.switchMenu(p, PlayerMenu.menu, Hauptmenu.menu);
 				break;
 			case "Mein Beruf":
-				// TODO Auto-generated method stub
+
 				p.sendMessage("--------------------------------");
 				p.sendMessage("Berufinformationen");
 				p.sendMessage("--------------------------------");
@@ -106,13 +106,13 @@ public class PlayerItem extends MenuItem {
 			case "MinerInfo":
 				if (!PlayerPermissions.hasAccess(p, "supporter"))
 					break;
-				// TODO Auto-generated method stub
+
 				p.sendMessage("--------------------------------");
 				p.sendMessage("Dein aktuelles Mining verhalten:");
 				p.sendMessage("--------------------------------");
 
 				if (!Miner.counterAll.containsKey(p.getUniqueId())) {
-					p.sendMessage("Keine abgebauten Blï¿½cke vorhanden");
+					p.sendMessage("Keine abgebauten Blöcke vorhanden");
 					p.sendMessage("--------------------------------");
 					return;
 				}
@@ -129,7 +129,7 @@ public class PlayerItem extends MenuItem {
 					p.sendMessage("Kohle: " + Miner.counterCoal.get(p.getUniqueId()));
 				if (Miner.counterLapis.containsKey(p.getUniqueId()))
 					p.sendMessage("Lapis: " + Miner.counterLapis.get(p.getUniqueId()));
-				p.sendMessage("Gesamt abgebaute Blï¿½cke: " + Miner.counterAll.get(p.getUniqueId()));
+				p.sendMessage("Gesamt abgebaute Blöcke: " + Miner.counterAll.get(p.getUniqueId()));
 				p.sendMessage("--------------------------------");
 				break;
 

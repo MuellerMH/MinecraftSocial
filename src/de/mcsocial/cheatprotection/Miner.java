@@ -115,14 +115,12 @@ public class Miner implements Listener, CommandExecutor {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	@SuppressWarnings("rawtypes")
 	public static void saveMinerData() {
-		// TODO Auto-generated method stub
 		Iterator it = Miner.counterDias.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry miner = (Map.Entry) it.next();
@@ -178,7 +176,7 @@ public class Miner implements Listener, CommandExecutor {
 			preparedStmt.setInt(4, count);
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -262,7 +260,7 @@ public class Miner implements Listener, CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
 		if (!(sender instanceof Player)) {
-			Bukkit.getLogger().info("[MCSocial] Dieser Befehl kann nur von einem Spieler ausgefï¿½hrt werden!");
+			Bukkit.getLogger().info("[MCSocial] Dieser Befehl kann nur von einem Spieler ausgeführt werden!");
 			return true;
 		}
 
@@ -297,7 +295,7 @@ public class Miner implements Listener, CommandExecutor {
 			p.sendMessage("--------------------------------");
 
 			if (!Miner.counterAll.containsKey(oP.getUniqueId())) {
-				p.sendMessage("Keine abgebauten Blï¿½cke vorhanden");
+				p.sendMessage("Keine abgebauten Blöcke vorhanden");
 				p.sendMessage("--------------------------------");
 				return true;
 			}
@@ -314,7 +312,7 @@ public class Miner implements Listener, CommandExecutor {
 				p.sendMessage("Kohle: " + Miner.counterCoal.get(oP.getUniqueId()));
 			if (Miner.counterLapis.containsKey(oP.getUniqueId()))
 				p.sendMessage("Lapis: " + Miner.counterLapis.get(oP.getUniqueId()));
-			p.sendMessage("Gesamt abgebaute Blï¿½cke: " + Miner.counterAll.get(oP.getUniqueId()));
+			p.sendMessage("Gesamt abgebaute Blöcke: " + Miner.counterAll.get(oP.getUniqueId()));
 			p.sendMessage("--------------------------------");
 			return true;
 		}

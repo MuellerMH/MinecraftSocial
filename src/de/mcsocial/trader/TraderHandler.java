@@ -116,7 +116,7 @@ public class TraderHandler implements Listener, CommandExecutor {
 					shop.setName(args[1]);
 					shop.setProfession(profession);
 					TraderHandler.saveShop(shop);
-					p.sendMessage("Shop mit dem Namen " + args[1] + " hinzugefï¿½gt.");
+					p.sendMessage("Shop mit dem Namen " + args[1] + " hinzugefügt.");
 					return true;
 				}
 
@@ -209,7 +209,7 @@ public class TraderHandler implements Listener, CommandExecutor {
 
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return;
@@ -234,7 +234,7 @@ public class TraderHandler implements Listener, CommandExecutor {
 
 				MySQL.insertDB(preparedStmt);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			return;
@@ -255,7 +255,7 @@ public class TraderHandler implements Listener, CommandExecutor {
 
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -275,7 +275,7 @@ public class TraderHandler implements Listener, CommandExecutor {
 				TraderHandler.initShop(result);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -337,7 +337,7 @@ public class TraderHandler implements Listener, CommandExecutor {
 				TraderHandler.initShop(result);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}

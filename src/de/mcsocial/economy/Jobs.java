@@ -96,14 +96,14 @@ public class Jobs implements Listener {
 					if (playerjob.equalsIgnoreCase("Soldat")) {
 						if (en.equals(EntityType.VILLAGER)) {
 							claimedMoney -= 1000;
-							player.sendMessage("Du hast einen unschuldigen getï¿½tet!");
+							player.sendMessage("Du hast einen unschuldigen getötet!");
 						} else if (event.getEntity() instanceof Player) {
 							Player target = (Player) event.getEntity();
 							if (target.hasMetadata("folk") && player.hasMetadata("folk")) {
 								if (target.getMetadata("folk").get(0).asString()
 										.equalsIgnoreCase(player.getMetadata("folk").get(0).asString())) {
 									claimedMoney -= 1000;
-									player.sendMessage("Du hast jemanden deines Volkes getï¿½tet!");
+									player.sendMessage("Du hast jemanden deines Volkes getötet!");
 								} else {
 									claimedMoney += 100;
 								}
@@ -111,7 +111,7 @@ public class Jobs implements Listener {
 								if (target.getMetadata("city").get(0).asString()
 										.equalsIgnoreCase(player.getMetadata("city").get(0).asString())) {
 									claimedMoney -= 1000;
-									player.sendMessage("Du hast einen Bï¿½rger deiner Stadt getï¿½tet!!");
+									player.sendMessage("Du hast einen Bürger deiner Stadt getötet!!");
 								} else {
 									claimedMoney += 100;
 								}
@@ -380,7 +380,6 @@ public class Jobs implements Listener {
 				Jobs.addJob(result.getString("name"), job);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

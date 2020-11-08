@@ -34,7 +34,7 @@ public class FirstTimeMenu {
 
 		FirstTimeItem item = new FirstTimeItem("Zwerg", Material.DIAMOND_PICKAXE);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Wï¿½hle das Volk der Zwerge");
+		lines.add("Wähle das Volk der Zwerge");
 		item.setDescriptions(lines);
 
 		// -8000,8000
@@ -46,7 +46,7 @@ public class FirstTimeMenu {
 		// 8000,-8000
 		FirstTimeItem item = new FirstTimeItem("Elf", Material.BOW);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Wï¿½hle das Volk der Elfen");
+		lines.add("Wähle das Volk der Elfen");
 		item.setDescriptions(lines);
 
 		FirstTimeMenu.menu.addMenuItem(item, 2);
@@ -56,7 +56,7 @@ public class FirstTimeMenu {
 		// 8000,8000
 		FirstTimeItem item = new FirstTimeItem("Mensch", Material.DIAMOND_SWORD);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Wï¿½hle das Volk der Menschen");
+		lines.add("Wähle das Volk der Menschen");
 		item.setDescriptions(lines);
 
 		FirstTimeMenu.menu.addMenuItem(item, 0);
@@ -66,7 +66,7 @@ public class FirstTimeMenu {
 		// -8000,-8000
 		FirstTimeItem item = new FirstTimeItem("Orc", Material.DIRT);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Wï¿½hle das Volk der Orcs");
+		lines.add("Wähle das Volk der Orcs");
 		item.setDescriptions(lines);
 
 		FirstTimeMenu.menu.addMenuItem(item, 3);

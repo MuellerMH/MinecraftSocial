@@ -234,7 +234,7 @@ public class ShopHandler implements Listener {
 
 							e.getPlayer().updateInventory();
 
-							e.getPlayer().sendMessage("Verkauft fï¿½r: " + total + " SD");
+							e.getPlayer().sendMessage("Verkauft für: " + total + " SD");
 
 							return true;
 						} else {
@@ -262,7 +262,7 @@ public class ShopHandler implements Listener {
 							Account.remove(Bukkit.getOfflinePlayer(shop.getOwner()).getPlayer(), total);
 							Account.add(e.getPlayer(), total);
 
-							e.getPlayer().sendMessage("Verkauft fï¿½r: " + total + " SD");
+							e.getPlayer().sendMessage("Verkauft für: " + total + " SD");
 
 							return true;
 						}
@@ -313,7 +313,7 @@ public class ShopHandler implements Listener {
 							e.getPlayer().getInventory().addItem(giveAway);
 							e.getPlayer().updateInventory();
 
-							e.getPlayer().sendMessage("Gekauft fï¿½r: " + total + " SD");
+							e.getPlayer().sendMessage("Gekauft für: " + total + " SD");
 
 							return true;
 						} else {
@@ -337,7 +337,7 @@ public class ShopHandler implements Listener {
 							e.getPlayer().getInventory().addItem(giveAway);
 							e.getPlayer().updateInventory();
 
-							e.getPlayer().sendMessage("Gekauft fï¿½r: " + total + " SD");
+							e.getPlayer().sendMessage("Gekauft für: " + total + " SD");
 
 							return true;
 						}
@@ -376,7 +376,6 @@ public class ShopHandler implements Listener {
 			preparedStmt.setDouble(11, shop.getPriceBuy());
 			MySQL.insertDB(preparedStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -437,13 +436,11 @@ public class ShopHandler implements Listener {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	private void destroy(String string) {
-		// TODO Auto-generated method stub
 		String sql = "DELETE FROM MCS_shop WHERE sign = ? ";
 
 		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
@@ -459,14 +456,11 @@ public class ShopHandler implements Listener {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public static void destroy(Sign state) {
-		// TODO Auto-generated method stub
-
 		String sql = "DELETE FROM MCS_shop WHERE sign = ? ";
 
 		PreparedStatement preparedStmt = MySQL.getPreStat(sql);
@@ -489,7 +483,6 @@ public class ShopHandler implements Listener {
 			ShopHandler.shops.remove(state);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

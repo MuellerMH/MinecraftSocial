@@ -117,7 +117,7 @@ public class WebChatHandler implements HttpHandler {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
     	returnString += "]}";

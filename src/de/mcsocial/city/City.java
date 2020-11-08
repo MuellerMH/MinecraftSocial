@@ -64,7 +64,6 @@ public class City {
 			MySQL.insertDB(preparedStmt);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -77,7 +76,7 @@ public class City {
 		p.setMetadata("city", new FixedMetadataValue(MCSocial.instance, city.getOwner()));
 		City.residentList.put(p.getUniqueId(), city);
 		// system.out.println("Spieler "+p.getName()+" wurde der Stadt
-		// "+city.getName()+" hinzugefï¿½gt.");
+		// "+city.getName()+" hinzugefügt.");
 	}
 
 	public static void leave(Player p, City city) {
@@ -163,7 +162,6 @@ public class City {
 	}
 
 	public City(UUID owner, String name, Location loc2) {
-		// TODO Auto-generated constructor stub
 		this.name = name;
 		this.owner = owner;
 		this.loc = loc2;
@@ -193,7 +191,6 @@ public class City {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -258,22 +255,18 @@ public class City {
 				City.residentList.put(playerUUID, city);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public static void save() {
-		// TODO Auto-generated method stub
 	}
 
 	public static boolean isVillager(UUID uniqueId) {
-		// TODO Auto-generated method stub
 		return City.residentList.containsKey(uniqueId);
 	}
 
 	public static void removeCity(Player p) {
-		// TODO Auto-generated method stub
 
 		List<UUID> deleteCity = new ArrayList<UUID>();
 
@@ -314,7 +307,6 @@ public class City {
 			MySQL.insertDB(preparedStmt);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -330,7 +322,6 @@ public class City {
 			MySQL.insertDB(preparedStmt);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

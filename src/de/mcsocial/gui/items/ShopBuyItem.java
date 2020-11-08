@@ -17,15 +17,15 @@ public class ShopBuyItem extends MenuItem {
 	private double buy;
 	private ItemStack item;
 	public ShopBuyItem(String text, ItemStack icon) {
-		// TODO Auto-generated constructor stub
+
 		super(text, icon);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onClick(Player player) {
-		// TODO Auto-generated method stub
-		if (this.getText().equalsIgnoreCase("zurï¿½ck")) {
+
+		if (this.getText().equalsIgnoreCase("zurück")) {
 			Gui.switchMenu(player, ShopMenu.trademenu, ShopMenu.menu);
 			return;
 		}
@@ -34,7 +34,7 @@ public class ShopBuyItem extends MenuItem {
 		double total = Math.round(this.buy * totalStack);
 
 		if (Account.getBalance(player) < total) {
-			player.sendMessage("Du hast nicht genï¿½gend Geld.");
+			player.sendMessage("Du hast nicht genügend Geld.");
 			return;
 		}
 
@@ -49,7 +49,7 @@ public class ShopBuyItem extends MenuItem {
 		Market.setPrice(item.getType().toString() + ":" + item.getDurability(), this.buy + (this.buy * 0.10));
 		this.sell = Math.max(1, Market.getPrice(item.getType().toString() + ":" + item.getDurability()) * 0.6);
 		this.buy = Math.max(1, Market.getPrice(item.getType().toString() + ":" + item.getDurability()));
-		player.sendMessage("Gekauft fï¿½r: " + total + " SD");
+		player.sendMessage("Gekauft für: " + total + " SD");
 
 		ShopMenu.trademenu.updateMenu();
 		ShopMenu.menu.updateMenu();
@@ -86,17 +86,17 @@ public class ShopBuyItem extends MenuItem {
 	}
 
 	public void setMat(Material mat) {
-		// TODO Auto-generated method stub
+
 		this.mat = mat;
 	}
 
 	public Material getMat() {
-		// TODO Auto-generated method stub
+
 		return this.mat;
 	}
 
 	public void setItem(ItemStack item) {
-		// TODO Auto-generated method stub
+
 		this.item = item;
 	}
 
