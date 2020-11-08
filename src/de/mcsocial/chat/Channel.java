@@ -12,6 +12,7 @@ import de.mcsocial.main.MCSocial;
 import de.mcsocial.protection.Jail;
 
 public class Channel {
+<<<<<<< HEAD
 	
 	private static List<String>channels;
 	private static HashMap<UUID,List<String>>inChannel;
@@ -22,19 +23,38 @@ public class Channel {
 	}
 
 	public static void create(String name) {		
+=======
+
+	private static List<String> channels;
+	private static HashMap<UUID, List<String>> inChannel;
+
+	public Channel() {
+		Channel.inChannel = new HashMap<UUID, List<String>>();
+		Channel.channels = new ArrayList<String>();
+	}
+
+	public static void create(String name) {
+>>>>>>> b4ade11... add new directory
 		Channel.channels.add(name);
 	}
 
 	public static void delete(String name) {
 		Channel.channels.remove(name);
 	}
+<<<<<<< HEAD
 	
 	public static Boolean isInChat(Player p, String name){
 		if(!Channel.inChannel.containsKey(p.getUniqueId())){
+=======
+
+	public static Boolean isInChat(Player p, String name) {
+		if (!Channel.inChannel.containsKey(p.getUniqueId())) {
+>>>>>>> b4ade11... add new directory
 			Channel.inChannel.put(p.getUniqueId(), new ArrayList<String>());
 		}
 		return Channel.inChannel.get(p.getUniqueId()).contains(name);
 	}
+<<<<<<< HEAD
 	
 	public static void join(Player p, String name) {
 		if(Jail.isInJail(p)){
@@ -45,11 +65,24 @@ public class Channel {
 			Channel.inChannel = new HashMap<UUID,List<String>>();
 		}
 		if(!Channel.inChannel.containsKey(p.getUniqueId())){
+=======
+
+	public static void join(Player p, String name) {
+		if (Jail.isInJail(p)) {
+			p.sendMessage("Du bist im Gef�ngniss und kannst keinen anderen Channel beitreten.");
+			return;
+		}
+		if (Channel.inChannel == null) {
+			Channel.inChannel = new HashMap<UUID, List<String>>();
+		}
+		if (!Channel.inChannel.containsKey(p.getUniqueId())) {
+>>>>>>> b4ade11... add new directory
 			Channel.inChannel.put(p.getUniqueId(), new ArrayList<String>());
 		}
 		Channel.inChannel.get(p.getUniqueId()).add(name);
 		p.setMetadata("channel", new FixedMetadataValue(MCSocial.instance, name));
 	}
+<<<<<<< HEAD
 	
 	public static void leave(Player p, String name) {
 		if(Jail.isInJail(p)){
@@ -62,6 +95,20 @@ public class Channel {
 		}
 		if(!Channel.inChannel.containsKey(p.getUniqueId())){
 			Channel.inChannel.put(p.getUniqueId(), new ArrayList<String>());	
+=======
+
+	public static void leave(Player p, String name) {
+		if (Jail.isInJail(p)) {
+			p.sendMessage("Du bist im Gef�ngniss und kannst keine anderen Channel verlassen.");
+			return;
+		}
+		if (!Channel.channels.contains(name)) {
+			p.sendMessage("Channel " + name + " existiert nicht.");
+			return;
+		}
+		if (!Channel.inChannel.containsKey(p.getUniqueId())) {
+			Channel.inChannel.put(p.getUniqueId(), new ArrayList<String>());
+>>>>>>> b4ade11... add new directory
 			return;
 		}
 		Channel.inChannel.get(p.getUniqueId()).remove(name);
@@ -69,7 +116,10 @@ public class Channel {
 		p.sendMessage("Du bist nun im Lokalem Chat.");
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> b4ade11... add new directory
 	public static List<String> getList() {
 		// TODO Auto-generated method stub
 		return Channel.channels;
@@ -79,5 +129,9 @@ public class Channel {
 		// TODO Auto-generated method stub
 		return Channel.channels.contains(string);
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> b4ade11... add new directory
 }

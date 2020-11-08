@@ -64,7 +64,11 @@ public class Jail {
 	
 	private static void giveJailItems(Player p){
 		p.getInventory().addItem(new ItemStack(Material.BREAD,4));
+<<<<<<< HEAD
 		p.getInventory().addItem(new ItemStack(Material.BOOK_AND_QUILL,4));		
+=======
+		p.getInventory().addItem(new ItemStack(Material.WRITABLE_BOOK,4));		
+>>>>>>> b4ade11... add new directory
 	}
 	
 	private static  void removeJailItems(Player p){
@@ -86,6 +90,10 @@ public class Jail {
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	@SuppressWarnings("unlikely-arg-type")
+>>>>>>> b4ade11... add new directory
 	public static Boolean isJailChunks(Chunk chunk) {
 		if(Jail.jailChunks== null){
 			Jail.jailChunks = new ArrayList<JailChunk>();

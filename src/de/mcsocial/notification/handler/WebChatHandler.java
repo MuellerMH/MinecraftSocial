@@ -27,6 +27,10 @@ import de.mcsocial.main.MySQL;
 public class WebChatHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
     	InputStream is=exchange.getRequestBody();
+<<<<<<< HEAD
+=======
+		@SuppressWarnings("resource")
+>>>>>>> b4ade11... add new directory
 		BufferedReader in=new BufferedReader(new InputStreamReader(is));
 		exchange.getRequestMethod();
 		

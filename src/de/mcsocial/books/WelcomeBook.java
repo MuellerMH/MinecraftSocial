@@ -23,7 +23,11 @@ public class WelcomeBook {
 
 	
 	public ItemStack getBook(){
+<<<<<<< HEAD
 		ItemStack book = new ItemStack(Material.BOOK_AND_QUILL, 1);			
+=======
+		ItemStack book = new ItemStack(Material.WRITABLE_BOOK, 1);			
+>>>>>>> b4ade11... add new directory
 		BookMeta bm = (BookMeta) book.getItemMeta();
 		bm.setAuthor(author);
 		bm.setDisplayName(title);

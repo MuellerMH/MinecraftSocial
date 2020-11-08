@@ -29,6 +29,10 @@ public class SkillListener implements Listener {
 			if (!(event.getCaught() instanceof Item)) return; //no catch
 			
 			Player player = event.getPlayer();
+<<<<<<< HEAD
+=======
+			@SuppressWarnings("deprecation")
+>>>>>>> b4ade11... add new directory
 			ItemStack inHand = player.getItemInHand();
 			
 			loadSkillItems();
@@ -54,6 +58,10 @@ public class SkillListener implements Listener {
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event){
 		Player player = event.getPlayer();
+<<<<<<< HEAD
+=======
+		@SuppressWarnings("deprecation")
+>>>>>>> b4ade11... add new directory
 		ItemStack inHand = player.getItemInHand();
 		
 		loadSkillItems();

@@ -18,25 +18,37 @@ import de.mcsocial.gui.Menus.AccountMenu;
 import de.mcsocial.gui.Menus.PlayerMenu;
 import de.mcsocial.main.MCSocial;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> b4ade11... add new directory
 public class AccountItem extends MenuItem {
 
 	private ConversationFactory conversationFactory;
 
 	public AccountItem(String text, Material icon) {
 		// TODO Auto-generated constructor stub
+<<<<<<< HEAD
 		super(text, new ItemStack(icon,1));
+=======
+		super(text, new ItemStack(icon, 1));
+>>>>>>> b4ade11... add new directory
 	}
 
 	@Override
 	public void onClick(Player p) {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
 		switch(this.getText()){
+=======
+		switch (this.getText()) {
+>>>>>>> b4ade11... add new directory
 			case "Spieler Menu":
 				// TODO Auto-generated method stub
 				Gui.switchMenu(p, AccountMenu.menu, PlayerMenu.menu);
 				break;
 			case "Spieler Geld geben":
+<<<<<<< HEAD
 				this.conversationFactory = new ConversationFactory(MCSocial.instance)
                 .withModality(true)                
                 .withPrefix(new SummoningConversationPrefix())
@@ -58,10 +70,30 @@ public class AccountItem extends MenuItem {
 		}
 	}
 	
+=======
+				this.conversationFactory = new ConversationFactory(MCSocial.instance).withModality(true)
+						.withPrefix(new SummoningConversationPrefix()).withFirstPrompt(new AccountPrompt())
+						.withEscapeSequence("/quit").withTimeout(15).thatExcludesNonPlayersWithMessage("Go away evil console!");
+				conversationFactory.buildConversation(p).begin();
+				AccountMenu.menu.closeMenu(p);
+				break;
+			case "Kontostand":
+				// TODO Auto-generated method stub
+				p.sendMessage("�r�l�4Kontoverwalter: Aktueller Kontostand: " + p.getMetadata("account").get(0).asInt() + " SD");
+				AccountMenu.menu.closeMenu(p);
+				break;
+			default:
+				p.sendMessage("Button Klick: " + this.getText());
+				break;
+		}
+	}
+
+>>>>>>> b4ade11... add new directory
 	private class AccountPrompt extends StringPrompt {
 
 		@Override
 		public Prompt acceptInput(ConversationContext arg0, String arg1) {
+<<<<<<< HEAD
 			try{
 				Player sender = (Player)arg0.getForWhom();
 				@SuppressWarnings("deprecation")
@@ -70,12 +102,24 @@ public class AccountItem extends MenuItem {
 				// TODO Auto-generated method stub
 				Account.trans(sender , reciver , amount );
 			}catch(Exception e){}
+=======
+			try {
+				Player sender = (Player) arg0.getForWhom();
+				@SuppressWarnings("deprecation")
+				Player reciver = (Player) Bukkit.getOfflinePlayer(arg1.split(" ")[0]);
+				Double amount = Double.parseDouble(arg1.split(" ")[1]);
+				// TODO Auto-generated method stub
+				Account.trans(sender, reciver, amount);
+			} catch (Exception e) {
+			}
+>>>>>>> b4ade11... add new directory
 			return null;
 		}
 
 		@Override
 		public String getPromptText(ConversationContext arg0) {
 			// TODO Auto-generated method stub
+<<<<<<< HEAD
 			 return "Gib nun den SPIELERNAMEN und den BETRAG im Chat ein: Beispiel: MuellerMH 1000";
 		}
 		
@@ -100,5 +144,32 @@ public class AccountItem extends MenuItem {
             return ChatColor.GREEN + "Kontoverwalter: " + ChatColor.WHITE;
         }
     }
+=======
+			return "Gib nun den SPIELERNAMEN und den BETRAG im Chat ein: Beispiel: MuellerMH 1000";
+		}
+
+	}
+
+	private class SummoningConversationPrefix implements ConversationPrefix {
+
+		public String getPrefix(ConversationContext context) {
+			String what = (String) context.getSessionData("type");
+			Integer count = (Integer) context.getSessionData("count");
+			Player who = (Player) context.getSessionData("who");
+
+			if (what != null && count == null && who == null) {
+				return ChatColor.GREEN + "Kontoverwalter " + what + ": " + ChatColor.WHITE;
+			}
+			if (what != null && count != null && who == null) {
+				return ChatColor.GREEN + "Kontoverwalter " + count + " " + what + ": " + ChatColor.WHITE;
+			}
+			if (what != null && count != null && who != null) {
+				return ChatColor.GREEN + "Kontoverwalter " + count + " " + what + " to " + who.getName() + ": "
+						+ ChatColor.WHITE;
+			}
+			return ChatColor.GREEN + "Kontoverwalter: " + ChatColor.WHITE;
+		}
+	}
+>>>>>>> b4ade11... add new directory
 
 }

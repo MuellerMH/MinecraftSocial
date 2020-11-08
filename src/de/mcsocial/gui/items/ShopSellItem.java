@@ -15,11 +15,16 @@ public class ShopSellItem extends MenuItem {
 	private double sell;
 	private double buy;
 	private ItemStack item;
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> b4ade11... add new directory
 	public ShopSellItem(String text, ItemStack icon) {
 		// TODO Auto-generated constructor stub
 		super(text, icon);
 	}
+<<<<<<< HEAD
 	
 	@Override
 	public void onClick(Player player) {
@@ -53,13 +58,53 @@ public class ShopSellItem extends MenuItem {
 
 				ShopMenu.trademenu.updateMenu();
 				ShopMenu.menu.updateMenu();		
+=======
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onClick(Player player) {
+		if (!player.getInventory().contains(mat)) {
+			player.sendMessage("Du besitzt dieses Item nicht.");
+			return;
+		}
+
+		ItemStack[] itemStackArray = player.getInventory().getContents();
+		for (ItemStack itemStack : itemStackArray) {
+			if (itemStack == null) {
+				continue;
+			}
+			if (itemStack.getType().equals(mat)) {
+
+				int totalStack = Math.min(this.amount, itemStack.getAmount());
+				double total = Math.round(this.sell * totalStack);
+
+				Account.add(player, total);
+
+				player.getInventory().removeItem(itemStack);
+				itemStack.setAmount(itemStack.getAmount() - totalStack);
+				player.getInventory().addItem(itemStack);
+				player.updateInventory();
+
+				Market.setPrice(item.getType().toString() + ":" + item.getDurability(), this.buy - (this.buy * 0.14));
+				this.sell = Math.max(1, Market.getPrice(item.getType().toString() + ":" + item.getDurability()) * 0.6);
+				this.buy = Math.max(1, Market.getPrice(item.getType().toString() + ":" + item.getDurability()));
+				player.sendMessage("Verkauft f�r: " + total + " SD");
+
+				ShopMenu.trademenu.updateMenu();
+				ShopMenu.menu.updateMenu();
+>>>>>>> b4ade11... add new directory
 				return;
 			}
 		}
 
 	}
+<<<<<<< HEAD
 	
 	public ItemStack getItem(){
+=======
+
+	public ItemStack getItem() {
+>>>>>>> b4ade11... add new directory
 		return this.item;
 	}
 
@@ -101,6 +146,9 @@ public class ShopSellItem extends MenuItem {
 		// TODO Auto-generated method stub
 		this.item = item;
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> b4ade11... add new directory
 
 }

@@ -1,0 +1,7 @@
+dbCreated: true
+mysql:
+  adress: 192.178.178.20
+  port: 3306
+  username: root
+  password: 1234
+  database: mcstest

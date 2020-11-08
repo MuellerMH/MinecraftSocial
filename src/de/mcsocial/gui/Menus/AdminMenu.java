@@ -13,6 +13,7 @@ import de.mcsocial.permissions.PlayerPermissions;
 public class AdminMenu {
 	public static Menu menu;
 	private static Player p;
+<<<<<<< HEAD
 	
 	public static void loadMenu(Menu menu, Player p) {
 		AdminMenu.setP(p);
@@ -28,16 +29,42 @@ public class AdminMenu {
 		AdminItem item = new AdminItem("JailMenu",Material.ENDER_PEARL);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Zum Gefängnis Menu");
+=======
+
+	public static void loadMenu(Menu menu, Player p) {
+		AdminMenu.setP(p);
+		AdminMenu.menu = menu;
+
+		closeMenu();
+		addJail();
+	}
+
+	private static void addJail() {
+		if (!PlayerPermissions.hasAccess(p, "moderator"))
+			return;
+		AdminItem item = new AdminItem("JailMenu", Material.ENDER_PEARL);
+		List<String> lines = new LinkedList<String>();
+		lines.add("Zum Gefï¿½ngnis Menu");
+>>>>>>> b4ade11... add new directory
 		item.setDescriptions(lines);
 
 		AdminMenu.menu.addMenuItem(item, 0);
 	}
+<<<<<<< HEAD
 	
 	private static void closeMenu()	{
 		
 		AdminItem item = new AdminItem("Hauptmenu",Material.ENDER_PEARL);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Zurück zum Hauptmenu.");
+=======
+
+	private static void closeMenu() {
+
+		AdminItem item = new AdminItem("Hauptmenu", Material.ENDER_PEARL);
+		List<String> lines = new LinkedList<String>();
+		lines.add("Zurï¿½ck zum Hauptmenu.");
+>>>>>>> b4ade11... add new directory
 		item.setDescriptions(lines);
 
 		AdminMenu.menu.addMenuItem(item, 26);

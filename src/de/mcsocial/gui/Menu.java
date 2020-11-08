@@ -8,6 +8,10 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+<<<<<<< HEAD
+=======
+import org.bukkit.inventory.InventoryView;
+>>>>>>> b4ade11... add new directory
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -126,7 +130,11 @@ public class Menu implements InventoryHolder  {
     @SuppressWarnings("deprecation")
 	public boolean removeMenuItem(int index) {
         ItemStack slot = getInventory().getItem(index);
+<<<<<<< HEAD
         if (slot == null || slot.getTypeId() == 0) {
+=======
+        if (slot == null || slot.getType().getId() == 0) {
+>>>>>>> b4ade11... add new directory
             return false;
         }
         getInventory().clear(index);
@@ -158,7 +166,11 @@ public class Menu implements InventoryHolder  {
      */
     public void openMenu(Player player) {
         if (getInventory().getViewers().contains(player)) {
+<<<<<<< HEAD
             throw new IllegalArgumentException(player.getName() + " is already viewing " + getInventory().getTitle());
+=======
+            throw new IllegalArgumentException(player.getName() + " is already viewing " + ((InventoryView) getInventory()).getTitle());
+>>>>>>> b4ade11... add new directory
         }
         player.openInventory(getInventory());
     }

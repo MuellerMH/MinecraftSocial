@@ -1,6 +1,10 @@
 package de.mcsocial.gui.items;
 
+<<<<<<< HEAD
 import java.util.Arrays;
+=======
+import java.util.ArrayList;
+>>>>>>> b4ade11... add new directory
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -20,12 +24,17 @@ import de.mcsocial.protection.ChunkHandler;
 import de.mcsocial.protection.Jail;
 import de.mcsocial.protection.JailChunk;
 
+<<<<<<< HEAD
 public class JailItem  extends MenuItem {
+=======
+public class JailItem extends MenuItem {
+>>>>>>> b4ade11... add new directory
 	@SuppressWarnings("unused")
 	private Boolean isCellSpawn;
 	private Location cellLocation;
 	private Player player;
 	private UUID uuid;
+<<<<<<< HEAD
 	
 	
 	public JailItem(String text, Material icon) {
@@ -34,10 +43,19 @@ public class JailItem  extends MenuItem {
 	}
 
 	@SuppressWarnings("deprecation")
+=======
+
+	public JailItem(String text, Material icon) {
+		// TODO Auto-generated constructor stub
+		super(text, new ItemStack(icon, 1));
+	}
+
+>>>>>>> b4ade11... add new directory
 	@Override
 	public void onClick(Player p) {
 		Menu playerSelect;
 		int needetRows = 3;
+<<<<<<< HEAD
 		switch(this.getText()){
 			case "einsperren":		
 				List<Player> allPlayer = Arrays.asList(Bukkit.getServer().getOnlinePlayers());
@@ -102,16 +120,90 @@ public class JailItem  extends MenuItem {
 				break;
 		}
 		
+=======
+		switch (this.getText()) {
+			case "einsperren":
+				List<Player> allPlayer = new ArrayList<Player>(Bukkit.getServer().getOnlinePlayers());
+				needetRows = Math.max(1, (int) Math.ceil(allPlayer.toArray().length / 9));
+				playerSelect = new Menu("Spieler w�hlen", needetRows);
+				JailMenu.createPlayerMenu(playerSelect, allPlayer, "select");
+				Gui.switchMenu(p, JailMenu.menu, playerSelect);
+				break;
+			case "Admin Menu":
+				Gui.switchMenu(p, JailMenu.menu, AdminMenu.menu);
+				break;
+			case "Neue Zelle":
+				JailChunk jailChunk = null;
+				if (!ChunkHandler.isClaimAble(p.getLocation().getChunk())) {
+					if (!Jail.isJailChunks(p.getLocation().getChunk())) {
+						ChunkHandler.unclaimChunk(p, 0.00);
+						ChunkHandler.claimJailChunk(p, 0.00);
+					}
+				} else {
+					ChunkHandler.claimJailChunk(p, 0.00);
+				}
+
+				jailChunk = (JailChunk) ChunkHandler.getChunk(p.getLocation().getChunk());
+
+				jailChunk.createCellSpawn(p);
+				ChunkHandler.insertChunkOwner(jailChunk);
+				p.sendMessage("Gef�ngnis Zelle hinzugef�gt.");
+				JailMenu.menu.closeMenu(p);
+				break;
+			case "frei lassen":
+				needetRows = Math.max(1, (int) Math.ceil(Jail.getPrisonerCount() / 9));
+				playerSelect = new Menu("Spieler w�hlen", (int) Math.ceil(needetRows));
+				JailMenu.createPlayerMenu(playerSelect, Jail.getPrisonerAll(), "remove");
+				Gui.switchMenu(p, JailMenu.menu, playerSelect);
+				break;
+			default:
+				switch (JailMenu.nextAction) {
+					case "teleport":
+						try {
+							p.teleport(this.cellLocation);
+							JailMenu.menu.closeMenu(p);
+						} catch (Exception e) {
+							if (p.isOp()) {
+								p.sendMessage(e.getMessage());
+							}
+						}
+						break;
+					case "select":
+						Random randomGenerator = new Random();
+						int index = randomGenerator.nextInt(Jail.getCellList().size());
+						Jail.add((Player) Bukkit.getPlayer(this.uuid), 20 * 1 * 15);
+						Bukkit.getPlayer(this.uuid).teleport(Jail.getCellList().get(index));
+						JailMenu.menu.closeMenu(p);
+						break;
+					case "remove":
+						Jail.remove((Player) Bukkit.getOfflinePlayer(this.uuid));
+						JailMenu.menu.closeMenu(p);
+						break;
+					default:
+						break;
+				}
+				break;
+		}
+
+>>>>>>> b4ade11... add new directory
 	}
 
 	public void setIsCellSpawn(boolean b) {
 		this.isCellSpawn = b;
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> b4ade11... add new directory
 	}
 
 	public void setLocation(Location key) {
 		this.cellLocation = key;
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> b4ade11... add new directory
 	}
 
 	public Player getPlayer() {
@@ -124,11 +216,20 @@ public class JailItem  extends MenuItem {
 
 	public void setUUID(UUID uniqueId) {
 		this.uuid = uniqueId;
+<<<<<<< HEAD
 		
 	}
 	
 	public UUID getUUID() {
 		return this.uuid;
 		
+=======
+
+	}
+
+	public UUID getUUID() {
+		return this.uuid;
+
+>>>>>>> b4ade11... add new directory
 	}
 }

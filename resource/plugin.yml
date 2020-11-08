@@ -1,0 +1,201 @@
+api: []
+name: MinecraftSocial
+main: de.mcsocial.main.MCSocial
+version: 1.14.4
+api-version: 1.14
+author: MuellerMH
+commands:
+  menu:
+    aliases: [m]
+    description: Zeigt das Spielermenu
+    usage: na
+    permission: MCSocial.menu
+    permission-message: You do not have Permission MCSocial.menu
+  miner:
+    description: Display Player Mining
+    usage: /miner UserName
+    permission: MCSocial.miner
+    permission-message: You do not have Permission MCSocial.miner
+  infoitem:
+    description: Display Player in Hand Item Info
+    usage: /infoitem  (Hold Item in Hand)
+    permission: MCSocial.miner
+    permission-message: You do not have Permission MCSocial.infoitem
+  gs:
+    description: Show Plot Information
+    usage: /gs
+    permission: MCSocial.gs
+    permission-message: You do not have Permission MCSocial.gs
+  home:
+    description: Teleport to Home
+    usage: /home
+    permission: MCSocial.home
+    permission-message: You do not have Permission MCSocial.home
+  spawn:
+    description: Teleport to Worldspawn
+    usage: /spawn
+    permission: MCSocial.spawn
+    permission-message: You do not have Permission MCSocial.spawn
+  ts:
+    description: Display TeamSpeak Information
+    usage: /ts
+    permission: MCSocial.ts
+    permission-message: You do not have Permission MCSocial.ts
+  vote:
+    description: Display Vote Information
+    usage: /vote
+    permission: MCSocial.vote
+    permission-message: You do not have Permission MCSocial.vote
+  money:
+    description: Display Account Information
+    usage: /money
+    permission: MCSocial.money
+    permission-message: You do not have Permission MCSocial.money
+  join:
+    description: Betritt einen Chatraum
+    usage: /join ChannelName
+    permission: MCSocial.join
+    permission-message: You do not have Permission MCSocial.join
+  leave:
+    description: Verlaesst einen Chatraum
+    usage: /leave ChannelName
+    permission: MCSocial.leave
+    permission-message: You do not have Permission MCSocial.leave
+  list:
+    description: zeigt alle chatrauume
+    usage: /list
+    permission: MCSocial.list
+    permission-message: You do not have Permission MCSocial.list
+  shop:
+    description: Erstellt einen NPC Shop
+    usage: /shop [add/remove] [Name] {Profession}
+    permission: MCSocial.shop
+    permission-message: You do not have Permission MCSocial.shop
+  g:
+    description: Betreten des Chat Global
+    usage: /g
+    permission: MCSocial.g
+    permission-message: You do not have Permission MCSocial.g
+  l:
+    description: Betreten des Chat Lokal
+    usage: /l
+    permission: MCSocial.l
+    permission-message: You do not have Permission MCSocial.l
+  h:
+    description: Betreten des Handel Global
+    usage: /h
+    permission: MCSocial.h
+    permission-message: You do not have Permission MCSocial.h
+  a:
+    description: Betreten des Chat Admin
+    usage: /a
+    permission: MCSocial.a
+    permission-message: You do not have Permission MCSocial.a
+  s:
+    description: Betreten des Chat Support
+    usage: /s
+    permission: MCSocial.s
+    permission-message: You do not have Permission MCSocial.s
+  kicken:
+    description: Betreten des Chat Support
+    usage: /kicken [player] [message]
+    permission: MCSocial.kicken
+    permission-message: You do not have Permission MCSocial.kicken
+  bannen:
+    description: Betreten des Chat Support
+    usage: /bannen [player]
+    permission: MCSocial.bannen
+    permission-message: You do not have Permission MCSocial.bannen
+  timeban:
+    description: Betreten des Chat Support
+    usage: /timeban [player] [minutes]
+    permission: MCSocial.timeban
+    permission-message: You do not have Permission MCSocial.timeban
+  geben:
+    description: gibt Gegenstand in der Hand dem Spieler
+    usage: /geben [player]
+    permission: MCSocial.geben
+    permission-message: You do not have Permission MCSocial.geben
+  bank:
+    description: Betreten des Chat Support
+    usage: /bank [player] [amount]
+    permission: MCSocial.bank
+    permission-message: You do not have Permission MCSocial.bank
+  teleport:
+    description: Betreten des Chat Support
+    usage: /teleport [player] [player]
+    permission: MCSocial.teleport
+    permission-message: You do not have Permission MCSocial.teleport
+  gm:
+    description: Betreten des Chat Support
+    usage: /gm
+    permission: MCSocial.gm
+    permission-message: You do not have Permission MCSocial.gm
+  fly:
+    description: Betreten des Chat Support
+    usage: /fly
+    permission: MCSocial.fly
+    permission-message: You do not have Permission MCSocial.fly
+  debug:
+    description: Betreten des Chat Support
+    usage: /debug
+    permission: MCSocial.fly
+    permission-message: You do not have Permission MCSocial.debug
+  balance:
+    description: Zeigt den Kontostand eines Spielers
+    usage: /balance (Spieler)
+    permission: MCSocial.balance
+    permission-message: You do not have Permission MCSocial.balance
+permissions:
+  MCSocial.menu:
+    default: true
+  MCSocial.miner:
+    default: false
+  MCSocial.gs:
+    default: true
+  MCSocial.home:
+    default: true
+  MCSocial.ts:
+    default: true
+  MCSocial.money:
+    default: true
+  MCSocial.vote:
+    default: true
+  MCSocial.spawn:
+    default: true
+  MCSocial.join:
+    default: true
+  MCSocial.leave:
+    default: true
+  MCSocial.list:
+    default: true
+  MCSocial.shop:
+    default: op
+  MCSocial.g:
+    default: true
+  MCSocial.l:
+    default: true
+  MCSocial.h:
+    default: true
+  MCSocial.a:
+    default: true
+  MCSocial.s:
+    default: true
+  MCSocial.kicken:
+    default: false
+  MCSocial.bannen:
+    default: false
+  MCSocial.timeban:
+    default: false
+  MCSocial.bank:
+    default: false
+  MCSocial.geben:
+    default: false
+  MCSocial.fly:
+    default: false
+  MCSocial.gm:
+    default: false
+  MCSocial.debug:
+    default: false
+  MCSocial.balance:
+    default: false

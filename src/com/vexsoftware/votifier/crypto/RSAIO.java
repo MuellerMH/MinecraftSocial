@@ -28,7 +28,11 @@ import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+<<<<<<< HEAD
 import javax.xml.bind.DatatypeConverter;
+=======
+//import javax.xml.bind.DatatypeConverter;
+>>>>>>> b4ade11... add new directory
 
 /**
  * Static utility methods for saving and loading RSA key pairs.
@@ -48,6 +52,19 @@ public class RSAIO {
 	 *             If an error occurs
 	 */
 	public static void save(File directory, KeyPair keyPair) throws Exception {
+<<<<<<< HEAD
+=======
+		X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(keyPair.getPublic().getEncoded());
+		FileOutputStream fos = new FileOutputStream(directory.getAbsoluteFile() + "/public.key");
+		fos.write(x509EncodedKeySpec.getEncoded());
+		fos.close();
+		
+		PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(keyPair.getPrivate().getEncoded());
+		fos = new FileOutputStream(directory.getAbsoluteFile() + "/private.key");
+		fos.write(pkcs8EncodedKeySpec.getEncoded());
+		fos.close();
+		/*
+>>>>>>> b4ade11... add new directory
 		PrivateKey privateKey = keyPair.getPrivate();
 		PublicKey publicKey = keyPair.getPublic();
 
@@ -55,17 +72,27 @@ public class RSAIO {
 		X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(
 				publicKey.getEncoded());
 		FileOutputStream out = new FileOutputStream(directory + "/public.key");
+<<<<<<< HEAD
 		out.write(DatatypeConverter.printBase64Binary(publicSpec.getEncoded())
 				.getBytes());
+=======
+		out.write(DatatypeConverter.printBase64Binary(publicSpec.getEncoded()).getBytes());
+>>>>>>> b4ade11... add new directory
 		out.close();
 
 		// Store the private key.
 		PKCS8EncodedKeySpec privateSpec = new PKCS8EncodedKeySpec(
 				privateKey.getEncoded());
 		out = new FileOutputStream(directory + "/private.key");
+<<<<<<< HEAD
 		out.write(DatatypeConverter.printBase64Binary(privateSpec.getEncoded())
 				.getBytes());
 		out.close();
+=======
+		out.write(DatatypeConverter.printBase64Binary(privateSpec.getEncoded()).getBytes());
+		out.close();
+		*/
+>>>>>>> b4ade11... add new directory
 	}
 
 	/**
@@ -79,13 +106,49 @@ public class RSAIO {
 	 *             If an error occurs
 	 */
 	public static KeyPair load(File directory) throws Exception {
+<<<<<<< HEAD
+=======
+		File dateiPriK = new File(directory.getAbsoluteFile() + "/private.key");
+		 
+		// Private Key lesen
+		FileInputStream fis = new FileInputStream(dateiPriK);
+		byte[] encodedPrivateKey = new byte[(int) dateiPriK.length()];
+		fis.read(encodedPrivateKey);
+		fis.close();
+		       
+		// generiere Key
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+		PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(encodedPrivateKey);
+		PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);   
+		 
+		File dateiPubK = new File(directory.getAbsoluteFile() + "/public.key");
+		 
+		// Public key lesen
+		fis = new FileInputStream(dateiPubK);
+		byte[] encodedPublicKey = new byte[(int) dateiPubK.length()];
+		fis.read(encodedPublicKey);
+		fis.close();
+		       
+		// generiere Key
+		keyFactory = KeyFactory.getInstance("RSA");
+		X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(encodedPublicKey);
+		PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
+		
+		return new KeyPair(publicKey, privateKey);
+		
+		/*
+>>>>>>> b4ade11... add new directory
 		// Read the public key file.
 		File publicKeyFile = new File(directory + "/public.key");
 		FileInputStream in = new FileInputStream(directory + "/public.key");
 		byte[] encodedPublicKey = new byte[(int) publicKeyFile.length()];
 		in.read(encodedPublicKey);
+<<<<<<< HEAD
 		encodedPublicKey = DatatypeConverter.parseBase64Binary(new String(
 				encodedPublicKey));
+=======
+		encodedPublicKey = DatatypeConverter.parseBase64Binary(new String(encodedPublicKey));
+>>>>>>> b4ade11... add new directory
 		in.close();
 
 		// Read the private key file.
@@ -93,8 +156,12 @@ public class RSAIO {
 		in = new FileInputStream(directory + "/private.key");
 		byte[] encodedPrivateKey = new byte[(int) privateKeyFile.length()];
 		in.read(encodedPrivateKey);
+<<<<<<< HEAD
 		encodedPrivateKey = DatatypeConverter.parseBase64Binary(new String(
 				encodedPrivateKey));
+=======
+		encodedPrivateKey = DatatypeConverter.parseBase64Binary(new String(encodedPrivateKey));
+>>>>>>> b4ade11... add new directory
 		in.close();
 
 		// Instantiate and return the key pair.
@@ -102,10 +169,17 @@ public class RSAIO {
 		X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(
 				encodedPublicKey);
 		PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
+<<<<<<< HEAD
 		PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(
 				encodedPrivateKey);
 		PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
 		return new KeyPair(publicKey, privateKey);
+=======
+		PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(encodedPrivateKey);
+		PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
+		return new KeyPair(publicKey, privateKey);
+		*/
+>>>>>>> b4ade11... add new directory
 	}
 
 }
