@@ -27,6 +27,36 @@ Slack: https://crankzone.slack.com/signup
 Get a Patron on Patreon https://www.patreon.com/deronkozockt
 You can Donate on Paypal muellermh.media@gmail.com
 
+### Installation / Setup
+
+Um das Plugin zu betreiben benötigt Ihr das Spigot Server File, eine MariaDB und das Plugin JAR File.
+
+#### Jar file in den plugin Ordner
+Um MC-Social auf deinem Servere zu installieren, lade dir das JAR File von Bukkit oder Github herunter.
+
+Lade das Jar File auf deinen Server in das plugin Verzeichnis
+
+#### Datenbank Config File
+
+Erstelle im Ordner plugin einen Unterortner MinecraftSocial. Erstelle hier eine neue Datei mit dem Namen config.yml
+
+Die Datei muss folgende Datenbank Informationen beinhalten:
+
+```yaml
+mysql:
+  adress: 192.178.178.20
+  port: 3306
+  username: root
+  password: 1234
+  database: mcstest
+```
+
+Eine Beispiel Datei findet Ihr im Github Projekt im Ordner resource.
+
+Beim nächsten Start wird das Plugin geladen und verbindet Sich mit der Datenbank. Beim Start werden alle benötigten Datenbank Tabellen automatisch angelegt.
+
+Weitere Anleitungen zum Projekt findet Ihr im Ordner documentationen im Github Projekt.
+
 ### Starten des Servers mit craftbukkit im Debug mdus
 java -Xmx8G -Xms1G -Xdebug -Xrunjdwp:transport=dt_socket,address=1000,server=y,suspend=n -jar craftbukkit.jar
 
