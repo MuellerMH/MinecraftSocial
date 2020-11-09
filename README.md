@@ -1,4 +1,4 @@
-![CodeQL](https://github.com/MuellerMH/MinecraftSocial/workflows/CodeQL/badge.svg)
+![CodeQL](https://github.com/MuellerMH/MinecraftSocial/workflows/CodeQL/badge.svg) ![Build compile and release Minecraft Social](https://github.com/MuellerMH/MinecraftSocial/workflows/Build%20compile%20and%20release%20Minecraft%20Social/badge.svg)
 
 # MinecraftSocial
 Minecraft Social Minecraft Server Plugin Pack
@@ -6,7 +6,6 @@ Minecraft Social Minecraft Server Plugin Pack
 ### What is this repository for? ###
 
 * Quick summary
-Amazon Web Service API
 * Version
 
 ### Who do I talk to? ###
