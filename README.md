@@ -14,10 +14,10 @@ aktuelle unterstützte Minecraft Version: 14.4.4
 
 ### Ein paar Videos
 
-![SpielerShop Tutorial](https://www.youtube.com/watch?v=PdU8wz7eN8w&t=15s)
-![Alte Servervorstellung](https://www.youtube.com/watch?v=uXoV3CyQoaM)
-![Servervorstellung](https://www.youtube.com/watch?v=KMjII45l-x4)
-![Live Coding NPC-Shop](https://www.youtube.com/watch?v=UGFalkxNiOQ)
+[![SpielerShop Tutorial](https://img.youtube.com/vi/PdU8wz7eN8w)](https://www.youtube.com/watch?v=PdU8wz7eN8w&t=15s)
+[![Alte Servervorstellung](https://img.youtube.com/vi/uXoV3CyQoaM)](https://www.youtube.com/watch?v=uXoV3CyQoaM)
+[![Servervorstellung](https://img.youtube.com/vi/KMjII45l-x4)](https://www.youtube.com/watch?v=KMjII45l-x4)
+[![Live Coding NPC-Shop](https://img.youtube.com/vi/UGFalkxNiOQ)](https://www.youtube.com/watch?v=UGFalkxNiOQ)
 
 ### Kontakt zum Entwickker? ###
 
