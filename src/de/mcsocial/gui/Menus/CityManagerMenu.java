@@ -60,7 +60,7 @@ public class CityManagerMenu {
 
 		CityManagerItem item = new CityManagerItem("Grundstueck hinzufuegen", Material.GRASS);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Dieses Grundstück der Stadt hinzufï¿½gen.");
+		lines.add("Dieses Grundstück der Stadt hinzufügen.");
 		item.setDescriptions(lines);
 
 		CityManagerMenu.menu.addMenuItem(item, 9);
@@ -69,7 +69,7 @@ public class CityManagerMenu {
 	private static void deleteCity() {
 		CityManagerItem item = new CityManagerItem("Stadt aufloesen", Material.BARRIER);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Diese Stadt wirklich auflï¿½esen und lï¿½schen?");
+		lines.add("Diese Stadt wirklich auflöesen und löschen?");
 		item.setDescriptions(lines);
 
 		CityManagerMenu.menu.addMenuItem(item, 22);
@@ -129,11 +129,11 @@ public class CityManagerMenu {
 				continue;
 			}
 			if (!pl.hasMetadata("city")) {
-				// System.out.println("Spieler gehï¿½rt keiner Stadt an");
+				// System.out.println("Spieler gehört keiner Stadt an");
 				continue;
 			}
 			if (!CityManagerMenu.getP().getUniqueId().equals(UUID.fromString(pl.getMetadata("city").get(0).asString()))) {
-				// System.out.println("Spieler gehï¿½rt nicht dieser Stadt an");
+				// System.out.println("Spieler gehört nicht dieser Stadt an");
 				continue;
 			}
 			CityManagerItem item = new CityManagerItem(pl.getName(), Material.BARRIER);
@@ -160,13 +160,13 @@ public class CityManagerMenu {
 				continue;
 			}
 			if (pl.hasMetadata("city")) {
-				// System.out.println("Spieler gehï¿½rt einer Stadt an");
+				// System.out.println("Spieler gehört einer Stadt an");
 				continue;
 			}
 			CityManagerItem item = new CityManagerItem(pl.getName(), Material.BARRIER);
 			List<String> lines = new LinkedList<String>();
-			lines.add("Diesen Spieler hinzufï¿½gen?");
-			lines.add("Zum hinzufï¿½gen klicken.");
+			lines.add("Diesen Spieler hinzufügen?");
+			lines.add("Zum hinzufügen klicken.");
 			item.setDescriptions(lines);
 			item.setUUID(pl.getUniqueId());
 			item.setCity((City) City.cityList.get(CityManagerMenu.getP().getUniqueId()));

@@ -17,7 +17,7 @@ public class Account {
 		player.sendMessage("--------------------------------");
 		player.sendMessage("Konto Information");
 		player.sendMessage("--------------------------------");
-		player.sendMessage("Dein Aktuelles Guthaben betrï¿½gt:");
+		player.sendMessage("Dein Aktuelles Guthaben beträgt:");
 		player.sendMessage(money + "Social Dollar");
 		player.sendMessage("--------------------------------");
 	}
@@ -52,7 +52,7 @@ public class Account {
 	public static void trans(Player sender, Player reciver, Double amount) {
 		Account.remove(sender, amount);
 		Account.add(reciver, amount);
-		sender.sendMessage(amount + " wurde an " + reciver.getName() + " ï¿½berwiesen");
+		sender.sendMessage(amount + " wurde an " + reciver.getName() + " überwiesen");
 		reciver.sendMessage("Neuer Geldeingang von " + sender.getName() + ": " + amount);
 	}
 

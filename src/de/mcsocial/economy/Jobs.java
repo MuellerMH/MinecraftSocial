@@ -341,7 +341,7 @@ public class Jobs implements Listener {
 		Job neededJob = Jobs.allJobItems.get(mat);
 
 		event.setCancelled(true);
-		player.sendMessage(ChatColor.RED + "Du hast nicht die Fï¿½higkeit den Gegenstand " + ChatColor.BLUE + mat.toString()
+		player.sendMessage(ChatColor.RED + "Du hast nicht die Fähigkeit den Gegenstand " + ChatColor.BLUE + mat.toString()
 				+ ChatColor.RED + " Herrzustellen!");
 		player.sendMessage(ChatColor.RED + "Du kannst den Gegenstand von einem " + ChatColor.BLUE + neededJob.getName()
 				+ ChatColor.RED + " erwerben!");

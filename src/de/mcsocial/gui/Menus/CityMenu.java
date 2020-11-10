@@ -68,7 +68,7 @@ public class CityMenu {
 			}
 		}
 
-		CityItem item = new CityItem("Stadt grï¿½nden", Material.WRITABLE_BOOK);
+		CityItem item = new CityItem("Stadt gründen", Material.WRITABLE_BOOK);
 		List<String> lines = new LinkedList<String>();
 		lines.add("Zurück zum Hauptmenu.");
 		item.setDescriptions(lines);
