@@ -61,7 +61,7 @@ public class TraderHandler implements Listener, CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (!(sender instanceof Player)) {
-			Bukkit.getLogger().info("[MCSocial] Dieser Befehl kann nur von einem Spieler ausgefï¿½hrt werden!");
+			Bukkit.getLogger().info("[MCSocial] Dieser Befehl kann nur von einem Spieler ausgeführt werden!");
 			return true;
 		}
 

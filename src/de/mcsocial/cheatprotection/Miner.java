@@ -268,14 +268,14 @@ public class Miner implements Listener, CommandExecutor {
 
 		if (cmd.getName().equalsIgnoreCase("infoitem")) {
 			ItemStack item = p.getItemInHand();
-			p.sendMessage("ï¿½6ItemIDï¿½7: ï¿½a" + item.getType());
+			p.sendMessage("§6ItemID§7: §a" + item.getType());
 			return true;
 		}
 
 		if (cmd.getName().equalsIgnoreCase("miner")) {
 
 			if (args.length < 1) {
-				p.sendMessage("ï¿½6MCSocialï¿½7: ï¿½cBitte gebe einen Spielernamen an.");
+				p.sendMessage("§6MCSocial§7: §cBitte gebe einen Spielernamen an.");
 				return true;
 			}
 
@@ -286,7 +286,7 @@ public class Miner implements Listener, CommandExecutor {
 				oP = (Player) Bukkit.getOfflinePlayer(args[0]);
 			}
 			if (oP == null) {
-				p.sendMessage("ï¿½6MCSocialï¿½7: ï¿½cDer Spieler konnte nicht gefunden werden.");
+				p.sendMessage("§6MCSocial§7: §cDer Spieler konnte nicht gefunden werden.");
 				return true;
 			}
 

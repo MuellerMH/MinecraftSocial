@@ -95,7 +95,7 @@ public class PlayerMenu {
 
 		PlayerItem item = new PlayerItem("Berufe Uebersicht", Material.WRITABLE_BOOK);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Zeigt alle verfï¿½gbaren Berufe");
+		lines.add("Zeigt alle verfügbaren Berufe");
 		item.setDescriptions(lines);
 
 		PlayerMenu.menu.addMenuItem(item, 8);
