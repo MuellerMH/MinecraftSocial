@@ -45,7 +45,7 @@ public class Hauptmenu {
 		}
 		CityItem itemLeave = new CityItem("Stadt verlassen", Material.BARRIER);
 		List<String> linesLeave = new LinkedList<String>();
-		linesLeave.add("Ja, ich mï¿½chte meine Stadt verlassen.");
+		linesLeave.add("Ja, ich möchte meine Stadt verlassen.");
 		itemLeave.setDescriptions(linesLeave);
 		Hauptmenu.menu.addMenuItem(itemLeave, 21);
 	}
@@ -67,7 +67,7 @@ public class Hauptmenu {
 				if (ChunkHandler.getOwner(Hauptmenu.p).equals(Hauptmenu.p.getUniqueId())) {
 					CityItem itemBarrier = new CityItem("Grundstueck verkaufen", Material.DIRT);
 					List<String> lines = new LinkedList<String>();
-					lines.add("Dieses Grundstück gehï¿½rt dir.");
+					lines.add("Dieses Grundstück gehört dir.");
 					lines.add("Zum verkaufen klicken.");
 					lines.add("Verkaufspreis 2000.00");
 					itemBarrier.setDescriptions(lines);
@@ -81,7 +81,7 @@ public class Hauptmenu {
 
 				CityManagerItem item = new CityManagerItem("Stadt verwalten", Material.WRITABLE_BOOK);
 				List<String> lines = new LinkedList<String>();
-				lines.add("ï¿½ffnet das Stadtverwaltungs Menu.");
+				lines.add("Öffnet das Stadtverwaltungs Menu.");
 				item.setDescriptions(lines);
 				Hauptmenu.menu.addMenuItem(item, 20);
 			}
@@ -138,9 +138,9 @@ public class Hauptmenu {
 
 	private static void addCity() {
 
-		CityItem item = new CityItem("Stï¿½dte Menu", Material.MAP);
+		CityItem item = new CityItem("Städte Menu", Material.MAP);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Zeigt eine Liste aller Stï¿½dte.");
+		lines.add("Zeigt eine Liste aller Städte.");
 		item.setDescriptions(lines);
 
 		Hauptmenu.menu.addMenuItem(item, 9);

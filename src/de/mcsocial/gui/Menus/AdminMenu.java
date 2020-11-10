@@ -27,7 +27,7 @@ public class AdminMenu {
 			return;
 		AdminItem item = new AdminItem("JailMenu", Material.ENDER_PEARL);
 		List<String> lines = new LinkedList<String>();
-		lines.add("Zum Gefï¿½ngnis Menu");
+		lines.add("Zum Gefängnis Menu");
 		item.setDescriptions(lines);
 
 		AdminMenu.menu.addMenuItem(item, 0);

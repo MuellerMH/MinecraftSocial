@@ -48,7 +48,7 @@ public class ShopHandler implements Listener {
 		shop.setShopName(e.getPlayer().getName() + "'s Shop");
 		shop.setIsAdmin(false);
 
-		shop.setAmount(Integer.parseInt(e.getLine(2).replace("ï¿½0", "")));
+		shop.setAmount(Integer.parseInt(e.getLine(2).replace(":0", "")));
 		if (e.getPlayer().isOp()) {
 			shop.setIsAdmin(true);
 		}
@@ -59,11 +59,11 @@ public class ShopHandler implements Listener {
 		shop.setSignText(e.getLine(1));
 
 		if (buyItems) {
-			shop.setPriceBuy(Double.parseDouble(e.getLine(3).split(":")[1].replace("ï¿½0", "")));
-			shop.setPriceSell(Double.parseDouble(e.getLine(3).split(":")[0].replace("ï¿½0", "")));
+			shop.setPriceBuy(Double.parseDouble(e.getLine(3).split(":")[1].replace(":0", "")));
+			shop.setPriceSell(Double.parseDouble(e.getLine(3).split(":")[0].replace(":0", "")));
 		} else {
 			shop.setPriceBuy(0.00);
-			shop.setPriceSell(Double.parseDouble(e.getLine(3).replace("ï¿½0", "")));
+			shop.setPriceSell(Double.parseDouble(e.getLine(3).replace(":0", "")));
 		}
 
 		e.setLine(0, e.getPlayer().getName() + "'s Shop");
@@ -113,7 +113,7 @@ public class ShopHandler implements Listener {
 				ItemStack toSell = shop.getChest().getInventory().getContents()[0];
 
 				if (toSell == null) {
-					e.getPlayer().sendMessage("Die ausgewï¿½hlte Kiste ist lerr");
+					e.getPlayer().sendMessage("Die ausgewählte Kiste ist lerr");
 					return true;
 				}
 				shop.setSign(sign);
@@ -144,7 +144,7 @@ public class ShopHandler implements Listener {
 			Chest chest = (Chest) block.getState();
 			ItemStack toSell = chest.getInventory().getContents()[0];
 			if (toSell == null) {
-				e.getPlayer().sendMessage("Die ausgewï¿½hlte Kiste ist lerr");
+				e.getPlayer().sendMessage("Die ausgewählte Kiste ist lerr");
 				return true;
 			}
 			e.getPlayer().sendMessage("Verkauft wird " + toSell.getType());
@@ -217,7 +217,7 @@ public class ShopHandler implements Listener {
 							double total = (shop.getPriceBuy() / shop.getAmount()) * totalStack;
 
 							if (Account.getBalance(Bukkit.getOfflinePlayer(shop.getOwner()).getPlayer()) < total) {
-								e.getPlayer().sendMessage("Verkï¿½ufer kann zur Zeit keine Ware ankaufen.");
+								e.getPlayer().sendMessage("Verekäufer kann zur Zeit keine Ware ankaufen.");
 								return true;
 							}
 
@@ -242,7 +242,7 @@ public class ShopHandler implements Listener {
 							double total = shop.getPriceBuy();
 
 							if (Account.getBalance(Bukkit.getOfflinePlayer(shop.getOwner()).getPlayer()) < total) {
-								e.getPlayer().sendMessage("Verkï¿½ufer kann zur Zeit keine Ware ankaufen.");
+								e.getPlayer().sendMessage("Verekäufer kann zur Zeit keine Ware ankaufen.");
 								return true;
 							}
 
@@ -297,7 +297,7 @@ public class ShopHandler implements Listener {
 							double total = (shop.getPriceSell() / shop.getAmount()) * totalStack;
 
 							if (Account.getBalance(e.getPlayer()) < total) {
-								e.getPlayer().sendMessage("Du hast nicht genï¿½gend Geld.");
+								e.getPlayer().sendMessage("Du hast nicht genügend Geld.");
 								return true;
 							}
 
@@ -321,7 +321,7 @@ public class ShopHandler implements Listener {
 							double total = shop.getPriceSell();
 
 							if (Account.getBalance(e.getPlayer()) < total) {
-								e.getPlayer().sendMessage("Du hast nicht genï¿½gend Geld.");
+								e.getPlayer().sendMessage("Du hast nicht genügend Geld.");
 								return true;
 							}
 
@@ -449,7 +449,6 @@ public class ShopHandler implements Listener {
 
 			preparedStmt.setString(1, string);
 			MySQL.insertDB(preparedStmt);
-			// System.out.println("Lï¿½sche " + string);
 
 			if (ShopHandler.shops == null) {
 				return;
@@ -475,7 +474,6 @@ public class ShopHandler implements Listener {
 
 			preparedStmt.setString(1, x + "," + z + "," + y);
 			MySQL.insertDB(preparedStmt);
-			// System.out.println("Lï¿½sche "+x +","+z+","+y);
 
 			if (ShopHandler.shops == null) {
 				return;

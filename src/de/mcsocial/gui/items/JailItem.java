@@ -62,7 +62,7 @@ public class JailItem extends MenuItem {
 
 				jailChunk.createCellSpawn(p);
 				ChunkHandler.insertChunkOwner(jailChunk);
-				p.sendMessage("Gefï¿½ngnis Zelle hinzugefügt.");
+				p.sendMessage("Gefängnis Zelle hinzugefügt.");
 				JailMenu.menu.closeMenu(p);
 				break;
 			case "frei lassen":
