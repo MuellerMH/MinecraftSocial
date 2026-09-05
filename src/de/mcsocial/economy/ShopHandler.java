@@ -3,7 +3,9 @@ package de.mcsocial.economy;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -12,11 +14,13 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import de.mcsocial.main.MySQL;
@@ -35,36 +39,45 @@ public class ShopHandler implements Listener {
 			ShopHandler.shops = new HashMap<Sign, Shop>();
 		}
 
-		e.getPlayer().sendMessage(e.getLine(0));
-		if (!e.getLine(0).endsWith("Shop")) {
-			e.getPlayer().sendMessage("Nur ein Schild");
+		if (!e.getLine(0).toLowerCase().endsWith("shop")) {
 			return;
 		}
 
-		Boolean buyItems = false;
+		int amount;
+		double priceSell;
+		double priceBuy = 0.00;
+		try {
+			amount = Integer.parseInt(e.getLine(2).split(":")[0]);
+			String[] prices = e.getLine(3).split(":");
+			priceSell = Double.parseDouble(prices[0]);
+			if (prices.length > 1) {
+				priceBuy = Double.parseDouble(prices[1]);
+			}
+		} catch (NumberFormatException ex) {
+			e.setCancelled(true);
+			e.getPlayer().sendMessage("Shop-Schild: Menge und Preise müssen Zahlen sein.");
+			return;
+		}
+
+		if (amount <= 0 || priceSell < 0 || priceBuy < 0) {
+			e.setCancelled(true);
+			e.getPlayer().sendMessage("Shop-Schild: Menge und Preise müssen gültig sein.");
+			return;
+		}
 
 		Shop shop = new Shop();
 		shop.setOwner(e.getPlayer().getUniqueId());
 		shop.setShopName(e.getPlayer().getName() + "'s Shop");
 		shop.setIsAdmin(false);
 
-		shop.setAmount(Integer.parseInt(e.getLine(2).replace(":0", "")));
+		shop.setAmount(amount);
 		if (e.getPlayer().isOp()) {
 			shop.setIsAdmin(true);
 		}
-		if (e.getLine(3).contains(":")) {
-			buyItems = true;
-		}
-		shop.setBuyItem(true);
+		shop.setBuyItem(priceBuy > 0);
 		shop.setSignText(e.getLine(1));
-
-		if (buyItems) {
-			shop.setPriceBuy(Double.parseDouble(e.getLine(3).split(":")[1].replace(":0", "")));
-			shop.setPriceSell(Double.parseDouble(e.getLine(3).split(":")[0].replace(":0", "")));
-		} else {
-			shop.setPriceBuy(0.00);
-			shop.setPriceSell(Double.parseDouble(e.getLine(3).replace(":0", "")));
-		}
+		shop.setPriceBuy(priceBuy);
+		shop.setPriceSell(priceSell);
 
 		e.setLine(0, e.getPlayer().getName() + "'s Shop");
 		e.setLine(1, "Makiere nun mit");
@@ -91,6 +104,10 @@ public class ShopHandler implements Listener {
 
 		shop = ShopHandler.shops.get(sign);
 		if (e.getPlayer().getItemInHand().getType().equals(Material.GLOWSTONE_DUST) && e.getPlayer().isOp()) {
+			if (shop.getChest() == null || shop.getItem() == null) {
+				e.getPlayer().sendMessage("Dieser Shop wurde noch nicht eingerichtet.");
+				return true;
+			}
 			e.getPlayer().sendMessage("---------------------------------");
 			e.getPlayer().sendMessage("Shop Informationen");
 			e.getPlayer().sendMessage("---------------------------------");
@@ -108,6 +125,10 @@ public class ShopHandler implements Listener {
 		if (e.getPlayer().getItemInHand().getType().equals(Material.REDSTONE)) {
 			e.getPlayer().sendMessage("Redstone okay");
 			if (e.getPlayer().getUniqueId().equals(shop.getOwner())) {
+				if (sellItem == null || !sellItem.containsKey(e.getPlayer().getUniqueId())) {
+					e.getPlayer().sendMessage("Wähle zuerst eine Kiste mit Redstone aus.");
+					return true;
+				}
 				shop.setChest(sellItem.get(e.getPlayer().getUniqueId()));
 				e.getPlayer().sendMessage("Owner okay");
 				ItemStack toSell = shop.getChest().getInventory().getContents()[0];
@@ -203,74 +224,35 @@ public class ShopHandler implements Listener {
 		shop = getShop(e);
 		if (shop == null)
 			return false;
+		if (shop.getChest() == null || shop.getItem() == null) {
+			e.getPlayer().sendMessage("Dieser Shop wurde noch nicht eingerichtet.");
+			return true;
+		}
 		if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
-			if (e.getPlayer().getInventory().contains(shop.getItem().getType())) {
-				ItemStack[] itemStackArray = e.getPlayer().getInventory().getContents();
-				for (ItemStack itemStack : itemStackArray) {
-					if (itemStack == null) {
-						e.getPlayer().sendMessage("itemStack ist null.");
-						continue;
-					}
-					if (itemStack.getType().equals(shop.getItem().getType())) {
-						if (e.getPlayer().isSneaking()) {
-							int totalStack = itemStack.getAmount();
-							double total = (shop.getPriceBuy() / shop.getAmount()) * totalStack;
-
-							if (Account.getBalance(Bukkit.getOfflinePlayer(shop.getOwner()).getPlayer()) < total) {
-								e.getPlayer().sendMessage("Verekäufer kann zur Zeit keine Ware ankaufen.");
-								return true;
-							}
-
-							Account.remove(Bukkit.getOfflinePlayer(shop.getOwner()).getPlayer(), total);
-							Account.add(e.getPlayer(), total);
-
-							ItemStack giveAway = itemStack.clone();
-							e.getPlayer().getInventory().removeItem(itemStack);
-							itemStack.setAmount(itemStack.getAmount() - totalStack);
-							e.getPlayer().getInventory().addItem(itemStack);
-							giveAway.setAmount(totalStack);
-
-							shop.getChest().getInventory().addItem(giveAway);
-
-							e.getPlayer().updateInventory();
-
-							e.getPlayer().sendMessage("Verkauft für: " + total + " SD");
-
-							return true;
-						} else {
-							int totalStack = shop.getAmount();
-							double total = shop.getPriceBuy();
-
-							if (Account.getBalance(Bukkit.getOfflinePlayer(shop.getOwner()).getPlayer()) < total) {
-								e.getPlayer().sendMessage("Verekäufer kann zur Zeit keine Ware ankaufen.");
-								return true;
-							}
-
-							Account.remove(Bukkit.getOfflinePlayer(shop.getOwner()).getPlayer(), total);
-							Account.add(e.getPlayer(), total);
-
-							ItemStack giveAway = itemStack.clone();
-							e.getPlayer().getInventory().removeItem(itemStack);
-							itemStack.setAmount(itemStack.getAmount() - totalStack);
-							e.getPlayer().getInventory().addItem(itemStack);
-							giveAway.setAmount(totalStack);
-
-							shop.getChest().getInventory().addItem(giveAway);
-
-							e.getPlayer().updateInventory();
-
-							Account.remove(Bukkit.getOfflinePlayer(shop.getOwner()).getPlayer(), total);
-							Account.add(e.getPlayer(), total);
-
-							e.getPlayer().sendMessage("Verkauft für: " + total + " SD");
-
-							return true;
-						}
-
-					}
-				}
+			Player owner = Bukkit.getOfflinePlayer(shop.getOwner()).getPlayer();
+			if (owner == null) {
+				e.getPlayer().sendMessage("Der Shopbesitzer muss online sein.");
+				return true;
 			}
-			e.getPlayer().sendMessage("Du hast dieses Item nicht mehr.");
+			int available = countItems(e.getPlayer().getInventory(), shop.getItem());
+			int totalStack = e.getPlayer().isSneaking() ? available : shop.getAmount();
+			if (shop.getPriceBuy() <= 0 || totalStack <= 0 || available < totalStack) {
+				e.getPlayer().sendMessage("Du hast dieses Item nicht mehr.");
+				return true;
+			}
+			double total = (shop.getPriceBuy() / shop.getAmount()) * totalStack;
+			if (Account.getBalance(owner) < total) {
+				e.getPlayer().sendMessage("Der Verkäufer kann zur Zeit keine Ware ankaufen.");
+				return true;
+			}
+			if (!moveItems(e.getPlayer().getInventory(), shop.getChest().getInventory(), shop.getItem(), totalStack)) {
+				e.getPlayer().sendMessage("Die Shopkiste ist voll.");
+				return true;
+			}
+			Account.remove(owner, total);
+			Account.add(e.getPlayer(), total);
+			e.getPlayer().updateInventory();
+			e.getPlayer().sendMessage("Verkauft für: " + total + " SD");
 			return true;
 
 		}
@@ -281,75 +263,88 @@ public class ShopHandler implements Listener {
 		shop = getShop(e);
 		if (shop == null)
 			return false;
+		if (shop.getChest() == null || shop.getItem() == null) {
+			e.getPlayer().sendMessage("Dieser Shop wurde noch nicht eingerichtet.");
+			return true;
+		}
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			e.getPlayer().sendMessage("Kaufe: " + shop.getItem().toString());
-			if (shop.getChest().getInventory().contains(shop.getItem().getType())) {
-				ItemStack[] itemStackArray = shop.getChest().getInventory().getContents();
-				for (ItemStack itemStack : itemStackArray) {
-					if (itemStack == null) {
-						e.getPlayer().sendMessage("itemStack ist null.");
-						continue;
-					}
-					if (itemStack.getType().equals(shop.getItem().getType())) {
-						if (e.getPlayer().isSneaking()) {
-
-							int totalStack = itemStack.getAmount();
-							double total = (shop.getPriceSell() / shop.getAmount()) * totalStack;
-
-							if (Account.getBalance(e.getPlayer()) < total) {
-								e.getPlayer().sendMessage("Du hast nicht genügend Geld.");
-								return true;
-							}
-
-							Account.add(Bukkit.getOfflinePlayer(shop.getOwner()).getPlayer(), total);
-							Account.remove(e.getPlayer(), total);
-
-							ItemStack giveAway = itemStack.clone();
-							shop.getChest().getInventory().removeItem(itemStack);
-							itemStack.setAmount(itemStack.getAmount() - totalStack);
-							shop.getChest().getInventory().addItem(itemStack);
-							giveAway.setAmount(totalStack);
-
-							e.getPlayer().getInventory().addItem(giveAway);
-							e.getPlayer().updateInventory();
-
-							e.getPlayer().sendMessage("Gekauft für: " + total + " SD");
-
-							return true;
-						} else {
-							int totalStack = shop.getAmount();
-							double total = shop.getPriceSell();
-
-							if (Account.getBalance(e.getPlayer()) < total) {
-								e.getPlayer().sendMessage("Du hast nicht genügend Geld.");
-								return true;
-							}
-
-							Account.add(Bukkit.getOfflinePlayer(shop.getOwner()).getPlayer(), total);
-							Account.remove(e.getPlayer(), total);
-
-							ItemStack giveAway = itemStack.clone();
-							shop.getChest().getInventory().removeItem(itemStack);
-							itemStack.setAmount(itemStack.getAmount() - totalStack);
-							shop.getChest().getInventory().addItem(itemStack);
-							giveAway.setAmount(totalStack);
-
-							e.getPlayer().getInventory().addItem(giveAway);
-							e.getPlayer().updateInventory();
-
-							e.getPlayer().sendMessage("Gekauft für: " + total + " SD");
-
-							return true;
-						}
-
-					}
-				}
+			Player owner = Bukkit.getOfflinePlayer(shop.getOwner()).getPlayer();
+			int available = countItems(shop.getChest().getInventory(), shop.getItem());
+			int totalStack = e.getPlayer().isSneaking() ? available : shop.getAmount();
+			if (shop.getPriceSell() <= 0 || totalStack <= 0 || available < totalStack) {
+				e.getPlayer().sendMessage("Dieser Shop ist ausverkauft!.");
+				return true;
 			}
-
-			e.getPlayer().sendMessage("Dieser Shop ist ausverkauft!.");
+			double total = (shop.getPriceSell() / shop.getAmount()) * totalStack;
+			if (Account.getBalance(e.getPlayer()) < total) {
+				e.getPlayer().sendMessage("Du hast nicht genügend Geld.");
+				return true;
+			}
+			if (owner == null || !moveItems(shop.getChest().getInventory(), e.getPlayer().getInventory(), shop.getItem(), totalStack)) {
+				e.getPlayer().sendMessage("Dein Inventar ist voll oder der Shopbesitzer ist offline.");
+				return true;
+			}
+			Account.add(owner, total);
+			Account.remove(e.getPlayer(), total);
+			e.getPlayer().updateInventory();
+			e.getPlayer().sendMessage("Gekauft für: " + total + " SD");
 			return true;
 		}
 		return false;
+	}
+
+	private int countItems(Inventory inventory, ItemStack item) {
+		int amount = 0;
+		for (ItemStack stack : inventory.getContents()) {
+			if (stack != null && stack.isSimilar(item)) {
+				amount += stack.getAmount();
+			}
+		}
+		return amount;
+	}
+
+	private boolean moveItems(Inventory source, Inventory target, ItemStack item, int amount) {
+		ItemStack[] sourceContents = cloneContents(source.getContents());
+		ItemStack[] targetContents = cloneContents(target.getContents());
+		List<ItemStack> moved = new ArrayList<ItemStack>();
+		int remaining = amount;
+		for (int slot = 0; slot < source.getContents().length && remaining > 0; slot++) {
+			ItemStack stack = source.getItem(slot);
+			if (stack == null || !stack.isSimilar(item)) {
+				continue;
+			}
+			int take = Math.min(remaining, stack.getAmount());
+			ItemStack part = stack.clone();
+			part.setAmount(take);
+			moved.add(part);
+			remaining -= take;
+			if (take == stack.getAmount()) {
+				source.setItem(slot, null);
+			} else {
+				stack.setAmount(stack.getAmount() - take);
+				source.setItem(slot, stack);
+			}
+		}
+		if (remaining > 0) {
+			source.setContents(sourceContents);
+			return false;
+		}
+		for (ItemStack stack : moved) {
+			if (!target.addItem(stack).isEmpty()) {
+				source.setContents(sourceContents);
+				target.setContents(targetContents);
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private ItemStack[] cloneContents(ItemStack[] contents) {
+		ItemStack[] copy = new ItemStack[contents.length];
+		for (int i = 0; i < contents.length; i++) {
+			copy[i] = contents[i] == null ? null : contents[i].clone();
+		}
+		return copy;
 	}
 
 	@SuppressWarnings("deprecation")
