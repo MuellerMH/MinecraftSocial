@@ -76,6 +76,12 @@ public class ChatListener implements Listener, CommandExecutor {
 			return true;
 		} else
 
+		if (cmd.getName().equalsIgnoreCase("s")) {
+			MCSocial.channel.join(p, "Support");
+			p.sendMessage("Chat [Support] betreten.");
+			return true;
+		} else
+
 		if (cmd.getName().equalsIgnoreCase("join")) {
 
 			if (args.length == 0) {
