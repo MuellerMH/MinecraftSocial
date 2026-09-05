@@ -130,6 +130,7 @@ public class MCSocial extends JavaPlugin implements Listener {
 		getCommand("h").setExecutor((CommandExecutor) chatListener);
 		getCommand("a").setExecutor((CommandExecutor) chatListener);
 		getCommand("l").setExecutor((CommandExecutor) chatListener);
+		getCommand("s").setExecutor((CommandExecutor) chatListener);
 		getCommand("menu").setExecutor(MCSocial.guiHandler);
 		getCommand("fly").setExecutor(adminPlayer);
 		getCommand("kicken").setExecutor(adminPlayer);
