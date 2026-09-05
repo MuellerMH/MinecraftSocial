@@ -148,6 +148,18 @@ public class ChunkHandler implements Listener, CommandExecutor {
 		Account.add(p, price);
 	}
 
+	public static void setChunkForSale(Player p, boolean forSale, double price) {
+		Chunk chunk = p.getLocation().getChunk();
+		CustomChunk cChunk = ChunkHandler.ownedChunks.get(chunk.toString());
+		if (cChunk == null || cChunk.isCity() || (!p.isOp() && !p.getUniqueId().equals(cChunk.getOwner()))) {
+			return;
+		}
+
+		cChunk.setBuyAble(forSale);
+		cChunk.setPrice(forSale ? price : 0.00);
+		ChunkHandler.save(cChunk);
+	}
+
 	private static void remove(String string) {
 
 		String sql = "DELETE FROM MCS_chunkowner WHERE chunkid = ?";
@@ -231,8 +243,25 @@ public class ChunkHandler implements Listener, CommandExecutor {
 					Hauptmenu.menu.closeMenu(p);
 					return;
 				}
-				p.sendMessage(ChatColor.RED + "Dieses Grundstück ist bereits vergeben!");
-				Hauptmenu.menu.closeMenu(p);
+				if (cChunk.getOwner().equals(p.getUniqueId())) {
+					Hauptmenu.menu.closeMenu(p);
+					return;
+				}
+				price = cChunk.getPrice();
+				if (Account.getBalance(p) < price) {
+					p.sendMessage(ChatColor.RED + "Dieses Grundstück kannst du dir nicht leisten!");
+					Hauptmenu.menu.closeMenu(p);
+					return;
+				}
+				Player seller = Bukkit.getPlayer(cChunk.getOwner());
+				if (seller != null) {
+					Account.add(seller, price);
+				}
+				cChunk.setOwner(p);
+				cChunk.setBuyAble(false);
+				cChunk.setPrice(0.00);
+				ChunkHandler.save(cChunk);
+				Account.remove(p, price);
 				return;
 			}
 			if(cChunk == null){

@@ -14,6 +14,7 @@ import de.mcsocial.gui.items.PlayerItem;
 import de.mcsocial.gui.items.WorldSpawn;
 import de.mcsocial.permissions.PlayerPermissions;
 import de.mcsocial.protection.ChunkHandler;
+import de.mcsocial.protection.CustomChunk;
 
 public class Hauptmenu {
 	public static Menu menu;
@@ -63,15 +64,27 @@ public class Hauptmenu {
 
 	private static void claimChunk() {
 		if (ChunkHandler.getOwner(Hauptmenu.p) != null) {
-			if (!ChunkHandler.getChunk(Hauptmenu.p.getLocation().getChunk()).isCity()) {
+			CustomChunk chunk = ChunkHandler.getChunk(Hauptmenu.p.getLocation().getChunk());
+			if (!chunk.isCity()) {
 				if (ChunkHandler.getOwner(Hauptmenu.p).equals(Hauptmenu.p.getUniqueId())) {
-					CityItem itemBarrier = new CityItem("Grundstueck verkaufen", Material.DIRT);
+					CityItem itemBarrier = new CityItem(
+							chunk.isBuyAble() ? "Verkauf zurücknehmen" : "Grundstück zum Verkauf freigeben",
+							Material.DIRT);
 					List<String> lines = new LinkedList<String>();
 					lines.add("Dieses Grundstück gehört dir.");
-					lines.add("Zum verkaufen klicken.");
+					lines.add(chunk.isBuyAble() ? "Zum zurücknehmen klicken." : "Zum Verkauf freigeben klicken.");
 					lines.add("Verkaufspreis 2000.00");
 					itemBarrier.setDescriptions(lines);
 					Hauptmenu.menu.addMenuItem(itemBarrier, 19);
+					return;
+				}
+				if (chunk.isBuyAble()) {
+					CityItem item = new CityItem("Grundstück kaufen", Material.GRASS);
+					List<String> lines = new LinkedList<String>();
+					lines.add("Dieses Grundstück kannst du kaufen.");
+					lines.add("Preis: " + chunk.getPrice() + " Social Dollar");
+					item.setDescriptions(lines);
+					Hauptmenu.menu.addMenuItem(item, 19);
 					return;
 				}
 			} else {
