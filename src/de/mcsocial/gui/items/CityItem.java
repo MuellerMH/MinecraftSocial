@@ -54,6 +54,18 @@ public class CityItem extends MenuItem {
 				ChunkHandler.unclaimChunk(p, 2000.00);
 				Hauptmenu.menu.closeMenu(p);
 				break;
+			case "Grundstück zum Verkauf freigeben":
+				ChunkHandler.setChunkForSale(p, true, 2000.00);
+				Hauptmenu.menu.closeMenu(p);
+				break;
+			case "Verkauf zurücknehmen":
+				ChunkHandler.setChunkForSale(p, false, 0.00);
+				Hauptmenu.menu.closeMenu(p);
+				break;
+			case "Grundstück kaufen":
+				ChunkHandler.claimChunk(p, 4000.00);
+				Hauptmenu.menu.closeMenu(p);
+				break;
 			case "Stadt verlassen":
 				if (!p.hasMetadata("city"))
 					return;
