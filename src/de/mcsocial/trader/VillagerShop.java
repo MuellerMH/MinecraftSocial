@@ -33,7 +33,6 @@ public class VillagerShop extends CustomVillager {
     public static Villager spawn(Location location) {
     	World world = location.getWorld();
     	Villager shop = (Villager) world.spawnEntity(location, EntityType.VILLAGER);
-    	shop.setAI(false);
 		shop.setInvulnerable(true);
 		shop.setCanPickupItems(false);
 		shop.setSilent(false);
@@ -57,7 +56,6 @@ public class VillagerShop extends CustomVillager {
 
 		World world = location.getWorld();
     	Villager shop = (Villager) world.spawnEntity(location, EntityType.VILLAGER);
-    	shop.setAI(false);
 		shop.setInvulnerable(true);
 		shop.setCanPickupItems(false);
 		shop.setSilent(false);
@@ -93,7 +91,6 @@ public class VillagerShop extends CustomVillager {
 
 		World world = location.getWorld();
     	Villager shop1 = (Villager) world.spawnEntity(location, EntityType.VILLAGER);
-    	shop1.setAI(false);
 		shop1.setInvulnerable(true);
 		shop1.setCanPickupItems(false);
 		shop1.setSilent(false);
