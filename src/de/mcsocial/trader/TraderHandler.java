@@ -27,9 +27,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-import de.mcsocial.gui.Gui;
 import de.mcsocial.gui.Menu;
-import de.mcsocial.gui.Menus.Hauptmenu;
 import de.mcsocial.gui.Menus.ShopMenu;
 import de.mcsocial.main.MySQL;
 
@@ -44,14 +42,9 @@ public class TraderHandler implements Listener, CommandExecutor {
 		if (villager instanceof CraftVillager) {
 			if (villager.getCustomName() != null) {
 				event.setCancelled(true);
-				if (Hauptmenu.menu == null) {
-					Menu menu = Gui.createMenu("Hauptmenu", 3);
-					Hauptmenu.loadMenu(menu, event.getPlayer());
-					menu.openMenu(event.getPlayer());
-				}
 				Menu shopMenu = new Menu(villager.getCustomName(), 4);
 				ShopMenu.loadMenu(shopMenu, event.getPlayer(), (CraftVillager) villager);
-				Gui.switchMenu(event.getPlayer(), Hauptmenu.menu, shopMenu);
+				shopMenu.openMenu(event.getPlayer());
 			}
 			return;
 		}
@@ -262,7 +255,7 @@ public class TraderHandler implements Listener, CommandExecutor {
 
 	static void loadShop(String customName) {
 		PreparedStatement preparedStmt = MySQL
-				.getPreStat("SELECT items,location,profession FROM MCS_npcshop WHERE name = ?");
+				.getPreStat("SELECT name,items,location,profession FROM MCS_npcshop WHERE name = ?");
 		ResultSet result = null;
 		try {
 			preparedStmt.setString(1, customName);
